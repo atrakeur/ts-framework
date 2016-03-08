@@ -20,14 +20,14 @@ Note: Don’t use `sudo` if you’re using Windows.
 Create a new app:
 
 ```sh
-$ tfw new testProject
+$ tmvc new testProject
 ```
 
 Run your app:
 
 ```sh
 $ cd testProject
-$ tfw start
+$ tmvc start
 ```
 
 And Voilà, your application has started. Visit [http://localhost:3000](http://localhost:3000) and you should see the default homepage.
