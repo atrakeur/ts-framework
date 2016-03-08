@@ -1,5 +1,5 @@
 {
-  "name": "typemvcframework",
+  "name": "typemvc-framework",
   "version": "0.2.1",
   "description": "TypeMVC",
   "author": "Jhon Mike <developer@jhonmike.com.br>",
@@ -24,10 +24,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/TypeMVC/framework.git"
+    "url": "git://github.com/TypeMVC/typemvc-framework.git"
   },
   "bugs": {
-    "url": "https://github.com/TypeMVC/framework/issues"
+    "url": "https://github.com/TypeMVC/typemvc-framework/issues"
   },
   "dependencies": {
     "express": "4.13.4",

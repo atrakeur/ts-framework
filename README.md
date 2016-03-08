@@ -2,8 +2,8 @@
 
 TypeMVC is a Web Framework that makes it easy to build enterprise-grade [NodeJS](http://nodejs.org) apps using [TypeScript](http://www.typescriptlang.org).
 
-[![NPM version](https://badge.fury.io/js/typemvc.svg)](http://badge.fury.io/js/typemvc)
-[![Build Status](https://travis-ci.org/TypeMVC/framework.svg?branch=master)](https://travis-ci.org/TypeMVC/framework)
+[![NPM version](https://badge.fury.io/js/typemvc-framework.svg)](http://badge.fury.io/js/typemvc-framework)
+[![Build Status](https://travis-ci.org/TypeMVC/typemvc-framework.svg?branch=master)](https://travis-ci.org/TypeMVC/typemvc-framework)
 
 ## Installation
 
