@@ -1,4 +1,4 @@
-/// <reference path="TypeFramework.ts" />
+/// <reference path="TypeMVC.ts" />
 
 module TF {
     export class Application {

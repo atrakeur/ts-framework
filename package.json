@@ -1,10 +1,11 @@
 {
-  "name": "typeframework",
+  "name": "typemvcframework",
   "version": "0.2.1",
-  "description": "TypeFramework",
-  "author": "Zeke Kievel <zeke.levu@gmail.com>",
+  "description": "TypeMVC",
+  "author": "Jhon Mike <developer@jhonmike.com.br>",
   "license": "MIT",
   "keywords": [
+    "typemvc",
     "typeframework",
     "framework",
     "mvc",
@@ -14,46 +15,46 @@
     "app",
     "api"
   ],
-  "main": "./build/TypeFramework.js",
+  "main": "./build/TypeMVC.js",
   "scripts": {
     "prepublish": "npm prune",
-    "start": "grunt",
-    "pretest": "grunt test",
+    "start": "run grunt",
+    "pretest": "run grunt test",
     "test": "mocha -R spec test/integration"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/zekelevu/typeframework.git"
+    "url": "git://github.com/TypeMVC/framework.git"
   },
   "bugs": {
-    "url": "https://github.com/zekelevu/typeframework/issues"
+    "url": "https://github.com/TypeMVC/framework/issues"
   },
   "dependencies": {
-    "express": "4.6.1",
-    "waterline": "0.9.16",
-    "compression": "~1.0.2",
-    "body-parser": "~1.2.0",
-    "method-override": "~1.0.1",
-    "morgan": "~1.0.1",
-    "lodash": "~2.4.1",
-    "ejs": "~1.0.0",
-    "express-ejs-layouts": "~1.1.0",
+    "express": "4.13.4",
+    "waterline": "0.11.0",
+    "compression": "~1.6.1",
+    "body-parser": "~1.15.0",
+    "method-override": "~2.3.5",
+    "morgan": "~1.7.0",
+    "lodash": "~4.6.1",
+    "ejs": "~2.4.1",
+    "express-ejs-layouts": "~2.0.0",
     "commander": "~2.2.0",
-    "jison": "~0.4.13",
-    "depd": "~0.4.3"
+    "jison": "~0.4.17",
+    "depd": "~1.1.0"
   },
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-ts": "~1.11.2",
-    "grunt-file-append": "~0.0.4",
-    "grunt-text-replace": "~0.3.11",
-    "time-grunt": "~0.1.1",
-    "load-grunt-tasks": "~0.2.0",
-    "sails-disk": "~0.9.3",
-    "should": "~4.0.4",
-    "request": "~2.27.0"
+    "grunt": "~0.4.5",
+    "grunt-ts": "~5.3.2",
+    "grunt-file-append": "~0.0.6",
+    "grunt-text-replace": "~0.4.0",
+    "time-grunt": "~1.3.0",
+    "load-grunt-tasks": "~3.4.1",
+    "sails-disk": "~0.10.9",
+    "should": "~8.2.2",
+    "request": "~2.67.0"
   },
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 0.12.0"
   }
 }

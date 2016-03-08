@@ -1,5 +1,5 @@
 /// <EXTERNAL REFERENCES>
-/// <reference path="../../build/TypeFramework.d.ts" />
+/// <reference path="../../build/TypeMVC.d.ts" />
 
 /// <HELPER REFERENCES>
 /// <reference path="app/Global.ts" />

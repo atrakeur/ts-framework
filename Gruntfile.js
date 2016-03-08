@@ -9,8 +9,8 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         ts: {
             build: {
-                src: ["src/TypeFramework.ts"],
-                out: "build/TypeFramework.js",
+                src: ["src/TypeMVC.ts"],
+                out: "build/TypeMVC.js",
                 options: {
                     target: 'es5',
                     module: 'commonjs',
@@ -38,7 +38,7 @@ module.exports = function (grunt) {
         file_append: {
             tf: {
                 files: {
-                    'build/TypeFramework.js': {
+                    'build/TypeMVC.js': {
                         append: "\nmodule.exports = TF;"
                     }
                 }
@@ -46,7 +46,7 @@ module.exports = function (grunt) {
             test: {
                 files: {
                     'test/integration/.build/app.js': {
-                        prepend: "var TF = require('../../../build/TypeFramework.js');\n\n",
+                        prepend: "var TF = require('../../../build/TypeMVC.js');\n\n",
                         append: "\nmodule.exports = app;"
                     }
                 }
