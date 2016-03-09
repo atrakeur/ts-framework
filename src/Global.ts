@@ -1,4 +1,4 @@
-/// <reference path="TypeMVC.ts" />
+/// <reference path="TSFramework.ts" />
 
 var _ = <LoDash.LoDashStatic> require('lodash');
 var fs = <NodeJS.FS.FSStatic> require('fs');
@@ -12,7 +12,7 @@ var extend = function (d, b) {
     d.prototype = new __();
 };
 
-module TF {
+module TS {
     export interface ICookieOption {
         domain?: string;
         path?: string;

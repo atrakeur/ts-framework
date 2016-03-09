@@ -1,6 +1,6 @@
-/// <reference path="TypeMVC.ts" />
+/// <reference path="TSFramework.ts" />
 
-module TF {
+module TS {
     export class Response {
         constructor(public express: EX.Response) {}
 

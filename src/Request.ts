@@ -1,5 +1,5 @@
-/// <reference path="TypeMVC.ts" />
+/// <reference path="TSFramework.ts" />
 
-module TF {
+module TS {
     export interface Request extends EX.Request {}
 }

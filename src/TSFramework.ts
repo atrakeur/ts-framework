@@ -1,7 +1,7 @@
-/// <reference path="../lib/node.d.ts" />
-/// <reference path="../lib/lodash.d.ts" />
-/// <reference path="../lib/express.d.ts" />
-/// <reference path="../lib/waterline.d.ts" />
+/// <reference path="../typings/node/node.d.ts" />
+/// <reference path="../typings/lodash/lodash.d.ts" />
+/// <reference path="../typings/express/express.d.ts" />
+/// <reference path="../typings/waterline.d.ts" />
 
 /// <reference path="Global.ts" />
 /// <reference path="Declaration.ts" />

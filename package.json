@@ -1,11 +1,11 @@
 {
-  "name": "typemvc-framework",
+  "name": "ts-framework",
   "version": "0.2.2",
-  "description": "TypeMVC",
+  "description": "TSFramework",
   "author": "Jhon Mike <developer@jhonmike.com.br>",
   "license": "MIT",
   "keywords": [
-    "typemvc",
+    "tsframework",
     "typeframework",
     "framework",
     "mvc",
@@ -15,7 +15,7 @@
     "app",
     "api"
   ],
-  "main": "./build/TypeMVC.js",
+  "main": "./build/TSFramework.js",
   "scripts": {
     "prepublish": "npm prune",
     "start": "run grunt",
@@ -24,10 +24,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/TypeMVC/typemvc-framework.git"
+    "url": "git://github.com/tsframework/ts-framework.git"
   },
   "bugs": {
-    "url": "https://github.com/TypeMVC/typemvc-framework/issues"
+    "url": "https://github.com/tsframework/ts-framework/issues"
   },
   "dependencies": {
     "express": "4.13.4",

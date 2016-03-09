@@ -1,6 +1,6 @@
-/// <reference path="TypeMVC.ts" />
+/// <reference path="TSFramework.ts" />
 
-module TF {
+module TS {
     export interface IActionResult {
         execute(Application, Response): void;
     }

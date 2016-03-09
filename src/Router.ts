@@ -1,6 +1,6 @@
-/// <reference path="TypeMVC.ts" />
+/// <reference path="TSFramework.ts" />
 
-module TF {
+module TS {
     export interface Route {
         path: string;
         methods: string[];

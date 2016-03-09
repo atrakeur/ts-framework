@@ -1,6 +1,6 @@
-/// <reference path="TypeMVC.ts" />
+/// <reference path="TSFramework.ts" />
 
-module TF {
+module TS {
     export interface INoResultCallback<T> { (err: Error); }
     export interface ISingleResultCallback<T> { (err: Error, model: T); }
     export interface IMultipleResultCallback<T> { (err: Error, models: T[]); }

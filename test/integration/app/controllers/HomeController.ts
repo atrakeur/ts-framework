@@ -1,6 +1,6 @@
 /// <reference path="../../app.ts" />
 
-class HomeController extends TF.Controller {
+class HomeController extends TS.Controller {
 
     static configure() {
         this.addFilter(ActionFilter1).only('actionWithBeforeFilter1', 'actionWithAllBeforeFilters');
@@ -8,7 +8,7 @@ class HomeController extends TF.Controller {
         this.addBeforeFilter(this.filter3).except('actionWithBeforeFilter1', 'actionWithBeforeFilter2', 'actionWithoutBeforeFilters');
     }
 
-    static filter3(context: TF.IActionFilterContext) {
+    static filter3(context: TS.IActionFilterContext) {
         if (context.request.param('filter') == 'filter3') context.reply.content('filter3');
         else context.next();
     }

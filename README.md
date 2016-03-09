@@ -1,33 +1,33 @@
-# Welcome to TypeMVC
+# Welcome to TSFramework
 
-TypeMVC is a Web Framework that makes it easy to build enterprise-grade [NodeJS](http://nodejs.org) apps using [TypeScript](http://www.typescriptlang.org).
+TSFramework is a Web Framework that makes it easy to build enterprise-grade [NodeJS](http://nodejs.org) apps using [TypeScript](http://www.typescriptlang.org).
 
-[![NPM version](https://badge.fury.io/js/typemvc-framework.svg)](http://badge.fury.io/js/typemvc-framework)
-[![Build Status](https://travis-ci.org/TypeMVC/typemvc-framework.svg?branch=master)](https://travis-ci.org/TypeMVC/typemvc-framework)
+[![NPM version](https://badge.fury.io/js/ts-framework.svg)](http://badge.fury.io/js/ts-framework)
+[![Build Status](https://travis-ci.org/tsframwork/ts-framework.svg?branch=master)](https://travis-ci.org/tsframwork/ts-framework)
 
 ## Installation
 
-Install the latest stable release of TypeMVC:
+Install the latest stable release of TSFramework:
 
 ```sh
-$ sudo npm install -g typemvc-cli
+$ sudo npm install -g tsfw-cli
 ```
 
 Note: Don’t use `sudo` if you’re using Windows.
 
-## Create a New TypeMVC Project
+## Create a New TSFramework Project
 
 Create a new app:
 
 ```sh
-$ tmvc new testProject
+$ tsfw new testProject
 ```
 
 Run your app:
 
 ```sh
 $ cd testProject
-$ tmvc start
+$ tsfw start
 ```
 
 And Voilà, your application has started. Visit [http://localhost:3000](http://localhost:3000) and you should see the default homepage.
@@ -36,10 +36,10 @@ And Voilà, your application has started. Visit [http://localhost:3000](http://l
 
 You can also view live examples here:
 
-<a href="https://runnable.com/typemvc" target="_blank"><img src="https://runnable.com/external/styles/assets/runnablebtn.png"></a>
+<a href="https://runnable.com/tsframework" target="_blank"><img src="https://runnable.com/external/styles/assets/runnablebtn.png"></a>
 
 ## Team
-TypeMVC is actively built and maintained by [Jhon Mike](https://github.com/jhonmike)
+TSFramework is actively built and maintained by [Jhon Mike](https://github.com/jhonmike)
 
 ## License
 

@@ -1,6 +1,6 @@
 /// <reference path="../../app.ts" />
 
-class User extends TF.Model {
+class User extends TS.Model {
     name: string;
     email: string;
     age: number;
@@ -10,6 +10,6 @@ class User extends TF.Model {
     }
 }
 
-class User2 extends TF.Model {
+class User2 extends TS.Model {
     test: string
 }
