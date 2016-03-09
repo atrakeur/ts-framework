@@ -1,6 +1,19 @@
-## 0.2.1 (2016-03-09)
+## 0.2.3 (2016-03-10)
 
-Upgrade TSFramework
+Upgrade typings:
+
+- Express update 4.x
+- Created interface Express
+- Update LoDash / object -> zipObject, any -> some, contains -> includes
+
+## 0.2.2 (2016-03-09)
+
+Change for TSFramework:
+
+- Change TF for TS module name ...
+- Change documentation
+- Change repository
+- Upgrade dependencias NPM
 
 ## 0.2.1 (2014-08-23)
 

@@ -2,7 +2,7 @@
 
 module TS {
     export class Response {
-        constructor(public express: EX.Response) {}
+        constructor(public express: Express.Response) {}
 
         setStatus(code: number): Response {
             this.express.status(code);

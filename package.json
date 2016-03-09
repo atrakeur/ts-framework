@@ -18,8 +18,8 @@
   "main": "./build/TSFramework.js",
   "scripts": {
     "prepublish": "npm prune",
-    "start": "run grunt",
-    "pretest": "run grunt test",
+    "start": "grunt",
+    "pretest": "grunt test",
     "test": "mocha -R spec test/integration"
   },
   "repository": {

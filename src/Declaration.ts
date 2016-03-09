@@ -79,7 +79,7 @@ module TS {
                 return action;
             });
 
-            var hasAction = function(name) { _.any(this.actions, (x: MemberInfo) => x.name == name) };
+            var hasAction = function(name) { _.some(this.actions, (x: MemberInfo) => x.name == name) };
             if (this.hasModel) {
                 var idParamOptional = new VariableInfo();
                 idParamOptional.name = 'id';
@@ -153,7 +153,7 @@ module TS {
                     });
                     return property;
                 })
-                .filter((x: MemberInfo) => !_.contains(x.keywords, 'static') && !_.contains(x.keywords, 'private'))
+                .filter((x: MemberInfo) => !_.includes(x.keywords, 'static') && !_.includes(x.keywords, 'private'))
                 .value();
         }
     }
