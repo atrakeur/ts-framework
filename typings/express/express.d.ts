@@ -1045,6 +1045,8 @@ declare module "express" {
              * simply by removing them from this object.
              */
             routes: any;
+
+            use: any;
         }
 
         interface Express extends Application {
