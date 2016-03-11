@@ -1,9 +1,8 @@
-/// <reference path="../typings/node/node.d.ts" />
-/// <reference path="../typings/lodash/lodash.d.ts" />
-/// <reference path="../typings/express/express.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
 /// <reference path="../typings/waterline.d.ts" />
 
 /// <reference path="Global.ts" />
+/// <reference path="Express.ts" />
 /// <reference path="Declaration.ts" />
 /// <reference path="Model.ts" />
 /// <reference path="Configuration.ts" />
@@ -13,3 +12,5 @@
 /// <reference path="Controller.ts" />
 /// <reference path="Router.ts" />
 /// <reference path="Application.ts" />
+
+module.exports = TS;

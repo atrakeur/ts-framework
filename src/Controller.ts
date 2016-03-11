@@ -76,8 +76,8 @@ module TS {
             if (this.includeList.length > 0 && this.excludeList.length > 0)
                 throw new Error('Action filter includes and excludes cannot be both specified!');
 
-            if (this.includeList.length > 0 && !_.contains(this.includeList, action)) return false;
-            if (this.excludeList.length > 0 && _.contains(this.excludeList, action)) return false;
+            if (this.includeList.length > 0 && !_.includes(this.includeList, action)) return false;
+            if (this.excludeList.length > 0 && _.includes(this.excludeList, action)) return false;
             return true;
         }
 
@@ -184,7 +184,7 @@ module TS {
             });
         }
 
-        private static bindModel(model: any, request: EX.Request) {
+        private static bindModel(model: any, request: Express.Request) {
             for (var key in request.query)
                 if (request.query.hasOwnProperty(key))
                     model[key] = request.query[key];

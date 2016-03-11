@@ -6,7 +6,7 @@ module TS {
         router: Router;
         root: string;
 
-        private express: EX.Application;
+        private express: Express.Application;
         private declaration: Declaration;
         private models: ModelInfo[] = [];
         private controllers: ControllerInfo[] = [];
@@ -102,7 +102,7 @@ module TS {
                 adapter.filePath && (adapter.filePath = path.join(this.root, adapter.filePath));
                 return adapter;
             });
-            var adapters = _.object(adapterNames, adapterObjects);
+            var adapters = _.zipObject(adapterNames, adapterObjects);
 
             this.models.forEach((model: ModelInfo) => {
                 var typeClass = model.type.prototype.constructor;
@@ -154,7 +154,7 @@ module TS {
                      res.render(500, '500');
                 });
             else
-                this.express.use((error: Error, req: EX.Request, res: EX.Response, next) => {
+                this.express.use((error: Error, req: Express.Request, res: Express.Response, next) => {
                     fs.readFile(__dirname + '/../views/500.html', { encoding: 'utf8' }, (err, data) => {
                         if (err) res.send(500, 'Server Error');
                         else if (this.config.get('env') == 'development')
@@ -177,7 +177,7 @@ module TS {
                     res.render(404, '404');
                 });
             else
-                this.express.use((req: EX.Request, res: EX.Response) => {
+                this.express.use((req: Express.Request, res: Express.Response) => {
                     fs.readFile(__dirname + '/../views/404.html', { encoding: 'utf8' }, (err, data) => {
                         if (err) res.send(404, 'Not found');
                         else res.send(404, data);
@@ -186,7 +186,7 @@ module TS {
         }
 
         private route(route: Route) {
-            var action = (req: EX.Request, res: EX.Response, next: Function) => {
+            var action = (req: Express.Request, res: Express.Response, next: Function) => {
                 res.header('X-Powered-By', 'TypeFramework');
 
                 var controllerName = req.params.controller || route.defaults.controller;
@@ -205,7 +205,7 @@ module TS {
                     next(); return;
                 }
 
-                if (_.any(actionInfo.keywords, (x) => _.contains(['static', 'private'], x))) {
+                if (_.some(actionInfo.keywords, (x) => _.includes(['static', 'private'], x))) {
                     next(); return;
                 }
 
@@ -213,7 +213,7 @@ module TS {
                     var name = paramInfo.name;
                     var paramData = req.param(name) || route.defaults[name];
                     if (!!paramInfo) {
-                        if (_.contains(paramInfo.type, '[]') && !(paramData instanceof Array))
+                        if (_.includes(paramInfo.type, '[]') && !(paramData instanceof Array))
                             paramData = [paramData];
 
                         switch (paramInfo.type) {
@@ -291,7 +291,7 @@ module TS {
             // map routes
             var eRoute = this.express.route(route.path);
             ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'].forEach((method) => {
-                if (!_.contains(route.methods, method)) return;
+                if (!_.includes(route.methods, method)) return;
                 var map: Function = eRoute[method.toLowerCase()];
                 map.call(eRoute, action);
             });

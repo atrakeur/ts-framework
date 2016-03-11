@@ -1,6 +1,6 @@
 {
   "name": "ts-framework",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "TSFramework",
   "author": "Jhon Mike <developer@jhonmike.com.br>",
   "license": "MIT",
@@ -18,8 +18,8 @@
   "main": "./build/TSFramework.js",
   "scripts": {
     "prepublish": "npm prune",
-    "start": "run grunt",
-    "pretest": "run grunt test",
+    "start": "grunt",
+    "pretest": "grunt test",
     "test": "mocha -R spec test/integration"
   },
   "repository": {

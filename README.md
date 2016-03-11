@@ -3,7 +3,6 @@
 TSFramework is a Web Framework that makes it easy to build enterprise-grade [NodeJS](http://nodejs.org) apps using [TypeScript](http://www.typescriptlang.org).
 
 [![NPM version](https://badge.fury.io/js/ts-framework.svg)](http://badge.fury.io/js/ts-framework)
-[![Build Status](https://travis-ci.org/tsframwork/ts-framework.svg?branch=master)](https://travis-ci.org/tsframwork/ts-framework)
 
 ## Installation
 
@@ -32,11 +31,9 @@ $ tsfw start
 
 And Voilà, your application has started. Visit [http://localhost:3000](http://localhost:3000) and you should see the default homepage.
 
-## View Live Examples
+## Documentation
 
-You can also view live examples here:
-
-<a href="https://runnable.com/tsframework" target="_blank"><img src="https://runnable.com/external/styles/assets/runnablebtn.png"></a>
+<a href="http://tsframework.github.io/documentation" target="_blank">TSFramework</a>
 
 ## Team
 TSFramework is actively built and maintained by [Jhon Mike](https://github.com/jhonmike)

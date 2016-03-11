@@ -36,17 +36,10 @@ module.exports = function (grunt) {
             }
         },
         file_append: {
-            tf: {
-                files: {
-                    'build/TSFramework.js': {
-                        append: "\nmodule.exports = TF;"
-                    }
-                }
-            },
             test: {
                 files: {
                     'test/integration/.build/app.js': {
-                        prepend: "var TF = require('../../../build/TSFramework.js');\n\n",
+                        prepend: "var TS = require('../../../build/TSFramework.js');\n\n",
                         append: "\nmodule.exports = app;"
                     }
                 }
@@ -54,7 +47,7 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('build_framework', [ 'ts:build', 'file_append:tf' ]);
+    grunt.registerTask('build_framework', [ 'ts:build' ]);
     grunt.registerTask('build_test', [ 'ts:build_test', 'file_append:test' ]);
 
     grunt.registerTask('default', [ 'build_framework' ]);
