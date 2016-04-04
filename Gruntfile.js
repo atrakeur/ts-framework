@@ -9,8 +9,8 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         ts: {
             build: {
-                src: ["src/TSFramework.ts"],
-                out: "build/TSFramework.js",
+                src: ["src/*.ts"],
+                outDir: "build/",
                 options: {
                     target: 'es5',
                     module: 'commonjs',

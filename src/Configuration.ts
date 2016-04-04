@@ -1,48 +1,46 @@
-/// <reference path="TSFramework.ts" />
+import {path, fs, _} from "./Global";
 
-module TS {
-    export class Configuration {
-        private data: {} = {};
+export class Configuration {
+    private data: {} = {};
 
-        constructor(private appRoot: string) {}
+    constructor(private appRoot: string) {}
 
-        addJson(filePath: string) {
-            filePath = path.join(this.appRoot, filePath);
-            if (!fs.existsSync(filePath)) {
-                console.log('Config ' + path + ' is not found!');
-                return;
-            }
-
-            var config = JSON.parse(fs.readFileSync(filePath, { encoding: 'utf8' }));
-            this.readConfig('', config);
+    addJson(filePath: string) {
+        filePath = path.join(this.appRoot, filePath);
+        if (!fs.existsSync(filePath)) {
+            console.log('Config ' + path + ' is not found!');
+            return;
         }
 
-        get(key: string): any {
-            var keyParts = key.split('.');
-            return _.reduce(keyParts, (data, key) => !!data ? data[key] : undefined, this.data)
-        }
+        var config = JSON.parse(fs.readFileSync(filePath, { encoding: 'utf8' }));
+        this.readConfig('', config);
+    }
 
-        set(key: string, value: any) {
-            var keyParts = key.split('.');
-            var data = this.data;
-            _.forEach(keyParts, (key) => {
-                if (key == _.last(keyParts))
-                    data[key] = value;
-                else
-                    data[key] = typeof data[key] == 'object' ? data[key] : {};
+    get(key: string): any {
+        var keyParts = key.split('.');
+        return _.reduce(keyParts, (data, key) => !!data ? data[key] : undefined, this.data)
+    }
 
-                data = data[key];
-            });
-        }
+    set(key: string, value: any) {
+        var keyParts = key.split('.');
+        var data = this.data;
+        _.forEach(keyParts, (key) => {
+            if (key == _.last(keyParts))
+                data[key] = value;
+            else
+                data[key] = typeof data[key] == 'object' ? data[key] : {};
 
-        private readConfig(path, config) {
-            Object.getOwnPropertyNames(config).forEach((key) => {
-                var newKey = path + (!!path ? '.' : '') + key;
-                if (typeof config[key] == 'object')
-                    this.readConfig(newKey, config[key]);
-                else
-                    this.set(newKey, config[key]);
-            });
-        }
+            data = data[key];
+        });
+    }
+
+    private readConfig(path, config) {
+        Object.getOwnPropertyNames(config).forEach((key) => {
+            var newKey = path + (!!path ? '.' : '') + key;
+            if (typeof config[key] == 'object')
+                this.readConfig(newKey, config[key]);
+            else
+                this.set(newKey, config[key]);
+        });
     }
 }
