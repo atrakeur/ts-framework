@@ -10,6 +10,7 @@ import {Router, Route} from "./Router";
 import {Configuration} from "./Configuration";
 import {IActionResult, ModelController, ActionFilter} from "./Controller";
 import {Declaration, ModelInfo, ControllerInfo, MemberInfo} from "./Declaration";
+import {Model, Models} from "./Model";
 
 export class Application {
     config: Configuration;
@@ -51,12 +52,32 @@ export class Application {
         this.controllers.push(info);
     }
 
-    public addModel(model: any) {
-        if (model.hasOwnProperty('configure'))
+    /**
+     * Add a single model to the models array
+     * @param {Model} model
+     * @returns {void}
+     */
+    public addModel(model: Model) : void
+    {
+        if (model.hasOwnProperty('configure') && typeof(model.configure) === "function") {
             model.configure();
-
+        }
+        
         var info = new ModelInfo(model, this.declaration);
         this.models.push(info);
+    }
+    
+    /**
+     * Add multiple models to the models array
+     * Usually passed in during configuration in 'app.ts'
+     * @param {Models} model
+     * @returns {void}
+     */
+    public addModels(models : Models) : void
+    {
+        for (var name in models) {
+            this.addModel(models[name]);
+        }
     }
 
     public start() {

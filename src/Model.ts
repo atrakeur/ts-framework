@@ -137,6 +137,13 @@ export class Model {
 
         return to;
     }
+    
+    /**
+     * Configure method used by the application if set
+     * @see Application#addModel()
+     * @returns {void}
+     */
+    public configure : () => void;
 }
 
 export interface ModelValidation {
@@ -192,3 +199,5 @@ export interface ModelValidation {
     minLength?: number;
     maxLength?: number;
 }
+
+export type Models = {[s : string] : Model};

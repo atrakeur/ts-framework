@@ -68,4 +68,10 @@ export class FactoryConfig
     
     public configPath : string = null;
     public declarationPath : string = null;
+    
+    public constructor(configPath : string = null, declarationPath : string = null)
+    {
+        this.configPath = configPath;
+        this.declarationPath = declarationPath;
+    }
 }
