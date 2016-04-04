@@ -1,13 +1,15 @@
 import {
+    IActionResult,
     RedirectResult, 
     ContentResult, 
     JsonResult, 
     FileResult, 
     DownloadResult, 
     ViewResult
-} from "./Controller";
+} from "./Result";
 
-export class Reply {
+export class Reply 
+{
     constructor(public send: (IActionResult) => void) {}
 
     redirect(url: string, status: number = 302) {

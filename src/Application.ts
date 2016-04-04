@@ -7,10 +7,11 @@ import * as Express from "./Express";
 import {Reply} from "./Reply";
 import {Response} from "./Response";
 import {Router, Route} from "./Router";
+import {IActionResult} from "./Result";
 import {Configuration} from "./Configuration";
-import {IActionResult, ModelController, ActionFilter} from "./Controller";
+import {ModelController, ActionFilter, Controller} from "./Controller";
 import {Declaration, ModelInfo, ControllerInfo, MemberInfo} from "./Declaration";
-import {Model, Models} from "./Model";
+import {Model} from "./Model";
 
 export class Application {
     config: Configuration;
@@ -18,7 +19,6 @@ export class Application {
     root: string;
 
     private express: Express.Application;
-    private declaration: Declaration;
     private models: ModelInfo[] = [];
     private controllers: ControllerInfo[] = [];
 
@@ -40,47 +40,73 @@ export class Application {
         callback.call(this);
     }
 
-    public addDeclaration(filePath: string) {
-        this.declaration = new Declaration(path.join(this.root, filePath));
-    }
-
-    public addController(controller: any) {
-        if (controller.hasOwnProperty('configure'))
+    /**
+     * Add a single controller to the controllers array
+     * @param {string} name
+     * @param {Controller} controller
+     * @returns {void}
+     */
+    public addController(name : string, controller: Controller) 
+    {
+        if (controller.hasOwnProperty('configure') && typeof(controller.configure) === "function") {
             controller.configure();
+        }
 
-        var info = new ControllerInfo(controller, this.declaration);
+        var info = new ControllerInfo(controller, new Declaration(this.root + "/app/controllers/" + name + ".d.ts"));
         this.controllers.push(info);
+    }
+    
+    /**
+     * Add multiple controllers to the models array
+     * Usually passed in during configuration in 'app.ts'
+     * 
+     * @param {Controller[]} controllers
+     * @returns {void}
+     */
+    public addControllers(controllers : Object) : void
+    {
+        for (var name in controllers) {
+            this.addController(name, controllers[name]);
+        }
     }
 
     /**
      * Add a single model to the models array
+     * @param {string} name
      * @param {Model} model
      * @returns {void}
      */
-    public addModel(model: Model) : void
+    public addModel(name : string, model: Model) : void
     {
         if (model.hasOwnProperty('configure') && typeof(model.configure) === "function") {
             model.configure();
         }
         
-        var info = new ModelInfo(model, this.declaration);
+        var info = new ModelInfo(model, new Declaration(this.root + "/app/models/" + name + ".d.ts"));
         this.models.push(info);
     }
     
     /**
      * Add multiple models to the models array
      * Usually passed in during configuration in 'app.ts'
-     * @param {Models} model
+     * Type 'Object' used, since typescript doesn't like multiple imports being passed as {[s : string] : Model}
+     *  
+     * @param {Model[]} model
      * @returns {void}
      */
-    public addModels(models : Models) : void
+    public addModels(models : Object) : void
     {
         for (var name in models) {
-            this.addModel(models[name]);
+            this.addModel(name, models[name]);
         }
     }
-
-    public start() {
+    
+    /**
+     * Starts the application
+     * @returns {void} 
+     */
+    public start() : void 
+    {
         this.buildExpress();
         this.buildCollections();
         this.buildRoutes();

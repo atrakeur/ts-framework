@@ -21,7 +21,8 @@ export class Declaration {
         this.items = new jison.Parser(typescript).parse(declaration);
     }
 
-    public getClass(name: string) {
+    public getClass(name: string) 
+    {
         return this.getItem('class', name, this.items);
     }
 

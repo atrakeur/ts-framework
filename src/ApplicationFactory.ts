@@ -23,14 +23,14 @@ export class ApplicationFactory
         // Configure the application
         app.configure(() => {
             
-            // Add declaration file 
-            if (config.declarationPath !== null) {
-                app.addDeclaration(config.declarationPath);
-            }
-            
             // load config
             if (config.configPath !== null) {
-                app.config.addJson('app.json');
+                try {
+                    app.config.addJson(root + config.configPath);
+                } catch (e) {
+                    console.error("[ERROR] Config file '%s' does not exist!", config.configPath);
+                    process.exit(1);                   
+                }
             }
 
             // default routes
@@ -63,15 +63,12 @@ export class ApplicationFactory
  */
 export class FactoryConfig
 {
+    public configPath : string = null;
     public addDefaultRoutes : boolean= true;
     public addDefaultRestRoutes : boolean = true;
     
-    public configPath : string = null;
-    public declarationPath : string = null;
-    
-    public constructor(configPath : string = null, declarationPath : string = null)
+    public constructor(configPath : string = null)
     {
         this.configPath = configPath;
-        this.declarationPath = declarationPath;
     }
 }

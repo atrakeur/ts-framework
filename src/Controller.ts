@@ -5,57 +5,9 @@ import {Model} from "./Model";
 import {Reply} from "./Reply";
 import {Request} from "./Request";
 import {Response} from "./Response";
+import {IActionResult} from "./Result";
 import {Application} from "./Application";
-
-export interface IActionResult {
-    execute(Application, Response): void;
-}
-
-export class RedirectResult implements IActionResult {
-    constructor(public url: string, public status: number = 302) {}
-    execute(app: Application, response: Response) {
-        response.express.redirect(this.status, this.url);
-    }
-}
-
-export class ContentResult implements IActionResult {
-    constructor(public content: string, public contentType?: string) {}
-    execute(app: Application, response: Response) {
-        if (!!this.contentType) response.setContentType(this.contentType);
-        response.express.send(this.content);
-    }
-}
-
-export class JsonResult implements IActionResult {
-    constructor(public data: {}) {}
-    execute(app: Application, response: Response) {
-        response.express.json(this.data);
-    }
-}
-
-export class FileResult implements IActionResult {
-    constructor(public path: string) {}
-    execute(app: Application, response: Response) {
-        var file = path.join(app.root, this.path);
-        response.express.sendfile(file);
-    }
-}
-
-export class DownloadResult implements IActionResult {
-    constructor(public path: string, public filename?: string) {}
-    execute(app: Application, response: Response) {
-        var file = path.join(app.root, this.path);
-        response.express.attachment(file);
-        response.express.sendfile(file, this.filename);
-    }
-}
-
-export class ViewResult implements IActionResult {
-    constructor(public template: string, public options?: {}) {}
-    execute(app: Application, response: Response) {
-        response.express.render(this.template, this.options);
-    }
-}
+import {IConfigurable} from "./Configuration";
 
 export interface IFilterAction {
     (context: IActionFilterContext): void;
@@ -98,7 +50,7 @@ export class ActionFilter implements IActionFilter {
     }
 }
 
-export class Controller extends Reply {
+export class Controller extends Reply implements IConfigurable {
     static filters: any[];
     static model: any = null;
 
@@ -128,6 +80,12 @@ export class Controller extends Reply {
         this.filters.push(filter);
         return filter;
     }
+    
+    /**
+     * Placeholder configure method
+     * @returns {void}
+     */
+    public configure() : void {} 
 }
 
 export class ModelController extends Controller {

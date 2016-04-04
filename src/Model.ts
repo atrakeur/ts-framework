@@ -1,3 +1,5 @@
+import {IConfigurable} from "./Configuration";
+
 export interface INoResultCallback<T> { (err: Error); }
 export interface ISingleResultCallback<T> { (err: Error, model: T); }
 export interface IMultipleResultCallback<T> { (err: Error, models: T[]); }
@@ -54,7 +56,7 @@ export class DbQueryRaw<T> {
     }
 }
 
-export class Model {
+export class Model implements IConfigurable {
     id: number;
     createdAt: Date;
     updatedAt: Date;
@@ -139,11 +141,10 @@ export class Model {
     }
     
     /**
-     * Configure method used by the application if set
-     * @see Application#addModel()
+     * Placeholder configure method
      * @returns {void}
      */
-    public configure : () => void;
+    public configure() : void {}
 }
 
 export interface ModelValidation {
@@ -199,5 +200,3 @@ export interface ModelValidation {
     minLength?: number;
     maxLength?: number;
 }
-
-export type Models = {[s : string] : Model};
