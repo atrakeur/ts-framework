@@ -9,7 +9,6 @@
 \/\/[^\n]*                              /* skip comment */
 \s+                                     /* skip whitespace */
 'export'                                return ''
-'import'                                return ''
 'declare'                               return ''
 'var'                                   return ''
 'function'                              return ''
