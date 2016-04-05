@@ -1,39 +1,35 @@
-/// <reference path="TSFramework.ts" />
+export interface Route {
+    path: string;
+    methods: string[];
+    defaults: RouteData;
+}
 
-module TS {
-    export interface Route {
-        path: string;
-        methods: string[];
-        defaults: RouteData;
+export interface RouteData {
+    controller?: string;
+    action?: string;
+    id?: string;
+}
+
+export class Router {
+    public routes: Route[] = [];
+
+    get(path: string, data: RouteData = {}) {
+        this.map(path, data, ['GET']);
     }
 
-    export interface RouteData {
-        controller?: string;
-        action?: string;
-        id?: string;
+    post(path: string, data: RouteData = {}) {
+        this.map(path, data, ['POST']);
     }
 
-    export class Router {
-        public routes: Route[] = [];
+    put(path: string, data: RouteData = {}) {
+        this.map(path, data, ['PUT']);
+    }
 
-        get(path: string, data: RouteData = {}) {
-            this.map(path, data, ['GET']);
-        }
+    delete(path: string, data: RouteData = {}) {
+        this.map(path, data, ['DELETE']);
+    }
 
-        post(path: string, data: RouteData = {}) {
-            this.map(path, data, ['POST']);
-        }
-
-        put(path: string, data: RouteData = {}) {
-            this.map(path, data, ['PUT']);
-        }
-
-        delete(path: string, data: RouteData = {}) {
-            this.map(path, data, ['DELETE']);
-        }
-
-        map(path, defaults: RouteData = {}, methods: string[] = ['GET', 'POST', 'PUT', 'DELETE']) {
-            this.routes.push({ path: path, methods: methods, defaults: defaults});
-        }
+    map(path, defaults: RouteData = {}, methods: string[] = ['GET', 'POST', 'PUT', 'DELETE']) {
+        this.routes.push({ path: path, methods: methods, defaults: defaults});
     }
 }

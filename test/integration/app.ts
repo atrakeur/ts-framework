@@ -1,20 +1,23 @@
-/// <EXTERNAL REFERENCES>
-/// <reference path="../../build/TSFramework.d.ts" />
+/// <TYPING REFERENCES>
+/// <reference path="../../typings/node/node.d.ts" />
 
-/// <HELPER REFERENCES>
-/// <reference path="app/Global.ts" />
-/// <reference path="app/ActionFilters.ts" />
+/// <CORE IMPORTS>
+import {Application} from "../../build/Application";
+import {ApplicationFactory, FactoryConfig} from "../../build/ApplicationFactory";
 
-/// <MODEL REFERENCES>
-/// <reference path="app/models/User.ts" />
+/// <MODEL + CONTROLLER IMPORTS>
+import * as Models from "./app/models";
+import * as Controllers from "./app/controllers";
 
-/// <CONTROLLER REFERENCES>
-/// <reference path="app/controllers/HomeController.ts" />
-/// <reference path="app/controllers/UserController.ts" />
 
-app.addModel(User);
-app.addModel(User2);
-app.addController(HomeController);
-app.addController(UserController);
+// Set up the root directory
+const __ROOT_DIR__ = require('path').join(__dirname, '.');
 
-app.start();
+// Create a new application
+var app = ApplicationFactory.create(__ROOT_DIR__, new FactoryConfig("/app.json"));
+
+
+// Start the application
+app.addModels(Models);
+app.addControllers(Controllers);
+app.start(); 

@@ -1,33 +1,40 @@
-/// <reference path="TSFramework.ts" />
+import {
+    IActionResult,
+    RedirectResult, 
+    ContentResult, 
+    JsonResult, 
+    FileResult, 
+    DownloadResult, 
+    ViewResult
+} from "./Result";
 
-module TS {
-    export class Reply {
-        constructor(public send: (IActionResult) => void) {}
+export class Reply 
+{
+    constructor(public send: (IActionResult) => void) {}
 
-        redirect(url: string, status: number = 302) {
-            this.send(new RedirectResult(url, status));
-        }
+    redirect(url: string, status: number = 302) {
+        this.send(new RedirectResult(url, status));
+    }
 
-        content(text: string, contentType?: string) {
-            this.send(new ContentResult(text, contentType));
-        }
+    content(text: string, contentType?: string) {
+        this.send(new ContentResult(text, contentType));
+    }
 
-        json(data: {}) {
-            this.send(new JsonResult(data));
-        }
+    json(data: {}) {
+        this.send(new JsonResult(data));
+    }
 
-        file(path: string) {
-            this.send(new FileResult(path));
-        }
+    file(path: string) {
+        this.send(new FileResult(path));
+    }
 
-        download(path: string, filename?: string) {
-            this.send(new DownloadResult(path, filename));
-        }
+    download(path: string, filename?: string) {
+        this.send(new DownloadResult(path, filename));
+    }
 
-        view(template: string, options?: {}) {
-            var result = new ViewResult(template);
-            if (options) result.options = options;
-            this.send(result);
-        }
+    view(template: string, options?: {}) {
+        var result = new ViewResult(template);
+        if (options) result.options = options;
+        this.send(result);
     }
 }
