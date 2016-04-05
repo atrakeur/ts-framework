@@ -9,8 +9,8 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         ts: {
             build: {
-                src: ["src/*.ts"],
-                outDir: "build/",
+                src: ["src/TSFramework.ts"],
+                out: "build/TSFramework.js",
                 options: {
                     target: 'es5',
                     module: 'commonjs',
@@ -23,7 +23,7 @@ module.exports = function (grunt) {
             },
             build_test: {
                 src: ["test/integration/app.ts"],
-                outDir: "test/.integration-build/",
+                out: "test/integration/.build/app.js",
                 options: {
                     target: 'es5',
                     module: 'commonjs',
@@ -32,8 +32,7 @@ module.exports = function (grunt) {
                     removeComments: true,
                     htmlModuleTemplate: '<%= filename %>',
                     htmlVarTemplate: '<%= ext %>'
-                },
-                watch: ['src/**/*', 'test/**/*']
+                }
             }
         },
         file_append: {
@@ -49,7 +48,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('build_framework', [ 'ts:build' ]);
-    grunt.registerTask('build_test', [ 'ts:build_test']);
+    grunt.registerTask('build_test', [ 'ts:build_test', 'file_append:test' ]);
 
     grunt.registerTask('default', [ 'build_framework' ]);
     grunt.registerTask('test', [ 'build_framework', 'build_test' ]);

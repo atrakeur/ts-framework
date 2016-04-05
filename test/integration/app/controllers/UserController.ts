@@ -1,10 +1,9 @@
-import {Controller} from "../../../../build/Controller";
-import {User} from "../models/User";
+/// <reference path="../../app.ts" />
 
-export class UserController extends Controller
-{
-    static configure() 
-    {
+class UserController extends TS.Controller {
+
+    static configure() {
         this.model = User;
     }
+
 }
