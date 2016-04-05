@@ -1,5 +1,3 @@
-/// <reference path="TSFramework.ts" />
+import * as Express from "./Express";
 
-module TS {
-    export interface Request extends Express.Request {}
-}
+export interface Request extends Express.Request {}

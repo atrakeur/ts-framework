@@ -1,15 +1,13 @@
-/// <reference path="../../app.ts" />
+import {Model} from "../../../../build/Model";
 
-class User extends TS.Model {
+export class User extends Model 
+{
     name: string;
     email: string;
     age: number;
 
-    static configure() {
+    static configure() 
+    {
         this.validate('age', { required: false, min: 10 });
     }
-}
-
-class User2 extends TS.Model {
-    test: string
 }
