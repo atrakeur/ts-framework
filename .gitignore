@@ -16,3 +16,4 @@ test/integration/app.js
 test/integration/app.js.map
 test/integration/app/**/*.js
 test/integration/app/**/*.map
+test/.integration-build

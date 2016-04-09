@@ -35,16 +35,6 @@ module.exports = function (grunt) {
                 },
                 watch: ['src/**/*', 'test/**/*']
             }
-        },
-        file_append: {
-            test: {
-                files: {
-                    'test/integration/.build/app.js': {
-                        prepend: "var TS = require('../../../build/TSFramework.js');\n\n",
-                        append: "\nmodule.exports = app;"
-                    }
-                }
-            }
         }
     });
 
