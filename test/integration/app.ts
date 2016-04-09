@@ -2,7 +2,6 @@
 /// <reference path="../../typings/node/node.d.ts" />
 
 /// <CORE IMPORTS>
-import {Application} from "../../build/Application";
 import {ApplicationFactory, FactoryConfig} from "../../build/ApplicationFactory";
 
 /// <MODEL + CONTROLLER IMPORTS>

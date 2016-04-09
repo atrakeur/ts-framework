@@ -1,4 +1,3 @@
-import {path, _} from "./Global";
 import * as Express from "./Express";
 
 import {Model} from "./Model";
@@ -6,7 +5,6 @@ import {Reply} from "./Reply";
 import {Request} from "./Request";
 import {Response} from "./Response";
 import {IActionResult} from "./Result";
-import {Application} from "./Application";
 import {IConfigurable} from "./Configuration";
 
 export interface IFilterAction {

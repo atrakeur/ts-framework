@@ -1,5 +1,4 @@
 import {
-    IActionResult,
     RedirectResult, 
     ContentResult, 
     JsonResult, 

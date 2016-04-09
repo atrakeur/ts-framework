@@ -2,7 +2,6 @@ node_modules*
 test/
 src/
 Gruntfile.js
-TSFramework.ts
 .travis.yml
 appveyor.yml
 *.iml
