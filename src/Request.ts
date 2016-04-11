@@ -1,3 +1,3 @@
-import * as Express from "./Express";
+import * as Express from "express";
 
 export interface Request extends Express.Request {}

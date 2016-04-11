@@ -1,5 +1,7 @@
+/// <reference path="../typings/express/express.d.ts" />
+
 import {ICookieOption} from "./Cookie";
-import * as Express from "./Express";
+import * as Express from "express";
 
 export class Response {
     constructor(public express: Express.Response) {}
