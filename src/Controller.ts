@@ -1,4 +1,4 @@
-import * as Express from "./Express";
+import * as Express from "express";
 
 import {Model} from "./Model";
 import {Reply} from "./Reply";

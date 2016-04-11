@@ -1,8 +1,10 @@
 /// <reference path="../typings/node/node.d.ts" />
 /// <reference path="../typings/waterline.d.ts" />
+/// <reference path="../typings/express/express.d.ts" />
+
 
 import {path, fs, extend, _} from "./Global";
-import * as Express from "./Express";
+import * as Express from "express";
 
 import {Reply} from "./Reply";
 import {Response} from "./Response";
