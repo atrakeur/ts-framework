@@ -16,9 +16,7 @@ module.exports = function (grunt) {
                     module: 'commonjs',
                     sourceMap: false,
                     declaration: true,
-                    removeComments: true,
-                    htmlModuleTemplate: '<%= filename %>',
-                    htmlVarTemplate: '<%= ext %>'
+                    removeComments: true
                 }
             },
             build_test: {
@@ -29,9 +27,7 @@ module.exports = function (grunt) {
                     module: 'commonjs',
                     sourceMap: false,
                     declaration: true,
-                    removeComments: true,
-                    htmlModuleTemplate: '<%= filename %>',
-                    htmlVarTemplate: '<%= ext %>'
+                    removeComments: true
                 },
                 watch: ['src/**/*', 'test/**/*']
             }

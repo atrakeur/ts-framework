@@ -19,4 +19,4 @@ var app = ApplicationFactory.create(__ROOT_DIR__, new FactoryConfig("/app.json")
 // Start the application
 app.addModels(Models);
 app.addControllers(Controllers);
-app.start(); 
+app.start();
