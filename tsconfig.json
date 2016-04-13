@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "sourceMap": true,
+        "declaration": true,
+        "removeComments": true,
+        "outDir": "src/ts-framework-build/"
+    },
+    "exclude": [
+        "src/ts-framework-build",
+        "node_modules",
+        "typings",
+        "typings/main",
+        "typings/main.d.ts",
+        "typings/browser",
+        "typings/browser.d.ts"
+    ]
+}
