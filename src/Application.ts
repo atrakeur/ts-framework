@@ -246,7 +246,7 @@ export class Application {
 
     private route(route: Route) {
         var action = (req: Express.Request, res: Express.Response, next: Function) => {
-            res.header('X-Powered-By', 'TypeFramework');
+            res.header('X-Powered-By', 'TSFramework');
 
             var controllerName = req.params.controller || route.defaults.controller;
             if (!controllerName) {
