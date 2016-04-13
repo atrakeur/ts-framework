@@ -6,7 +6,7 @@ export class Configuration {
     constructor(private appRoot: string) {}
 
     addJson(filePath: string) {
-        filePath = path.join(this.appRoot, filePath);
+        // filePath = path.join(this.appRoot, filePath);
         if (!fs.existsSync(filePath)) {
             console.log('Config ' + filePath + ' does not exist!');
             return;
