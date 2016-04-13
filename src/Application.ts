@@ -48,16 +48,16 @@ export class Application {
      * @param {Controller} controller
      * @returns {void}
      */
-    public addController(name : string, controller: Controller) 
+    public addController(name: string, controller: Controller)
     {
         if (controller.hasOwnProperty('configure') && typeof(controller.configure) === "function") {
             controller.configure();
         }
-
-        var info = new ControllerInfo(controller, new Declaration(this.root + "/app/controllers/" + name + ".d.ts"));
-        this.controllers.push(info);
+        //
+        // var info = new ControllerInfo(controller, new Declaration(this.root + "/app/controllers/" + name + ".d.ts"));
+        // this.controllers.push(info);
     }
-    
+
     /**
      * Add multiple controllers to the models array
      * Usually passed in during configuration in 'app.ts'
@@ -83,9 +83,9 @@ export class Application {
         if (model.hasOwnProperty('configure') && typeof(model.configure) === "function") {
             model.configure();
         }
-        
-        var info = new ModelInfo(model, new Declaration(this.root + "/app/models/" + name + ".d.ts"));
-        this.models.push(info);
+        //
+        // var info = new ModelInfo(model, new Declaration(this.root + "/app/models/" + name + ".d.ts"));
+        // this.models.push(info);
     }
     
     /**
@@ -110,7 +110,7 @@ export class Application {
     public start() : void 
     {
         this.buildExpress();
-        this.buildCollections();
+        //this.buildCollections(); //
         this.buildRoutes();
 
         var port = this.config.get('port');
@@ -215,14 +215,14 @@ export class Application {
         else
             this.express.use((error: Error, req: Express.Request, res: Express.Response, next) => {
                 fs.readFile(__dirname + '/../views/500.html', { encoding: 'utf8' }, (err, data) => {
-                    if (err) res.send(500, 'Server Error');
+                    if (err) res.status(500).send('Server Error');
                     else if (this.config.get('env') == 'development')
-                        res.send(500, data
+                        res.status(500).send(data
                             .replace(/{{name}}/g, error.name)
                             .replace('{{message}}', error.message)
                             .replace('{{stack}}', error['stack']));
                     else
-                        res.send(500, data
+                        res.status(500).send(data
                             .replace(/{{name}}/g, 'Server Error')
                             .replace('{{message}}', 'The server has encountered an internal error.')
                             .replace('{{stack}}', ''));
@@ -238,8 +238,8 @@ export class Application {
         else
             this.express.use((req: Express.Request, res: Express.Response) => {
                 fs.readFile(__dirname + '/../views/404.html', { encoding: 'utf8' }, (err, data) => {
-                    if (err) res.send(404, 'Not found');
-                    else res.send(404, data);
+                    if (err) res.status(404).send('Not found');
+                    else res.status(404).send(data);
                 });
             });
     }
