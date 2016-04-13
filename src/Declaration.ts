@@ -1,5 +1,12 @@
 import {fs, _} from "./Global";
 
+/**
+ * Declaration item describing a class or interface
+ * Used in:
+ *  - Declaration
+ *  - ControllerInfo
+ *  - ModelInfo
+ */
 export interface DeclarationItem {
     type: string
     name?: string
@@ -11,9 +18,15 @@ export interface DeclarationItem {
     members?: DeclarationItem[];
 }
 
+/**
+ * @todo JISON removal: Declaration class must be fully refactored/removed
+ */
 export class Declaration {
+
+    /** @todo JISON removal: Declaration~items only used in Declaration#constructor and Declaration#getClass */
     private items: DeclarationItem[];
 
+    /** @todo JISON removal: Declaration#constructor() used in 'Application.ts" */
     constructor(declarationPath: string) {
         var jison: any = require('jison');
         var typescript = fs.readFileSync(__dirname + '/../jison/typescript.jison', { encoding: 'utf8' });
@@ -21,24 +34,30 @@ export class Declaration {
         this.items = new jison.Parser(typescript).parse(declaration);
     }
 
+    /** @todo JISON removal: Declaration#getClass() not used publicly */
     public getClass(name: string) 
     {
         return this.getItem('class', name, this.items);
     }
 
-    private getItem(type: string, name: string, items: DeclarationItem[]) {
+    /** @todo JISON removal: Declaration~getItem() only used in Declaration#getClass and itself */
+    private getItem(type: string, name: string, items: DeclarationItem[])
+    {
         var items = _.filter<DeclarationItem>(items, (item: DeclarationItem) => item.type == type);
         var item = _.find<DeclarationItem>(items, (item: DeclarationItem) => item.name == name);
         return item || _.find<DeclarationItem>(items, (item: DeclarationItem) => this.getItem(type, name, item.members) )
     }
 }
 
-export class VariableInfo {
+/** @todo JISON removal: VariableInfo used in: MemberInfo, ControllerInfo, ModelInfo */
+export class VariableInfo
+{
     name: string;
     type: string;
     optional: boolean = false;
 }
 
+/** @todo JISON removal: MemberInfo used in: Application#buildCollections(), ControllerInfo, ModelInfo */
 export class MemberInfo extends VariableInfo {
     keywords: string[] = [];
     parameters: VariableInfo[] = [];
@@ -47,6 +66,7 @@ export class MemberInfo extends VariableInfo {
     }
 }
 
+/** @todo JISON removal: ControllerInfo used in: Application~controllers, Application#addController(), Application~route() */
 export class ControllerInfo {
     name: string;
     className: string;
@@ -55,6 +75,8 @@ export class ControllerInfo {
     baseClassName: string;
     actions: MemberInfo[];
 
+
+    /** @todo JISON removal: ControllerInfo#constructor() used in Application#addController(), Application~route() */
     constructor(public type: any, declaration: Declaration) {
         this.className = type.prototype.constructor.name;
         this.name = this.className.replace('Controller', '').toLowerCase();
@@ -121,16 +143,19 @@ export class ControllerInfo {
         }
     }
 
+    /** @todo JISON removal: Declaration#getAction() used in Application~route() */
     getAction(name: string): MemberInfo {
         return _.find(this.actions, (x: MemberInfo) => x.name == name);
     }
 }
 
+/** @todo JISON removal: ModelInfo used in Application~models, Application#addModel, Application~buildCollections() */
 export class ModelInfo {
     name: string;
     baseClassName: string;
     properties: MemberInfo[];
 
+    /** @todo JISON removal: ModelInfo#contructor() used in Application#addModel() */
     constructor(public type: any, declaration: Declaration) {
         this.name = type.prototype.constructor.name;
 
