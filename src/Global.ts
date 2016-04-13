@@ -1,6 +1,6 @@
 /// <reference path="../typings/lodash/lodash.d.ts" />
 
-export const _ = <_.LoDashStatic> require('lodash');
+export const _ = <_.LoDashStatic>require('lodash');
 export const fs = require('fs');
 export const path = require('path');
 export const deprecate: (message: string) => void = require('depd')('ts-framework');
