@@ -1,19 +1,69 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Not Found</title>
-    <style type="text/css">
-        body { margin: 0; font-family: Monaco, monospace, serif }
-        header { padding: 10px 20px; background: #FAF1D9; border-bottom: 2px solid #999 }
-        header h1 { font-size: 30px; line-height: 24px }
-        p { font-size: 14px }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Not Found</h1>
-        <p>The requested URL was not found on this server.</p>
-    </header>
-</body>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>404 - Not Found</title>
+        <style type="text/css">
+            body {
+                font-family: 'Open Sans', sans-serif;
+                text-align: center;
+                font-weight: 400;
+                margin: 0;
+                color: #333;
+            }
+            a,
+            a:visited {
+                color: #1E90FF;
+            }
+            header {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            header h1 {
+                width: 100%;
+                font-weight: 800;
+                font-size: 20rem;
+                margin: 0;
+                margin-top: -125px;
+            }
+            header p {
+                display: block;
+                width: 100%;
+                border-top: 1px solid #ddd;
+                padding-top: 25px;
+                margin-top: -60px;
+            }
+            footer {
+                position: absolute;
+                font-size: small;
+                bottom: 0;
+                width: 100%;
+                margin: 0;
+                color: #999;
+            }
+            footer a {
+                color: #59ADFF;
+            }
+        </style>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <header>
+            <section>
+                <h1>404</h1>
+                <p>
+                    The page you were looking for doesn't exist :( <br />
+                    To go home, click <a href="/">here</a>!
+                </p>
+            </section>
+        </header>
+
+        <footer>
+            <p>Powered by <a href="https://github.com/tsframework">TS-Framework</a></p>
+        </footer>
+    </body>
 </html>
