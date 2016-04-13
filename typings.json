@@ -1,0 +1,8 @@
+{
+  "name": "ts-framework",
+  "version": false,
+  "dependencies": {},
+  "ambientDependencies": {
+    "express": "registry:dt/express#4.0.0+20160317120654"
+  }
+}
