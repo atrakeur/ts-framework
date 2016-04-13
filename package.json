@@ -15,7 +15,7 @@
     "app",
     "api"
   ],
-  "main": "./src/ts-framework-build/TS-Framework.js",
+  "main": "./src/ts-framework-build/TS-Framework.d.ts",
   "scripts": {
     "prepublish": "npm prune",
     "start": "grunt",
