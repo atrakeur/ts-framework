@@ -1,6 +1,4 @@
-export interface INoResultCallback<T> { (err: Error); }
-export interface ISingleResultCallback<T> { (err: Error, model: T); }
-export interface IMultipleResultCallback<T> { (err: Error, models: T[]); }
+import { IMultipleResultCallback, ISingleResultCallback, INoResultCallback } from "./Http"
 
 /**
  * TS-Framework DatabaseDriver
@@ -92,4 +90,97 @@ export interface IDatabaseDriver<T> {
      * @return IDatabaseDriver<T>
     */
     done(callback: IMultipleResultCallback<T>)
+}
+
+//----------------------------------------------------------------------------------
+
+/**
+ * TS-Framework DatabaseDriver
+ * Contains method for oparation with WL Query
+ * @parameter T
+ */
+
+//needs to refactor class name !!!
+export class DatabaseDriverEnd<T> implements DatabaseDriverEnd<T> { 
+       
+   /**
+     * Register query method WHERE
+     * @param {} query
+     * @return IDatabaseDriver<T>
+    */
+    public done(callback: IMultipleResultCallback<T>) {
+        
+    }
+}
+
+export interface IDatabaseDriverEnd<T> {
+    
+     /**
+     * Register query method WHERE
+     * @param {} query
+     * @return IDatabaseDriver<T>
+    */
+    done(callback: IMultipleResultCallback<T>);     
+}
+
+//----------------------------------------------------------------------------------
+
+/**
+ * TS-Framework DatabaseDriverUnique
+ * Contains method for oparation with WL Query
+ * @parameter T
+ */
+
+//needs to refactor class name !!!
+export class DatabaseDriverUnique<T> implements DatabaseDriverUnique<T> { 
+       
+   /**
+     * Register query method WHERE
+     * @param {} query
+     * @return IDatabaseDriver<T>
+    */
+    public done(callback: ISingleResultCallback<T>) {
+        
+    }
+}
+
+export interface IDatabaseDriverUnique<T> {
+    
+     /**
+     * Register query method WHERE
+     * @param {} query
+     * @return IDatabaseDriver<T>
+    */
+    done(callback: ISingleResultCallback<T>);     
+}
+
+//----------------------------------------------------------------------------------
+
+/**
+ * TS-Framework DatabaseDriverUnique
+ * Contains method for oparation with WL Query
+ * @parameter T
+ */
+
+//needs to refactor class name !!!
+export class DatabaseDriverRaw<T> implements IDatabaseDriverRaw<T> { 
+       
+   /**
+     * Register query method WHERE
+     * @param {} query
+     * @return IDatabaseDriver<T>
+    */
+    public done(callback: ISingleResultCallback<T>) {
+        
+    }
+}
+
+export interface IDatabaseDriverRaw<T> {
+    
+     /**
+     * Register query method WHERE
+     * @param {} query
+     * @return IDatabaseDriver<T>
+    */
+    done(callback: ISingleResultCallback<T>);     
 }
