@@ -9,22 +9,22 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         ts: {
             build: {
-                src: ["src/*.ts"],
-                outDir: "build/",
+                src: ["src/ts-framework/*.ts"],
+                outDir: "src/ts-framework-build/",
                 options: {
-                    target: 'es5',
-                    module: 'commonjs',
+                    target: "es5",
+                    module: "commonjs",
                     sourceMap: false,
                     declaration: true,
                     removeComments: true
                 }
             },
             build_test: {
-                src: ["test/integration/app.ts"],
-                outDir: "test/.integration-build/",
+                src: ["src/ts-framework/*.ts"],
+                outDir: "src/ts-framework-build/",
                 options: {
-                    target: 'es5',
-                    module: 'commonjs',
+                    target: "es5",
+                    module: "commonjs",
                     sourceMap: false,
                     declaration: true,
                     removeComments: true
@@ -38,5 +38,5 @@ module.exports = function (grunt) {
     grunt.registerTask('build_test', [ 'ts:build_test']);
 
     grunt.registerTask('default', [ 'build_framework' ]);
-    grunt.registerTask('test', [ 'build_framework', 'build_test' ]);
+    grunt.registerTask('test', [ 'build_test' ]);
 };
