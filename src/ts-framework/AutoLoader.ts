@@ -1,5 +1,6 @@
 /// <reference path="../../typings/main.d.ts" />
 
+import {Exception} from "./Exception";
 import * as fs from "fs";
 
 /**
@@ -41,4 +42,16 @@ export class AutoLoader
     }
 }
 
-export class AutoLoaderException implements Error {}
+/**
+ * Custom auto-loader exception
+ * @type {Exception}
+ */
+export class AutoLoaderException extends Exception
+{
+    public name = "AutoLoaderException";
+    
+    constructor (public message?: string)
+    {
+        super(message);
+    }
+}
