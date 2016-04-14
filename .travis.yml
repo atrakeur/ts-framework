@@ -8,3 +8,6 @@ branches:
     only:
         - master
         - development
+
+before_install:
+    - npm install -g typescript
