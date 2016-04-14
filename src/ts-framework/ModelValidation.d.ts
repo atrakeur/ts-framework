@@ -4,7 +4,7 @@
  * This class contains all available validators
  */
 
-export interface ModelValidation {
+export interface IModelValidation {
     type?: string;
     defaultsTo?: any;
     empty?: boolean;

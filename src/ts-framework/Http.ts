@@ -1,3 +1,20 @@
+/// <reference path="../../typings/main.d.ts" />
+
+import * as Express from "express";
+import { ICookieOption } from "./Cookie"; 
+
+export class Request {
+    //...   
+}
+
+export class Reply {
+    //...   
+}
+
+export class Response {
+  //..
+}
+
 /**
  * TS-Framework INoResultCallback<T>
  * Callback for no result
@@ -20,16 +37,4 @@ export interface ISingleResultCallback<T> {
  */
 export interface IMultipleResultCallback<T> { 
     (err: Error, models: T[]); 
-}
-
-export class Request {
-    //...   
-}
-
-export class Reply {
-    //...   
-}
-
-export class Response {
-    //...   
 }
