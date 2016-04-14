@@ -81,8 +81,8 @@ export class Application
     private static getRepositoryAddress()
     {
         let repo = require('root-require')('package.json').repository.url;
-            repo.replace("git://", "https://");
-            repo.replace(".git", "");
+            repo = repo.replace("git://", "https://");
+            repo = repo.replace(".git", "");
         return String(repo);
     }
 
