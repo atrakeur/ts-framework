@@ -41,8 +41,7 @@ export interface IModel<T> {
     
     /**
      * Model All
-     * @param {T} model
-     * @param {IDatabaseDriverEnd<T>} callback
+     * @param {IDatabaseDriverEnd} callback
      */   
     all<T>() : IDatabaseDriverEnd;
     
@@ -54,8 +53,8 @@ export interface IModel<T> {
     
     /**
      * Model Get
-     * @param {T} model
-     * @param {IDatabaseDriverUnique<T>} callback
+     * @param {number} id
+     * @return {IDatabaseDriverUnique<any>} callback
      */   
     get<T>(id: number) : IDatabaseDriverUnique<any>;
     

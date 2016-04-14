@@ -15,24 +15,27 @@ export class Controller {
     /**
      * Register filter before action
      * @param {IActionFilterContext} actionFilter
+     * @return IActionFilter
     */
-    public registerFilterBefore(actionFilter: IActionFilterContext) : IActionFilter {
+    public static registerFilterBefore(actionFilter: IActionFilterContext) : IActionFilter {
         return new ActionFilter();
     }
     
     /**
      * Register filter after action
      * @param {IActionFilterContext} actionFilter
+     * @return IActionFilter
     */
-    public registerFilterAfter(actionFilter: IActionFilterContext) : IActionFilter {
+    public static registerFilterAfter(actionFilter: IActionFilterContext) : IActionFilter {
         return new ActionFilter();
     }
     
     /**
      * Register filter action
      * @param {IActionFilterContext} actionFilter
+     * @return IActionFilter
     */
-    public registerFilter(actionFilter: IActionFilterContext) : IActionFilter {
+    public static registerFilter(actionFilter: IActionFilterContext) : IActionFilter {
         return new ActionFilter();
     }
 }
@@ -50,18 +53,18 @@ export class DataModelController extends Controller {
     public create() {
         
     }
-    
+
     /**
      * Update Object specificed with ID
-     * @param {string}
-    */
+     * @param {string} id
+     */
     public update(id: string) {
         
     }
     
     /**
      * Delete Object specificed with ID
-     * @param {string}
+     * @param {string} id
     */
     public delete(id: string) {
         
@@ -69,8 +72,8 @@ export class DataModelController extends Controller {
     
     /**
      * Create new Object
-     * @param {string}
-    */
+     * @param {string} id
+     */
     public find(id: string) {
         
     }
