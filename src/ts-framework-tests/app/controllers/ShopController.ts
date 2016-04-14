@@ -3,14 +3,14 @@ import {Request, Response} from "../../../ts-framework/Http";
 
 export class ShopController extends Controller
 {
-    // Path: /shop
-    @action index(req: Request, res: Response)
+    // GET: /shop
+    @action index()
     {
         // ...
     }
 
-    // Path: /shop/product
-    @action product(req: Request, res: Response)
+    // GET: /shop/product/:id
+    @action product(id: number)
     {
         // ...
     }

@@ -3,8 +3,8 @@ import {Request, Response} from "../../../ts-framework/Http";
 
 export class IndexController extends Controller
 {
-    // Path: /
-    @action index(req: Request, res: Response)
+    // GET: /
+    @action index()
     {
         // ...
     }

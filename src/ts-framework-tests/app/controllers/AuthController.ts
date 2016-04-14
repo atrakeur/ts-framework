@@ -3,20 +3,24 @@ import {Request, Response} from "../../../ts-framework/Http";
 
 export class AuthController extends Controller
 {
-    // Path /auth
-    @action index(req: Request, res: Response)
+    // GET: /auth
+    @action index()
     {
         // ...
     }
 
-    // Path /auth/login
-    @action login(req: Request, res: Response)
+    // POST: /auth/login
+    @action login(username: string, password: string)
     {
-        // ...
+        if (username === "foo" && password === "bar") {
+            this.response.redirect("/success");
+        } else {
+            this.response.redirect("/error");
+        }
     }
 
-    // Path /auth/logout
-    @action logout(req: Request, res: Response)
+    // POST: /auth/logout
+    @action logout(token: string)
     {
         // ...
     }
