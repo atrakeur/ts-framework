@@ -66,6 +66,16 @@ export class Application
     }
 
     /**
+     * Get the version specified in package.json
+     * @returns {string|number}
+     */
+    private static getVersion()
+    {
+        return require('root-require')('package.json').version
+    }
+
+
+    /**
      * Add or override a pre-defined route
      * @param {string} path
      * @param {string} action
@@ -88,11 +98,40 @@ export class Application
             port =  this.config.get("port") || Application.DEFAULT_PORT;
         }
 
+        // Build all dependencies
+        this.buildExpress();
+
         // Make express listen
         this.express.listen(port);
 
         // Display a start message
-        console.log("TS-Framework started");
+        this.printHeader();
+        console.log("TS-Framework (%s) starting..", Application.getVersion());
         console.log("Server listening on port: %d", port);
+    }
+
+    /**
+     * Build the express application
+     * @returns {void}
+     */
+    private buildExpress(): void
+    {
+        this.express = Express();
+    }
+
+    /**
+     * Prints out a pretty ASCII art header for the framework startup
+     * @returns {void}
+     */
+    private printHeader(): void
+    {
+        console.log("-----------------------------------------------------------------------------");
+        console.log("   ___________       ______                                             __   ");
+        console.log("  /_  __/ ___/      / ____/________ _____ ___  ___ _      ______  _____/ /__ ");
+        console.log("   / /  \\__ \\______/ /_  / ___/ __ `/ __ `__ \\/ _ \\ | /| / / __ \\/ ___/ //_/ ");
+        console.log("  / /  ___/ /_____/ __/ / /  / /_/ / / / / / /  __/ |/ |/ / /_/ / /  / ,<    ");
+        console.log(" /_/  /____/     /_/   /_/   \\__,_/_/ /_/ /_/\\___/|__/|__/\\____/_/  /_/|_|   ");
+        console.log("                                                                             ");
+        console.log("-----------------------------------------------------------------------------");
     }
 }
