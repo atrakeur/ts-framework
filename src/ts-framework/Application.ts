@@ -74,6 +74,17 @@ export class Application
         return require('root-require')('package.json').version
     }
 
+    /**
+     * Gets the URL of the GitHub repository that belongs to the application
+     * @returns {string}
+     */
+    private static getRepositoryAddress()
+    {
+        let repo = require('root-require')('package.json').repository.url;
+            repo.replace("git://", "https://");
+            repo.replace(".git", "");
+        return String(repo);
+    }
 
     /**
      * Add or override a pre-defined route
@@ -106,7 +117,7 @@ export class Application
 
         // Display a start message
         this.printHeader();
-        console.log("TS-Framework (%s) starting..", Application.getVersion());
+        console.log("");
         console.log("Server listening on port: %d", port);
     }
 
@@ -125,13 +136,15 @@ export class Application
      */
     private printHeader(): void
     {
-        console.log("-----------------------------------------------------------------------------");
-        console.log("   ___________       ______                                             __   ");
-        console.log("  /_  __/ ___/      / ____/________ _____ ___  ___ _      ______  _____/ /__ ");
+        console.log("-----------------------------------------------------------------------------     ");
+        console.log("   ___________       ______                                             __        ");
+        console.log("  /_  __/ ___/      / ____/________ _____ ___  ___ _      ______  _____/ /__      ");
         console.log("   / /  \\__ \\______/ /_  / ___/ __ `/ __ `__ \\/ _ \\ | /| / / __ \\/ ___/ //_/ ");
-        console.log("  / /  ___/ /_____/ __/ / /  / /_/ / / / / / /  __/ |/ |/ / /_/ / /  / ,<    ");
-        console.log(" /_/  /____/     /_/   /_/   \\__,_/_/ /_/ /_/\\___/|__/|__/\\____/_/  /_/|_|   ");
-        console.log("                                                                             ");
-        console.log("-----------------------------------------------------------------------------");
+        console.log("  / /  ___/ /_____/ __/ / /  / /_/ / / / / / /  __/ |/ |/ / /_/ / /  / ,<         ");
+        console.log(" /_/  /____/     /_/   /_/   \\__,_/_/ /_/ /_/\\___/|__/|__/\\____/_/  /_/|_|     ");
+        console.log("                                                                                  ");
+        console.log(" GitHub:  %s                                   ", Application.getRepositoryAddress());
+        console.log(" Version: %s                                             ", Application.getVersion());
+        console.log("-----------------------------------------------------------------------------     ");
     }
 }
