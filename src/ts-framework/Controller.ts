@@ -78,3 +78,20 @@ export class DataModelController extends Controller {
         
     }
 }
+
+/**
+ * Action decorator (no arguments)
+ * @param target
+ * @param propertyKey
+ * @param descriptor
+ * @returns {TypedPropertyDescriptor<any>}
+ * @decorator
+ */
+export function action(target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>)
+{
+    let originalMethod = descriptor.value; // save a reference to the original method
+
+    // @todo Allow for simple reading of the actions within the descriptor
+
+    return descriptor;
+}

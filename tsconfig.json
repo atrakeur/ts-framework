@@ -5,6 +5,7 @@
         "sourceMap": true,
         "declaration": true,
         "removeComments": true,
+        "experimentalDecorators": true,
         "outDir": "src/ts-framework-build/"
     },
     "exclude": [

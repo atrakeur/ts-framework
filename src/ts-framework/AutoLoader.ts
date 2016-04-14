@@ -49,7 +49,7 @@ export class AutoLoader
 export class AutoLoaderException extends Exception
 {
     public name = "AutoLoaderException";
-    
+
     constructor (public message?: string)
     {
         super(message);
