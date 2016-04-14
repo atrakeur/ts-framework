@@ -39,7 +39,20 @@ export class Request
 
 export class Response
 {
-    private response: Express.Response;
+    /**
+     * Constructor for Response
+     * @param {Express.Response} response
+     */
+    public constructor(private response: Express.Response) {}
+
+    /**
+     * Redirect a client to a given path/url
+     * @param {string} path
+     */
+    public redirect(path: string)
+    {
+        this.response.redirect(path);
+    }
 }
 
 /** @todo What's actually the difference between Response and Reply? The name states they basically do the same thing */

@@ -1,11 +1,25 @@
 import {ActionFilter, IActionFilter, IActionFilterContext} from "./ActionFilter";
+import {Request, Response} from "./Http";
 
 /**
  * TS-Framework application
  * Controller.ts - It can register filters and call Model db functions
  */
-export class Controller {
-    
+export class Controller
+{
+    /**
+     * The request made by the client
+     * @type {Request}
+     */
+    protected request: Request;
+
+    /**
+     * Response sent by the controller action
+     * @type {Response}
+     */
+    protected response: Response;
+
+
     /** 
      * Array IActionFilter
      * @type IActionFilter[]
@@ -17,7 +31,8 @@ export class Controller {
      * @param {IActionFilterContext} actionFilter
      * @return IActionFilter
     */
-    public static registerFilterBefore(actionFilter: IActionFilterContext) : IActionFilter {
+    public static registerFilterBefore(actionFilter: IActionFilterContext) : IActionFilter 
+    {
         return new ActionFilter();
     }
     
@@ -26,7 +41,8 @@ export class Controller {
      * @param {IActionFilterContext} actionFilter
      * @return IActionFilter
     */
-    public static registerFilterAfter(actionFilter: IActionFilterContext) : IActionFilter {
+    public static registerFilterAfter(actionFilter: IActionFilterContext) : IActionFilter 
+    {
         return new ActionFilter();
     }
     
@@ -35,7 +51,8 @@ export class Controller {
      * @param {IActionFilterContext} actionFilter
      * @return IActionFilter
     */
-    public static registerFilter(actionFilter: IActionFilterContext) : IActionFilter {
+    public static registerFilter(actionFilter: IActionFilterContext) : IActionFilter 
+    {
         return new ActionFilter();
     }
 }
@@ -45,37 +62,41 @@ export class Controller {
  * DataModelController.ts - Register methods for communication with ORM
  * extends Controller
  */
-export class DataModelController extends Controller {
-    
+export class DataModelController extends Controller
+{
     /**
      * Create new Object
-    */
-    public create() {
-        
+     */
+    public create()
+    {
+        // ...
     }
 
     /**
-     * Update Object specificed with ID
+     * Update Object specified with ID
      * @param {string} id
      */
-    public update(id: string) {
-        
+    public update(id: string)
+    {
+        // ...
     }
     
     /**
-     * Delete Object specificed with ID
+     * Delete Object specified with ID
      * @param {string} id
     */
-    public delete(id: string) {
-        
+    public delete(id: string)
+    {
+        // ...
     }
     
     /**
-     * Create new Object
+     * Find object by id
      * @param {string} id
      */
-    public find(id: string) {
-        
+    public find(id: string)
+    {
+        // ...
     }
 }
 
