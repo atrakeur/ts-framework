@@ -1,5 +1,6 @@
 /// <reference path="../../typings/main.d.ts" />
 
+import * as Express from "express";
 import {Configuration} from "./Configuration";
 import {Router} from "./Router";
 
@@ -47,7 +48,7 @@ export class Application
         this.router = new Router(rootDirectory);
 
         // Define default settings
-        this.config.set('env', this.getEnvironment());
+        this.config.set('env', Application.getEnvironment());
         this.config.set('port', Application.DEFAULT_PORT);
         this.config.set('static.path', 'public');
         this.config.set('view.path', 'app/views');
@@ -59,7 +60,7 @@ export class Application
      * Checks wether the project should run as development mode or production mode
      * @returns {string}
      */
-    private getEnvironment()
+    private static getEnvironment()
     {
         return ((process.env.NODE_ENV == null) ? 'development' : process.env.NODE_ENV);
     }

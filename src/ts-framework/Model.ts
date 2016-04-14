@@ -1,6 +1,6 @@
-import { IMultipleResultCallback, ISingleResultCallback, INoResultCallback } from "Http"
-Import {  IDatabaseDriver, IDatabaseDriverEnd, IDatabaseDriverUnique, IDatabaseDriverRaw} from "DatabaseDriver"
-import { IModelValidation } from "ModelValidation"
+import { IMultipleResultCallback, ISingleResultCallback, INoResultCallback } from "./Http";
+import { IDatabaseDriver, IDatabaseDriverEnd, IDatabaseDriverUnique, IDatabaseDriverRaw } from "./DatabaseDriver";
+import { IModelValidation } from "./ModelValidation";
 /**
  * TS-Framework application
  * This class contains definitons of methods for comunication with DatabaseDriver
@@ -89,15 +89,13 @@ export interface IModel<T> {
      * Model validate
      * @param {string[]} attrs
      * @param {IModelValidation} definition
-     */   
-    
+     */
     validate(attrs: string[], definition: IModelValidation);
     
     /**
      * Model validate
      * @param {any} obj
      * @param {IModelValidation} definition
-     */   
-    
+     */
     validate(obj: any, definition: IModelValidation);
 }

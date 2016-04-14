@@ -17,7 +17,6 @@ export class Controller {
      * @param {IActionFilterContext} actionFilter
     */
     public registerFilterBefore(actionFilter: IActionFilterContext) : IActionFilter {
-        //...
         return new ActionFilter();
     }
     
@@ -26,7 +25,6 @@ export class Controller {
      * @param {IActionFilterContext} actionFilter
     */
     public registerFilterAfter(actionFilter: IActionFilterContext) : IActionFilter {
-        //...
         return new ActionFilter();
     }
     
@@ -35,7 +33,6 @@ export class Controller {
      * @param {IActionFilterContext} actionFilter
     */
     public registerFilter(actionFilter: IActionFilterContext) : IActionFilter {
-        //...
         return new ActionFilter();
     }
 }
