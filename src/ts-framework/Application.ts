@@ -3,6 +3,7 @@
 import * as Express from "express";
 import {Configuration} from "./Configuration";
 import {Router} from "./Router";
+import {AutoLoader} from "./AutoLoader";
 
 /**
  * TS-Framework application
@@ -24,6 +25,12 @@ export class Application
     public router: Router;
 
     /**
+     * AutoLoader object
+     * @type {AutoLoader}
+     */
+    private loader: AutoLoader;
+
+    /**
      * Configuration object
      * @type {Configuration}
      */
@@ -43,6 +50,9 @@ export class Application
      */
     public constructor(private rootDirectory: string)
     {
+        // Print a pretty header
+        this.printHeader();
+
         // Initialize router and configuration manager
         this.config = new Configuration();
         this.router = new Router(rootDirectory);
@@ -87,17 +97,6 @@ export class Application
     }
 
     /**
-     * Add or override a pre-defined route
-     * @param {string} path
-     * @param {string} action
-     * @returns {void}
-     */
-    public addRoute(path: string, action: string)
-    {
-        // ...
-    }
-
-    /**
      * Registers all controllers and models accordingly, and starts the express server
      * @param {number|null} port
      * @returns {void}
@@ -110,15 +109,33 @@ export class Application
         }
 
         // Build all dependencies
+        this.loadRoutes();
         this.buildExpress();
 
         // Make express listen
         this.express.listen(port);
 
         // Display a start message
-        this.printHeader();
         console.log("");
         console.log("Server listening on port: %d", port);
+    }
+
+    private loadRoutes(): void
+    {
+        // Check if an auto-loader is defined
+        // If not, it will try to add models and controllers from the default routes
+        if (this.loader == null) {
+            this.loader = new AutoLoader();
+            this.loader.addDirectory(`${this.rootDirectory}/app/models/`);
+            this.loader.addDirectory(`${this.rootDirectory}/app/controllers/`);
+        }
+
+        this.loader.load();
+
+        let controllers = this.loader.getControllers();
+        let models = this.loader.getModels();
+
+        @todo Load models and controllers into the router
     }
 
     /**
