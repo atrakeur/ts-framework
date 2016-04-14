@@ -55,7 +55,7 @@ export class Application
 
         // Initialize router and configuration manager
         this.config = new Configuration();
-        this.router = new Router(rootDirectory);
+        this.router = new Router();
 
         // Define default settings
         this.config.set('env', Application.getEnvironment());
@@ -70,7 +70,7 @@ export class Application
      * Checks wether the project should run as development mode or production mode
      * @returns {string}
      */
-    private static getEnvironment()
+    public static getEnvironment()
     {
         return ((process.env.NODE_ENV == null) ? 'development' : process.env.NODE_ENV);
     }
@@ -109,8 +109,9 @@ export class Application
         }
 
         // Build all dependencies
-        this.loadRoutes();
-        this.buildExpress();
+        this.loadAutoLoader();
+        this.registerRoutes();
+        this.initializeExpress();
 
         // Make express listen
         this.express.listen(port);
@@ -120,7 +121,11 @@ export class Application
         console.log("Server listening on port: %d", port);
     }
 
-    private loadRoutes(): void
+    /**
+     * Loads all dependencies from the models and controllers directories
+     * @returns {void}
+     */
+    private loadAutoLoader(): void
     {
         // Check if an auto-loader is defined
         // If not, it will try to add models and controllers from the default routes
@@ -130,19 +135,24 @@ export class Application
             this.loader.addDirectory(`${this.rootDirectory}/app/controllers/`);
         }
 
+        // AutoLoad all models and controllers
         this.loader.load();
-
-        let controllers = this.loader.getControllers();
-        let models = this.loader.getModels();
-
-        //@todo Load models and controllers into the router
     }
 
     /**
-     * Build the express application
+     * Register all routes in the router
      * @returns {void}
      */
-    private buildExpress(): void
+    private registerRoutes(): void
+    {
+        this.router.registerRoutes( this.loader.getControllers() );
+    }
+
+    /**
+     * Initialize the express application
+     * @returns {void}
+     */
+    private initializeExpress(): void
     {
         this.express = Express();
     }
@@ -160,8 +170,21 @@ export class Application
         console.log("  / /  ___/ /_____/ __/ / /  / /_/ / / / / / /  __/ |/ |/ / /_/ / /  / ,<         ");
         console.log(" /_/  /____/     /_/   /_/   \\__,_/_/ /_/ /_/\\___/|__/|__/\\____/_/  /_/|_|     ");
         console.log("                                                                                  ");
-        console.log(" GitHub:  %s                                   ", Application.getRepositoryAddress());
-        console.log(" Version: %s                                             ", Application.getVersion());
+        console.log(" GitHub:  %s                                  ", Application.getRepositoryAddress());
+        console.log(" Version: %s                                            ", Application.getVersion());
         console.log("-----------------------------------------------------------------------------     ");
+    }
+}
+
+/**
+ * Debug method, wrapper for console.log() only when the application is in 'development' mode
+ * @param {any[]} args
+ * @private
+ */
+export function __DEBUG(...args: any[])
+{
+    if (Application.getEnvironment() === "development") {
+        args.unshift("[DEBUG]");
+        console.log.apply(null, args);
     }
 }

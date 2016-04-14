@@ -8,6 +8,12 @@ import {Request, Response} from "./Http";
 export class Controller
 {
     /**
+     * TypeScript won't recognise 'prototype' on classes
+     * This is a hack to get around it, don't ask me why.
+     */
+    public __proto__: any;
+
+    /**
      * The request made by the client
      * @type {Request}
      */
@@ -117,8 +123,5 @@ export type ControllerCollection = {[s: string]: Controller};
 export function action(target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>)
 {
     let originalMethod = descriptor.value; // save a reference to the original method
-
-    // @todo Allow for simple reading of the actions within the descriptor
-
     return descriptor;
 }

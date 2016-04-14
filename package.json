@@ -40,6 +40,7 @@
     "ejs": "~2.4.1",
     "express": "4.13.4",
     "express-ejs-layouts": "~2.1.0",
+    "get-parameter-names": "^0.3.0",
     "lodash": "~4.10.0",
     "method-override": "~2.3.5",
     "morgan": "~1.7.0",

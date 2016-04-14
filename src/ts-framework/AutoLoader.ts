@@ -5,6 +5,7 @@ import * as _ from "lodash";
 import {Exception} from "./Exception";
 import {Model, ModelCollection} from "./Model";
 import {Controller, ControllerCollection} from "./Controller";
+import {__DEBUG} from "./Application";
 
 /**
  * AutoLoader class
@@ -97,22 +98,22 @@ export class AutoLoader
             {
                 // The object in the module is a controller
                 if (module[name].prototype instanceof Controller) {
-                    console.log(`Loaded controller: ${file}`);
-                    let base = name.replace("Controller", "").toLowerCase();
-                    this.controllers[base] = new module[name];
+                    __DEBUG(`Loaded controller: ${file}`);
+                    let base = _.kebabCase(name.replace("Controller", ""));
+                    this.controllers[base] = new module[name]();
                     continue;
                 }
 
                 // The object in the module is a model
                 if (module[name].prototype instanceof Model) {
-                    console.log(`Loaded model: ${file}`);
-                    let base = name.replace("Model", "").toLowerCase();
-                    this.models[base] = new module[name];
+                    __DEBUG(`Loaded model: ${file}`);
+                    let base = _.kebabCase(name.replace("Model", ""));
+                    this.models[base] = new module[name]();
                     continue;
                 }
 
                 // Something is terribly wrong
-                console.warn(`Exported object '${name}' in '${file}' is neither a model nor a controller`);
+                __DEBUG(`Exported object '${name}' in '${file}' is neither a model nor a controller`);
             }
         }
     }
