@@ -37,7 +37,9 @@ And Voilà, your application has started. Visit [http://localhost:3000](http://l
 <a href="http://tsframework.github.io/documentation" target="_blank">TSFramework</a>
 
 ## Team
-TSFramework is actively built and maintained by [Jhon Mike](https://github.com/jhonmike)
+* [Jhon Mike](https://github.com/jhonmike)
+* [Luke Paris](https://github.com/Paradoxis)
+* [Petr Tomášek](https://github.com/petrck)
 
 ## License
 

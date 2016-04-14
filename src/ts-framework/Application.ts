@@ -1,5 +1,6 @@
 /// <reference path="../../typings/main.d.ts" />
 
+import * as Express from "express";
 import {Configuration} from "./Configuration";
 import {Router} from "./Router";
 
@@ -20,7 +21,7 @@ export class Application
      * Router object
      * @type {Router}
      */
-    private router: Router;
+    public router: Router;
 
     /**
      * Configuration object
@@ -47,7 +48,7 @@ export class Application
         this.router = new Router(rootDirectory);
 
         // Define default settings
-        this.config.set('env', this.getEnvironment());
+        this.config.set('env', Application.getEnvironment());
         this.config.set('port', Application.DEFAULT_PORT);
         this.config.set('static.path', 'public');
         this.config.set('view.path', 'app/views');
@@ -59,7 +60,7 @@ export class Application
      * Checks wether the project should run as development mode or production mode
      * @returns {string}
      */
-    private getEnvironment()
+    private static getEnvironment()
     {
         return ((process.env.NODE_ENV == null) ? 'development' : process.env.NODE_ENV);
     }
@@ -77,10 +78,21 @@ export class Application
 
     /**
      * Registers all controllers and models accordingly, and starts the express server
-     * @param {number} port
+     * @param {number|null} port
+     * @returns {void}
      */
-    public start(port: number)
+    public start(port: number = null): void
     {
-        // ...
+        // If no port was given, fetch from config or use the default port
+        if (port == null) {
+            port =  this.config.get("port") || Application.DEFAULT_PORT;
+        }
+
+        // Make express listen
+        this.express.listen(port);
+
+        // Display a start message
+        console.log("TS-Framework started");
+        console.log("Server listening on port: %d", port);
     }
 }

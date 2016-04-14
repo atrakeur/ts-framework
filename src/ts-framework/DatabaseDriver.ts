@@ -45,8 +45,7 @@ export class DatabaseDriver<T> implements IDatabaseDriver<T> {
     
    /**
      * Register query method WHERE
-     * @param {} query
-     * @return IDatabaseDriver<T>
+     * @param {IMultipleResultCallback<T>} callback
     */
     public done(callback: IMultipleResultCallback<T>) {
         
@@ -86,8 +85,7 @@ export interface IDatabaseDriver<T> {
     
    /**
      * Register query method WHERE
-     * @param {} query
-     * @return IDatabaseDriver<T>
+     * @param {IMultipleResultCallback<T>} callback
     */
     done(callback: IMultipleResultCallback<T>)
 }
@@ -105,8 +103,7 @@ export class DatabaseDriverEnd<T> implements DatabaseDriverEnd<T> {
        
    /**
      * Register query method WHERE
-     * @param {} query
-     * @return IDatabaseDriver<T>
+     * @param {IMultipleResultCallback<T>} callback
     */
     public done(callback: IMultipleResultCallback<T>) {
         
@@ -117,8 +114,7 @@ export interface IDatabaseDriverEnd<T> {
     
      /**
      * Register query method WHERE
-     * @param {} query
-     * @return IDatabaseDriver<T>
+     * @param {IMultipleResultCallback<T>} callback
     */
     done(callback: IMultipleResultCallback<T>);     
 }
@@ -136,8 +132,7 @@ export class DatabaseDriverUnique<T> implements DatabaseDriverUnique<T> {
        
    /**
      * Register query method WHERE
-     * @param {} query
-     * @return IDatabaseDriver<T>
+     * @param {ISingleResultCallback<T>} callback
     */
     public done(callback: ISingleResultCallback<T>) {
         
@@ -148,8 +143,7 @@ export interface IDatabaseDriverUnique<T> {
     
      /**
      * Register query method WHERE
-     * @param {} query
-     * @return IDatabaseDriver<T>
+     * @param {ISingleResultCallback<T>} callback
     */
     done(callback: ISingleResultCallback<T>);     
 }
@@ -167,8 +161,7 @@ export class DatabaseDriverRaw<T> implements IDatabaseDriverRaw<T> {
        
    /**
      * Register query method WHERE
-     * @param {} query
-     * @return IDatabaseDriver<T>
+     * @param {ISingleResultCallback<T>} callback
     */
     public done(callback: ISingleResultCallback<T>) {
         
@@ -179,8 +172,7 @@ export interface IDatabaseDriverRaw<T> {
     
      /**
      * Register query method WHERE
-     * @param {} query
-     * @return IDatabaseDriver<T>
+     * @param {ISingleResultCallback<T>} callback
     */
     done(callback: ISingleResultCallback<T>);     
 }

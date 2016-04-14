@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 
 import { IMultipleResultCallback, ISingleResultCallback, INoResultCallback } from "./Http";
 import { IDatabaseDriver, IDatabaseDriverEnd, IDatabaseDriverUnique, IDatabaseDriverRaw} from "./DatabaseDriver";
+=======
+import { IMultipleResultCallback, ISingleResultCallback, INoResultCallback } from "./Http";
+import { IDatabaseDriver, IDatabaseDriverEnd, IDatabaseDriverUnique, IDatabaseDriverRaw } from "./DatabaseDriver";
+>>>>>>> 0ec4387b558e8f09db772e067daac29db77d93a3
 import { IModelValidation } from "./ModelValidation";
 
 /**
@@ -139,8 +144,7 @@ export interface IModel {
     
     /**
      * Model All
-     * @param {T} model
-     * @param {IDatabaseDriverEnd<T>} callback
+     * @param {IDatabaseDriverEnd} callback
      */   
      all<T>() : IDatabaseDriverEnd<T>;
     
@@ -152,8 +156,8 @@ export interface IModel {
     
     /**
      * Model Get
-     * @param {T} model
-     * @param {IDatabaseDriverUnique<T>} callback
+     * @param {number} id
+     * @return {IDatabaseDriverUnique<any>} callback
      */   
      get(id: number) : IDatabaseDriverUnique<any>;
     
@@ -187,15 +191,19 @@ export interface IModel {
      * Model validate
      * @param {string[]} attrs
      * @param {IModelValidation} definition
+<<<<<<< HEAD
      */   
     
      validate(attrs: string[], definition: IModelValidation);
+=======
+     */
+    validate(attrs: string[], definition: IModelValidation);
+>>>>>>> 0ec4387b558e8f09db772e067daac29db77d93a3
     
     /**
      * Model validate
      * @param {any} obj
      * @param {IModelValidation} definition
-     */   
-    
+     */
     validate(obj: any, definition: IModelValidation);
 }
