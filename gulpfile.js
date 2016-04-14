@@ -14,16 +14,17 @@ gulp.task('default', function () {
     ]);
 });
 
-// gulp.task('test', ['default'], function () {
-//     var tsResult = gulp.src('src/ts-framework-test/*.ts')
-//         .pipe(ts(tsProject));
-//
-//     return merge([
-//         tsResult.dts.pipe(gulp.dest('src/ts-framework-test')),
-//         tsResult.js.pipe(gulp.dest('src/ts-framework-test'))
-//     ]);
-// });
+gulp.task('test', ['default'], function () {
+    var tsResult = gulp.src('src/ts-framework-tests/**/*.ts')
+        .pipe(ts(tsProject));
+
+    return merge([
+        tsResult.dts.pipe(gulp.dest('src/ts-framework-build/ts-framework-tests')),
+        tsResult.js.pipe(gulp.dest('src/ts-framework-build/ts-framework-tests'))
+    ]);
+});
 
 gulp.task('watch', ['default'], function() {
     gulp.watch('src/ts-framework/*.ts', ['default']);
+    gulp.watch('src/ts-framework-tests/**/*.ts', ['test']);
 });

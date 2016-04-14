@@ -135,7 +135,7 @@ export class Application
         let controllers = this.loader.getControllers();
         let models = this.loader.getModels();
 
-        @todo Load models and controllers into the router
+        //@todo Load models and controllers into the router
     }
 
     /**
