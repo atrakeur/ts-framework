@@ -24,7 +24,7 @@ export class AutoLoader
     public addDirectory(directory: string): void
     {
         if (fs.existsSync(directory)) {
-
+            this.directories.push(directory);
         } else {
             throw new AutoLoaderException(`Directory '${directory}' does not exist!`);
         }

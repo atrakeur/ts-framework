@@ -1,6 +1,7 @@
 import { IMultipleResultCallback, ISingleResultCallback, INoResultCallback } from "./Http";
 import { IDatabaseDriver, IDatabaseDriverEnd, IDatabaseDriverUnique, IDatabaseDriverRaw } from "./DatabaseDriver";
 import { IModelValidation } from "./ModelValidation";
+
 /**
  * TS-Framework application
  * This class contains definitons of methods for comunication with DatabaseDriver
