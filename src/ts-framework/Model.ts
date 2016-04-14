@@ -1,32 +1,134 @@
+<<<<<<< HEAD
+
+import { IMultipleResultCallback, ISingleResultCallback, INoResultCallback } from "./Http";
+import { IDatabaseDriver, IDatabaseDriverEnd, IDatabaseDriverUnique, IDatabaseDriverRaw} from "./DatabaseDriver";
+=======
 import { IMultipleResultCallback, ISingleResultCallback, INoResultCallback } from "./Http";
 import { IDatabaseDriver, IDatabaseDriverEnd, IDatabaseDriverUnique, IDatabaseDriverRaw } from "./DatabaseDriver";
+>>>>>>> 0ec4387b558e8f09db772e067daac29db77d93a3
 import { IModelValidation } from "./ModelValidation";
 
 /**
- * TS-Framework application
+ * TS-Framework Model
  * This class contains definitons of methods for comunication with DatabaseDriver
  */
 
-export interface IModel<T> {
+export class Model<T> {
  
     /**
      * WL collection     
      */   
-    private collection: WL.Collection;
+    private collection: T[];
  
      /**
      * Save flag
      * @param {ISingleResultCallback<T>} callback
      */   
-    save:<T> (callback: ISingleResultCallback<T>) => void;
+    //save:<T> (callback: ISingleResultCallback<T>) => void;
  
     /**
      * Destroy flag
      * @param {INoResultCallback<T>} callback
      */   
-    destroy:<T> (callback: INoResultCallback<T>) => void;
+    //destroy:<T> (callback: INoResultCallback<T>) => void;
  
     /**
+     * Model Save
+     * @param {T} model
+     * @param {ISingleResultCallback<T>} callback
+     */   
+    public save<T>(model: T, callback: ISingleResultCallback<T>) {
+        //...
+    }
+    
+    /**
+     * Model Sestroy
+     * @param {T} model
+     * @param {INoResultCallback<T>} callback
+     */   
+    public destroy<T>(model: T, callback: INoResultCallback<T>) {
+        //...
+    }
+    
+    /**
+     * Model All
+     * @param {T} model
+     * @param {IDatabaseDriverEnd<T>} callback
+     */   
+    public all<T>() : IDatabaseDriverEnd<T> {
+        return null;
+    }
+    
+    /**
+     * Model Where
+     * @param {} query
+     */   
+    public where(query: {}) {
+        //...;
+    }
+    
+    /**
+     * Model Get
+     * @param {T} model
+     * @param {IDatabaseDriverUnique<T>} callback
+     */   
+    public get(id: number) : IDatabaseDriverUnique<any> {
+        return null;
+    }
+    
+    /**
+     * Model First
+     * @param {number} id
+     * @return {IDatabaseDriverUnique<T>} callback
+     */   
+    public first<T>(id: number) : IDatabaseDriverUnique<T> {
+        return null;
+    }
+    
+    /**
+     * Model Find
+     */   
+    public find<T>() : IDatabaseDriver<T> {
+        return null;
+    }
+    
+    /**
+     * Model Query
+     * @param {number} id
+     * @return {IDatabaseDriverRaw<T>}
+     */   
+    public query<T>(id: number) : IDatabaseDriverRaw<T> {
+        return null;
+    }
+    
+    /**
+     * Model validate
+     * @param {string} attr
+     * @param {IModelValidation} options
+     */   
+    public validate(attr: string, options: IModelValidation);
+    
+    /**
+     * Model validate
+     * @param {string[]} attrs
+     * @param {IModelValidation} definition
+     */   
+    
+    public validate(attrs: string[], definition: IModelValidation);
+    
+    /**
+     * Model validate
+     * @param {any} obj
+     * @param {IModelValidation} definition
+     */   
+    
+    public validate(obj: any, definition: IModelValidation) {
+        //...
+    }
+}
+
+export interface IModel {
+      /**
      * Model Save
      * @param {T} model
      * @param {ISingleResultCallback<T>} callback
@@ -38,59 +140,65 @@ export interface IModel<T> {
      * @param {T} model
      * @param {INoResultCallback<T>} callback
      */   
-    destroy<T>(model: T, callback: INoResultCallback<T>);
+     destroy<T>(model: T, callback: INoResultCallback<T>);
     
     /**
      * Model All
      * @param {IDatabaseDriverEnd} callback
      */   
-    all<T>() : IDatabaseDriverEnd;
+     all<T>() : IDatabaseDriverEnd<T>;
     
     /**
      * Model Where
      * @param {} query
      */   
-    where<T>(query: {});
+     where(query: {});
     
     /**
      * Model Get
      * @param {number} id
      * @return {IDatabaseDriverUnique<any>} callback
      */   
-    get<T>(id: number) : IDatabaseDriverUnique<any>;
+     get(id: number) : IDatabaseDriverUnique<any>;
     
     /**
      * Model First
      * @param {number} id
      * @return {IDatabaseDriverUnique<T>} callback
      */   
-    first<T>(id: number) : IDatabaseDriverUnique<T>;
+     first<T>(id: number) : IDatabaseDriverUnique<T>;
     
     /**
      * Model Find
      */   
-    find<T>() : IDatabaseDriver<T>;
+     find<T>() : IDatabaseDriver<T>;
     
     /**
      * Model Query
      * @param {number} id
      * @return {IDatabaseDriverRaw<T>}
      */   
-    query<T>(id: number) : IDatabaseDriverRaw<T>;
+     query<T>(id: number) : IDatabaseDriverRaw<T>;
     
     /**
      * Model validate
      * @param {string} attr
      * @param {IModelValidation} options
      */   
-    validate(attr: string, options: IModelValidation);
+     validate(attr: string, options: IModelValidation);
     
     /**
      * Model validate
      * @param {string[]} attrs
      * @param {IModelValidation} definition
+<<<<<<< HEAD
+     */   
+    
+     validate(attrs: string[], definition: IModelValidation);
+=======
      */
     validate(attrs: string[], definition: IModelValidation);
+>>>>>>> 0ec4387b558e8f09db772e067daac29db77d93a3
     
     /**
      * Model validate
