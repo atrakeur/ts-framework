@@ -22,8 +22,9 @@
   "main": "./src/ts-framework-build/TS-Framework.d.ts",
   "scripts": {
     "prepublish": "npm prune",
-    "start": "gulp",
-    "pretest": "gulp test"
+    "start": "tsc -w",
+    "pretest": "tsc",
+    "test": "node src/ts-framework-build/ts-framework-tests/app.js"
   },
   "repository": {
     "type": "git",
@@ -48,9 +49,6 @@
     "waterline": "0.12.1"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-typescript": "^2.13.0",
-    "merge2": "^1.0.2",
     "request": "~2.71.0",
     "should": "~8.3.0"
   },
