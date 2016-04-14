@@ -7,8 +7,8 @@ import { IModelValidation } from "./ModelValidation";
  * This class contains definitons of methods for comunication with DatabaseDriver
  */
 
-export class Model<T> {
- 
+export class Model<T>
+{
     /**
      * WL collection     
      */   
@@ -195,3 +195,10 @@ export interface IModel {
      */
     validate(obj: any, definition: IModelValidation);
 }
+
+
+/**
+ * Collection of controllers
+ * @format string -> controller
+ */
+export type ModelCollection = {[s: string]: Model<any>};

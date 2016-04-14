@@ -101,6 +101,12 @@ export class DataModelController extends Controller
 }
 
 /**
+ * Collection of controllers
+ * @format string -> controller
+ */
+export type ControllerCollection = {[s: string]: Controller};
+
+/**
  * Action decorator (no arguments)
  * @param target
  * @param propertyKey
