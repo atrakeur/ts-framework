@@ -21,7 +21,7 @@ export class Application
      * Router object
      * @type {Router}
      */
-    private router: Router;
+    public router: Router;
 
     /**
      * Configuration object
@@ -78,10 +78,21 @@ export class Application
 
     /**
      * Registers all controllers and models accordingly, and starts the express server
-     * @param {number} port
+     * @param {number|null} port
+     * @returns {void}
      */
-    public start(port: number)
+    public start(port: number = null): void
     {
-        // ...
+        // If no port was given, fetch from config or use the default port
+        if (port == null) {
+            port =  this.config.get("port") || Application.DEFAULT_PORT;
+        }
+
+        // Make express listen
+        this.express.listen(port);
+
+        // Display a start message
+        console.log("TS-Framework started");
+        console.log("Server listening on port: %d", port);
     }
 }
