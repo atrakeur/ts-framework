@@ -47,17 +47,18 @@ export class Response
 {
     /**
      * Constructor for Response
-     * @param {Express.Response} response
+     * @param {Express.Response} rawResponse
      */
-    public constructor(public express: Express.Response) {}
+    public constructor(private rawResponse: Express.Response) {}
 
     /**
      * Constructor for Response
      * @param {number} code
-     * @return {Express.Response}
+     * @return {Response}
      */
-    public setStatus(code: number): Response {
-        this.express.status(code);
+    public setStatus(code: number): Response
+    {
+        this.rawResponse.status(code);
         return this;
     }
 
@@ -65,28 +66,31 @@ export class Response
      * Get Response status     
      * @return {number}
      */
-    public getStatus(): number {
-        return this.express.statusCode;
+    public getStatus(): number
+    {
+        return this.rawResponse.statusCode;
     }
 
     /**
      * Set Response header
-     * @param {string} filed
+     * @param {string} field
      * @param {string} value
-     * @return {Express.Response}
+     * @return {Response}
      */
-    public setHeader(field: string, value: string): Response {
-        this.express.header(field, value);
+    public setHeader(field: string, value: string): Response
+    {
+        this.rawResponse.header(field, value);
         return this;
     }
 
     /**
      * Get Response header
-     * @param {string} filed     
+     * @param {string} field
      * @return {string}
      */
-    public getHeader(field: string): string {
-        return this.express.get(field);
+    public getHeader(field: string): string
+    {
+        return this.rawResponse.get(field);
     }
 
     /**
@@ -96,8 +100,9 @@ export class Response
      * @param {ICookieOption?} options     
      * @return {Response}
      */
-    public setCookie(name: string, value: string, options?: ICookieOption): Response {
-        this.express.cookie(name, value, options);
+    public setCookie(name: string, value: string, options?: ICookieOption): Response
+    {
+        this.rawResponse.cookie(name, value, options);
         return this;
     }
 
@@ -107,8 +112,9 @@ export class Response
      * @param {string} path     
      * @return {Response}
      */
-    public removeCookie(name: string, path: string = '/'): Response {
-        this.express.clearCookie(name, { path: path });
+    public removeCookie(name: string, path: string = '/'): Response
+    {
+        this.rawResponse.clearCookie(name, { path: path });
         return this;
     }
     
@@ -117,18 +123,20 @@ export class Response
      * @param {string} value          
      * @return {Response}
      */
-    public setContentType(value: string): Response {
-        this.express.type(value);
+    public setContentType(value: string): Response
+    {
+        this.rawResponse.type(value);
         return this;
     }
 
     /**
      * Set Response Links
-     * @param {} value          
+     * @param {Object} links
      * @return {Response}
      */
-    public setLinks(links: {}): Response {
-        this.express.links(links);
+    public setLinks(links: {}): Response
+    {
+        this.rawResponse.links(links);
         return this;
     }
 
@@ -138,8 +146,9 @@ export class Response
      * @param {any} value          
      * @return {Response}
      */
-    public setLocal(name: string, value: any): Response {
-        this.express.locals[name] = value;
+    public setLocal(name: string, value: any): Response
+    {
+        this.rawResponse.locals[name] = value;
         return this;
     }
 
@@ -148,7 +157,86 @@ export class Response
      * @param {any} name          
      * @return {Response}
      */
-    public getLocal(name: string): any {
-        return this.express.locals[name];
+    public getLocal(name: string): any
+    {
+        return this.rawResponse.locals[name];
+    }
+
+    /**
+     * Wrapper for the Express.Request#send() method
+     * @param {string} content
+     * @returns {Response}
+     */
+    public sendContent(content: string): Response
+    {
+        this.rawResponse.send(content);
+        return this;
+    }
+
+    /**
+     * Send a response of serialized JSON data
+     * @param {any} content
+     * @returns {Response}
+     */
+    public sendJson(content: any): Response
+    {
+        this.rawResponse.json(content);
+        return this;
+    }
+
+    /**
+     * Read a file and send it to the client
+     * @param {string} path
+     * @returns {Response}
+     */
+    public sendFile(path: string): Response
+    {
+        this.rawResponse.sendFile(path);
+        return this;
+    }
+
+    /**
+     * Set the attachment name of a download
+     * @param {string} path
+     * @param {string} name
+     * @returns {Response}
+     */
+    public sendDownload(path: string, name?: string): Response
+    {
+        this.rawResponse.download(path, name);
+        return this;
+    }
+
+    /**
+     * Render a view
+     * @param {string} view
+     * @param {Object} options
+     * @returns {Response}
+     */
+    public sendView(view: string, options?: Object): Response
+    {
+        this.rawResponse.render(view, options);
+        return this;
+    }
+
+    /**
+     * Send a redirect response to the client
+     * @param {string} url
+     * @param {number} status
+     * @returns {Response}
+     */
+    public redirect(url: string, status: number = 302): Response
+    {
+        this.rawResponse.redirect(url, status);
+        return this;
+    }
+
+    /**
+     * Gets the raw express response
+     * @returns {Express.Response}
+     */
+    public getRawResponse(): Express.Response
+    {
+        return this.rawResponse;
     }
 }
