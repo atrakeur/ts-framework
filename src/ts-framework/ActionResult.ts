@@ -3,7 +3,7 @@ import { Response } from "./Http";
 /**
  * TS-Framework ActionResult
  * This class contains redirect result
- * Methods are calling from ResultController, when user want return content from controller
+ * Methods are calling from ControllerResult, when user want return content from controller
  */
 export class RedirectResult implements IActionResult
 {
@@ -16,7 +16,7 @@ export class RedirectResult implements IActionResult
 /**
  * TS-Framework ContentResult
  * This class contains redirect result
- * Methods are calling from ResultController, when user want return content from controller
+ * Methods are calling from ControllerResult, when user want return content from controller
  */
 export class ContentResult implements IActionResult {
     constructor(public content: string, public contentType?: string) {}
@@ -29,7 +29,7 @@ export class ContentResult implements IActionResult {
 /**
  * TS-Framework JsonResult
  * This class contains redirect result
- * Methods are calling from ResultController, when user want return content from controller
+ * Methods are calling from ControllerResult, when user want return content from controller
  */
 export class JsonResult implements IActionResult {
     constructor(public data: {}) {}
@@ -41,7 +41,7 @@ export class JsonResult implements IActionResult {
 /**
  * TS-Framework FileResult
  * This class contains redirect result
- * Methods are calling from ResultController, when user want return content from controller
+ * Methods are calling from ControllerResult, when user want return content from controller
  */
 export class FileResult implements IActionResult {
     constructor(public path: string) {}
@@ -55,7 +55,7 @@ export class FileResult implements IActionResult {
 /**
  * TS-Framework DownloadResult
  * This class contains redirect result
- * Methods are calling from ResultController, when user want return content from controller
+ * Methods are calling from ControllerResult, when user want return content from controller
  */
 export class DownloadResult implements IActionResult {
     constructor(public path: string, public filename?: string) {}
@@ -70,7 +70,7 @@ export class DownloadResult implements IActionResult {
 /**
  * TS-Framework ViewResult
  * This class contains redirect result
- * Methods are calling from ResultController, when user want return content from controller
+ * Methods are calling from ControllerResult, when user want return content from controller
  */
 export class ViewResult implements IActionResult {
     constructor(public template: string, public options?: {}) {}

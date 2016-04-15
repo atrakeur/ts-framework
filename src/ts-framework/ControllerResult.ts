@@ -1,11 +1,11 @@
 import { RedirectResult, ContentResult, JsonResult, FileResult, DownloadResult, ViewResult } from "./ActionResult";
 
 /**
- * TS-Framework ResultController
+ * TS-Framework ControllerResult
  * This class containt methods, which are callable from controller.
  * It allow send response back to User
  */
-export class ResultController 
+export class ControllerResult 
 {
     constructor(public send: (IActionResult) => void) {}
 
