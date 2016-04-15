@@ -94,7 +94,7 @@ export class AutoLoader
         // class (not advised), we'll be looping over the object to find possible candidates
         for (let name in module)
         {
-            if (module.hasOwnProperty((name)))
+            if (module.hasOwnProperty(name))
             {
                 // The object in the module is a controller
                 if (module[name].prototype instanceof Controller) {
