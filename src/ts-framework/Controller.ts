@@ -61,6 +61,26 @@ export class Controller
     {
         return new ActionFilter();
     }
+
+    /**
+     * Sets the request of the client requesting the resource
+     * @param {Request} request
+     * @private
+     */
+    public __setRequest(request: Request): void
+    {
+        this.request = request;
+    }
+
+    /**
+     * Sets the response the server will return to the client
+     * @param {Response} response
+     * @private
+     */
+    public __setResponse(response: Response): void
+    {
+        this.response = response;
+    }
 }
 
 /**

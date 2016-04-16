@@ -1,8 +1,11 @@
 /// <reference path="../../typings/main.d.ts" />
+import * as Express from "express";
 
+import {__DEBUG} from "./Application";
 import {Reflection} from "./Reflection";
+import {RequestMethod, Response, Request} from "./Http";
 import {Controller, ControllerCollection} from "./Controller";
-import {Application, __DEBUG} from "./Application";
+import {IActionResult} from "./ActionResult";
 
 
 /**
@@ -13,6 +16,7 @@ export class Route
 {
     public path: string;
     public action: string;
+    public methods: Array<RequestMethod>;
     public controller: Controller;
     public parameters: string[];
 }
@@ -40,33 +44,80 @@ export class Router
      * @param {ControllerCollection} controllers
      * @returns {void}
      */
-    public registerRoutes(controllers: ControllerCollection)
+    public registerRoutes(controllers: ControllerCollection, express: Express.Application)
     {
         __DEBUG("");
 
+        // Register all routes
         for (let name in controllers)
         {
-            Object.getOwnPropertyNames(controllers[name].__proto__).forEach(action => {
-                if (action === "constructor") return;
+            if (controllers.hasOwnProperty(name)) {
+                Object.getOwnPropertyNames(controllers[name].__proto__).forEach(action => {
+                    if (action === "constructor") return;
 
-                let path = (name   === "index") ? `/`       : `/${name}`;
+                    let path = (name   === "index") ? `/`       : `/${name}`;
                     path = (action === "index") ? `${path}` : `${path}/${action}`;
 
-                let route = new Route();
+                    let route = new Route();
                     route.path = path;
                     route.action = action;
+                    route.methods = ["GET"];
                     route.controller = controllers[name];
                     route.parameters = Reflection.getFunctionArguments(controllers[name][action]);
 
-                this.routes[path] = route;
+                    // Attach the route to express
+                    this.attachRoute(express, route);
 
-                __DEBUG(`Registered route: ${path} (controller = ${name}, action = ${action})`);
-            });
+                    // Debug message
+                    __DEBUG(`Registered route: ${path} (controller = ${name}, action = ${action})`);
+                });
+            }
         }
     }
 
-    public dispatch(path: string)
+    private attachRoute(express: Express.Application, route: Route): void
     {
-        
+        route.methods.forEach(method => {
+            express[method.toLowerCase()](route.path, this.dispatch(route));
+        });
+    }
+
+    /**
+     * Method that actually handles a request
+     * @returns {Function}
+     */
+    private dispatch(route: Route): Function
+    {
+        return function (req: Express.Request, res: Express.Response, next: Function)
+        {
+            res.header("X-Powered-By", "TS-Framework");
+
+            // Request parameters don't match target?
+                // Dispatch 404
+            // else
+                // Get parameters
+
+            let request: Request = new Request(req);
+            let response: Response = new Response(res);
+            route.controller.__setRequest(request);
+            route.controller.__setResponse(response);
+
+            // Trigger the action
+            let result: IActionResult = route.controller[route.action](/* parameters */);
+
+            // IActionResult was returned
+            if (
+                result !== undefined &&
+                result.__proto__.hasOwnProperty("execute") &&
+                result.execute instanceof Function
+            ) {
+                result.execute(response);
+            } else {
+                res.end();
+            }
+
+            // Log request
+            __DEBUG(`[${req.ip}] (${req.statusCode || 200}) ${req.method} ${req.path}`);
+        }
     }
 }

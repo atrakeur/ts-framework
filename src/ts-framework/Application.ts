@@ -109,9 +109,9 @@ export class Application
         }
 
         // Build all dependencies
+        this.initializeExpress();
         this.loadAutoLoader();
         this.registerRoutes();
-        this.initializeExpress();
 
         // Make express listen
         this.express.listen(port);
@@ -145,7 +145,7 @@ export class Application
      */
     private registerRoutes(): void
     {
-        this.router.registerRoutes( this.loader.getControllers() );
+        this.router.registerRoutes( this.loader.getControllers(), this.express );
     }
 
     /**

@@ -36,7 +36,7 @@ export interface IMultipleResultCallback<T>
  */
 export class Request
 {
-    public constructor(public express: Express.Response) {}
+    public constructor(public express: Express.Request) {}
 }
 
 /**
@@ -240,3 +240,9 @@ export class Response
         return this.rawResponse;
     }
 }
+
+/**
+ * Available request methods in the framework
+ * @type {string}
+ */
+export type RequestMethod = "GET" | "POST" | "PUT" | "DELETE";
