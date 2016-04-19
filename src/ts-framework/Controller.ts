@@ -1,5 +1,6 @@
 import {ActionFilter, IActionFilter, IActionFilterContext} from "./ActionFilter";
 import {Request, Response} from "./Http";
+import {fork} from "cluster";
 
 /**
  * TS-Framework application
@@ -133,15 +134,24 @@ export class DataModelController extends Controller
 export type ControllerCollection = {[s: string]: Controller};
 
 /**
- * Action decorator (no arguments)
- * @param target
- * @param propertyKey
- * @param descriptor
+ * Action decorator
+ * @param parameters
  * @returns {TypedPropertyDescriptor<any>}
  * @decorator
  */
-export function action(target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<any>)
+export function action(parameters: any = {})
 {
-    let originalMethod = descriptor.value; // save a reference to the original method
-    return descriptor;
+    return function (target:Object, propertyKey:string, descriptor:TypedPropertyDescriptor<any>) {
+        let originalMethod = descriptor.value;
+
+        descriptor.value = function(...args: any[]) {
+            console.log("The decorator parameters are: " + JSON.stringify(parameters)); // pre
+            console.log("The method args are: " + JSON.stringify(args)); // pre
+            let result = originalMethod.apply(this, args); // run and store the result
+            console.log("The return value is: " + result); // post
+            return result; // return the result of the original method
+        };
+
+        return descriptor;
+    };
 }
