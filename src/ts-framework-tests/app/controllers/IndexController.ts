@@ -5,7 +5,7 @@ import {ContentResult} from "../../../ts-framework/ActionResult";
 export class IndexController extends Controller
 {
     // GET: /
-    @action index()
+    @action() index()
     {
         return new ContentResult(`
             <!DOCTYPE html>

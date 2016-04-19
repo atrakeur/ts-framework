@@ -4,13 +4,19 @@ import {Request, Response} from "../../../ts-framework/Http";
 export class AuthController extends Controller
 {
     // GET: /auth
-    @action index()
+    @action({
+        'path': '/auth',
+        'method': ['GET']
+    }) index()
     {
         // ...
     }
 
     // POST: /auth/login
-    @action login(username: string, password: string)
+    @action({
+        'path': '/auth/login',
+        'method': ['POST']
+    }) login(username: string, password: string)
     {
         if (username === "foo" && password === "bar") {
             this.response.redirect("/success");
@@ -20,7 +26,7 @@ export class AuthController extends Controller
     }
 
     // POST: /auth/logout
-    @action logout(token: string)
+    @action() logout(token: string)
     {
         // ...
     }

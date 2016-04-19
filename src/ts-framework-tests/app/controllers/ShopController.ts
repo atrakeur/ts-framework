@@ -4,13 +4,13 @@ import {JsonResult} from "../../../ts-framework/ActionResult";
 export class ShopController extends Controller
 {
     // GET: /shop
-    @action index()
+    @action() index()
     {
         this.response.sendContent("Hello");
     }
 
     // GET: /shop/product/:id
-    @action product(id: number)
+    @action() product(id: number)
     {
         return new JsonResult({
             "id": id || 0
