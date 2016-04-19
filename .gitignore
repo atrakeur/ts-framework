@@ -11,6 +11,8 @@ build*
 src/**/*.js
 src/**/*.map
 src/.baseDir.ts
+src/ts-framework-build/!.gitkeep
+src/ts-framework-build/*
 
 test/integration/app.js
 test/integration/app.js.map

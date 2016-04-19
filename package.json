@@ -1,8 +1,12 @@
 {
   "name": "ts-framework",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "description": "TSFramework",
   "author": "Jhon Mike <developer@jhonmike.com.br>",
+  "contributors": [
+    "Luke Paris <luke@paradoxis.nl>",
+    "Petr Tomášek"
+  ],
   "license": "MIT",
   "keywords": [
     "tsframework",
@@ -15,12 +19,12 @@
     "app",
     "api"
   ],
-  "main": "./build/TSFramework.js",
+  "main": "./src/ts-framework-build/TS-Framework.d.ts",
   "scripts": {
     "prepublish": "npm prune",
-    "start": "grunt",
-    "pretest": "grunt test",
-    "test": "mocha -R spec test/integration"
+    "start": "tsc -w",
+    "pretest": "tsc",
+    "test": "node src/ts-framework-build/ts-framework-tests/app.js"
   },
   "repository": {
     "type": "git",
@@ -30,29 +34,23 @@
     "url": "https://github.com/tsframework/ts-framework/issues"
   },
   "dependencies": {
-    "express": "4.13.4",
-    "waterline": "0.12.1",
-    "compression": "~1.6.1",
     "body-parser": "~1.15.0",
+    "commander": "~2.9.0",
+    "compression": "~1.6.1",
+    "depd": "~1.1.0",
+    "ejs": "~2.4.1",
+    "express": "4.13.4",
+    "express-ejs-layouts": "~2.1.0",
+    "get-parameter-names": "^0.3.0",
+    "lodash": "~4.10.0",
     "method-override": "~2.3.5",
     "morgan": "~1.7.0",
-    "lodash": "~4.10.0",
-    "ejs": "~2.4.1",
-    "express-ejs-layouts": "~2.1.0",
-    "commander": "~2.9.0",
-    "jison": "~0.4.17",
-    "depd": "~1.1.0"
+    "root-require": "^0.3.1",
+    "waterline": "0.12.1"
   },
   "devDependencies": {
-    "grunt": "~1.0.1",
-    "grunt-ts": "~5.4.0",
-    "grunt-file-append": "~0.0.6",
-    "grunt-text-replace": "~0.4.0",
-    "time-grunt": "~1.3.0",
-    "load-grunt-tasks": "~3.5.0",
-    "sails-disk": "~0.10.9",
-    "should": "~8.3.0",
-    "request": "~2.71.0"
+    "request": "~2.71.0",
+    "should": "~8.3.0"
   },
   "engines": {
     "node": ">= 0.12.0"
