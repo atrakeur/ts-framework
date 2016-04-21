@@ -1,4 +1,5 @@
-import {Controller, action, required} from "../../../ts-framework/Controller";
+import {Controller} from "../../../ts-framework/Controller";
+import {action, required} from "../../../ts-framework/DecoratorController";
 import {JsonResult} from "../../../ts-framework/ActionResult";
 
 export class ShopController extends Controller
