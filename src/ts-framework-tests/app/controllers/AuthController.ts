@@ -1,4 +1,5 @@
-import {Controller, action, required} from "../../../ts-framework/Controller";
+import {Controller} from "../../../ts-framework/Controller";
+import {action, required} from "../../../ts-framework/DecoratorController";
 import {Request, Response} from "../../../ts-framework/Http";
 
 export class AuthController extends Controller
