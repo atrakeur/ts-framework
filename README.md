@@ -5,6 +5,15 @@ TSFramework is a Web Framework that makes it easy to build enterprise-grade [Nod
 [![NPM version](https://badge.fury.io/js/ts-framework.svg)](http://badge.fury.io/js/ts-framework)
 [![Join the chat at https://gitter.im/tsframework/ts-framework](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tsframework/ts-framework?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+## Installation Dev Version
+
+```sh
+$ sudo npm install -g typescript typings
+$ sudo npm install
+$ typings install
+$ npm test // app test
+```
+
 ## Installation
 
 Install the latest stable release of TSFramework:

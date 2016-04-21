@@ -1,6 +1,6 @@
 import {ActionFilter, IActionFilter, IActionFilterContext} from "./ActionFilter";
 import {Request, Response} from "./Http";
-import {fork} from "cluster";
+import {Error} from "./Exception";
 
 /**
  * TS-Framework application
@@ -141,6 +141,7 @@ export type ControllerCollection = {[s: string]: Controller};
  */
 export function action(parameters: any = {})
 {
+    console.log("The decorator parameters are: " + JSON.stringify(parameters)); // pre
     return function (target:Object, propertyKey:string, descriptor:TypedPropertyDescriptor<any>) {
         let originalMethod = descriptor.value;
 
@@ -154,4 +155,21 @@ export function action(parameters: any = {})
 
         return descriptor;
     };
+}
+
+/**
+ * Required decorator
+ * @param target
+ * @param propertyKey
+ * @param parameterIndex
+ * @returns {any}
+ * @decorator
+ */
+export function required(target: Object, propertyKey: string | symbol, parameterIndex: any) {
+    console.log(parameterIndex);
+    if (parameterIndex != undefined) {
+        return parameterIndex;
+    } else {
+        throw new Error(`Parameter ${propertyKey} is required!`);
+    }
 }
