@@ -4,6 +4,8 @@
 node_modules*
 build*
 .build*
+typings*
+!typings.json
 
 *.iml
 *.log
