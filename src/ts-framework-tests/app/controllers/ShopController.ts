@@ -1,4 +1,4 @@
-import {Controller, action} from "../../../ts-framework/Controller";
+import {Controller, action, required} from "../../../ts-framework/Controller";
 import {JsonResult} from "../../../ts-framework/ActionResult";
 
 export class ShopController extends Controller
@@ -10,7 +10,7 @@ export class ShopController extends Controller
     }
 
     // GET: /shop/product/:id
-    @action() product(id: number)
+    @action() product(@required id: number)
     {
         return new JsonResult({
             "id": id || 0

@@ -69,7 +69,7 @@ export class Router
                     this.attachRoute(express, route);
 
                     // Debug message
-                    __DEBUG(`Registered route: ${path} (controller = ${name}, action = ${action})`);
+                    __DEBUG(`Registered route: ${path} (controller = ${name}, action = ${action}, parameters = ${route.parameters})`);
                 });
             }
         }
