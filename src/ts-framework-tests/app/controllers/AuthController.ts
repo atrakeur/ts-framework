@@ -1,5 +1,4 @@
-import {Controller} from "../../../ts-framework/Controller";
-import {action, required} from "../../../ts-framework/DecoratorController";
+import {Controller, action} from "../../../ts-framework/Controller";
 import {Request, Response} from "../../../ts-framework/Http";
 
 export class AuthController extends Controller
@@ -17,7 +16,7 @@ export class AuthController extends Controller
     @action({
         'path': '/auth/login',
         'method': ['POST']
-    }) login(@required username: string, @required password: string)
+    }) login(username: string, password: string)
     {
         if (username === "foo" && password === "bar") {
             this.response.redirect("/success");

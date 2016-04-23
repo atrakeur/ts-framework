@@ -51,17 +51,34 @@ export class Router
         // Register all routes
         for (let name in controllers)
         {
+            console.log(controllers[name].__proto__.decorate);
             if (controllers.hasOwnProperty(name)) {
                 Object.getOwnPropertyNames(controllers[name].__proto__).forEach(action => {
                     if (action === "constructor") return;
+                    if (action === "decorate") return;
+
+                    var decorate = {
+                        path: null,
+                        method: null
+                    };
+                    if (controllers[name].__proto__.decorate) {
+                        if (controllers[name].__proto__.decorate[action])
+                            decorate = controllers[name].__proto__.decorate[action];
+                    }
 
                     let path = (name   === "index") ? `/`       : `/${name}`;
-                    path = (action === "index") ? `${path}` : `${path}/${action}`;
+                    if (decorate.path) {
+                        path = decorate.path;
+                    } else {
+                        path = (action === "index") ? `${path}` : `${path}/${action}`;
+                    }
+
+                    var method = (decorate.method) ? decorate.method : ['GET'];
 
                     let route = new Route();
                     route.path = path;
                     route.action = action;
-                    route.methods = ["GET"];
+                    route.methods = method;
                     route.controller = controllers[name];
                     route.parameters = Reflection.getFunctionArguments(controllers[name][action]);
 
@@ -69,7 +86,7 @@ export class Router
                     this.attachRoute(express, route);
 
                     // Debug message
-                    __DEBUG(`Registered route: ${path} (controller = ${name}, action = ${action}, parameters = ${route.parameters})`);
+                    __DEBUG(`Registered route: ${path} (controller = ${name}, action = ${action}, methods = ${route.methods})`);
                 });
             }
         }
