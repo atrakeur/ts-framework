@@ -1,5 +1,4 @@
-import {Controller} from "../../../ts-framework/Controller";
-import {action} from "../../../ts-framework/DecoratorController";
+import {Controller, action} from "../../../ts-framework/Controller";
 import {Request, Response} from "../../../ts-framework/Http";
 import {ContentResult} from "../../../ts-framework/ActionResult";
 
