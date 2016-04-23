@@ -15,6 +15,11 @@ export class Controller
     public __proto__: any;
 
     /**
+     * Parameters Decorator Action
+     */
+    public decorate: Object;
+
+    /**
      * The request made by the client
      * @type {Request}
      */
@@ -132,3 +137,25 @@ export class DataModelController extends Controller
  * @format string -> controller
  */
 export type ControllerCollection = {[s: string]: Controller};
+
+
+/**
+ * Action decorator
+ * @param parameters
+ * @returns {TypedPropertyDescriptor<any>}
+ * @decorator
+ */
+export function action(parameters: Object = null)
+{
+    return function (target:Controller, propertyKey:string, descriptor:TypedPropertyDescriptor<any>) {
+        if (parameters) {
+            var aux = {};
+            if (target.decorate)
+                aux = target.decorate;
+            aux[propertyKey] = parameters;
+            target.decorate = aux;
+        }
+
+        return descriptor;
+    };
+}
