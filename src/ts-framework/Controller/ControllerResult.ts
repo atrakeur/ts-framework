@@ -1,4 +1,9 @@
-import { RedirectResult, ContentResult, JsonResult, FileResult, DownloadResult, ViewResult } from "./ActionResult";
+import { ViewResult } from "../View/ViewResult";
+import { RedirectResult } from "../View/RedirectResult";
+import { ContentResult } from "../View/ContentResult";
+import { JsonResult } from "../View/JsonResult";
+import { FileResult } from "../View/FileResult";
+import { DownloadResult} from "../View/DownloadResult";
 
 /**
  * TS-Framework ControllerResult

@@ -1,11 +1,13 @@
-/// <reference path="../../typings/main.d.ts" />
+/// <reference path="../../../typings/main.d.ts" />
 import * as fs from "fs";
 import * as _ from "lodash";
 
-import {Exception} from "./Exception";
-import {Model, ModelCollection} from "./Model";
-import {Controller, ControllerCollection} from "./Controller";
-import {__DEBUG} from "./Application";
+import {AutoLoaderException} from "./Exception";
+import {Model} from "../Model/Model";
+import {ModelCollection} from "../Model/ModelCollection";
+import {Controller} from "../Controller/Controller";
+import {ControllerCollection} from "../Controller/ControllerCollection";
+import {__DEBUG} from "./Debug";
 
 /**
  * AutoLoader class
@@ -134,19 +136,5 @@ export class AutoLoader
     public getModels(): ModelCollection
     {
         return this.models;
-    }
-}
-
-/**
- * Custom auto-loader exception
- * @type {Exception}
- */
-export class AutoLoaderException extends Exception
-{
-    public name = "AutoLoaderException";
-
-    constructor (public message?: string)
-    {
-        super(message);
     }
 }

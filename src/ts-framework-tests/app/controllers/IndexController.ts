@@ -1,6 +1,6 @@
 import {Controller, action} from "../../../ts-framework/Controller";
 import {Request, Response} from "../../../ts-framework/Http";
-import {ContentResult} from "../../../ts-framework/ActionResult";
+import {ContentResult} from "../../../ts-framework/View";
 
 export class IndexController extends Controller
 {
