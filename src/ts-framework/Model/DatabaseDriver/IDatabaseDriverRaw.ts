@@ -1,3 +1,5 @@
+import {ISingleResultCallback} from "../../Http/ISingleResultCallback";
+
 export interface IDatabaseDriverRaw<T> {
 
     /**

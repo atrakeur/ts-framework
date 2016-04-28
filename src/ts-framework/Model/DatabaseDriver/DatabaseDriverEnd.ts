@@ -1,3 +1,6 @@
+import {IMultipleResultCallback} from "../../Http/IMultipleResultCallback";
+import {IDatabaseDriverEnd} from "./IDatabaseDriverEnd";
+
 /**
  * TS-Framework DatabaseDriver
  * Contains method for oparation with WL Query
@@ -5,7 +8,7 @@
  */
 
 //needs to refactor class name !!!
-export class DatabaseDriverEnd<T> implements DatabaseDriverEnd<T> {
+export class DatabaseDriverEnd<T> implements IDatabaseDriverEnd<T> {
 
     /**
      * Register query method WHERE
