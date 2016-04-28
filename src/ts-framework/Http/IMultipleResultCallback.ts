@@ -1,3 +1,8 @@
 /**
- * Created by jhon on 27/04/16.
+ * TS-Framework IMultipleResultCallback<T>
+ * Callback for collection of models
  */
+export interface IMultipleResultCallback<T>
+{
+    (err: Error, models: T[]);
+}

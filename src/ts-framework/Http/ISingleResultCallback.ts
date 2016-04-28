@@ -1,3 +1,8 @@
 /**
- * Created by jhon on 27/04/16.
+ * TS-Framework ISingleResultCallback<T>
+ * Callback for generic model
  */
+export interface ISingleResultCallback<T>
+{
+    (err: Error, model: T);
+}

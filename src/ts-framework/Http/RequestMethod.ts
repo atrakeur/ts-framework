@@ -1,3 +1,5 @@
 /**
- * Created by jhon on 27/04/16.
+ * Available request methods in the framework
+ * @type {string}
  */
+export type RequestMethod = "GET" | "POST" | "PUT" | "DELETE";

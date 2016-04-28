@@ -1,3 +1,12 @@
+/// <reference path="../../../typings/main.d.ts" />
+
+import * as Express from "express";
+
 /**
- * Created by jhon on 27/04/16.
+ * TS-Framework Request
+ * Contains basic method for working with HTTP
  */
+export class Request
+{
+    public constructor(public express: Express.Request) {}
+}
