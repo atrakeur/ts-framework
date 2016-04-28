@@ -10,4 +10,5 @@ branches:
         - development
 
 before_install:
-    - npm install -g typescript
+    - npm install -g typescript typings
+    - typings install
