@@ -1,3 +1,7 @@
+import {Model} from "./Model";
+
 /**
- * Created by jhon on 27/04/16.
+ * Collection of controllers
+ * @format string -> controller
  */
+export type ModelCollection = {[s: string]: Model<any>};
