@@ -1,3 +1,7 @@
+import {Route} from "./Route";
+
 /**
- * Created by jhon on 27/04/16.
+ * Collection of routes identified by a string (path)
+ * @type {Object}
  */
+export type RouteCollection = {[s:string]: Route};
