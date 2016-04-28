@@ -1,6 +1,6 @@
-import {ActionFilter} from "./ActionFilter";
-import {IActionFilter} from "./IActionFilter";
-import {IActionFilterContext} from "./IActionFilterContext";
+import {ActionFilter} from "../View/ActionFilter";
+import {IActionFilter} from "../View/IActionFilter";
+import {IActionFilterContext} from "../View/IActionFilterContext";
 import {Request} from "../Http/Request";
 import {Response} from "../Http/Response";
 

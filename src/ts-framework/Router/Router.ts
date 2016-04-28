@@ -34,7 +34,6 @@ export class Router
         // Register all routes
         for (let name in controllers)
         {
-            console.log(controllers[name].__proto__.decorate);
             if (controllers.hasOwnProperty(name)) {
                 Object.getOwnPropertyNames(controllers[name].__proto__).forEach(action => {
                     if (action === "constructor") return;

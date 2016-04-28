@@ -2,8 +2,8 @@
 import * as fs from "fs";
 import * as _ from "lodash";
 
-import {AutoLoaderException} from "./Exception/AutoLoaderException";
-import {ModelCollection} from "../Model/Model";
+import {AutoLoaderException} from "./Exception";
+import {Model} from "../Model/Model";
 import {ModelCollection} from "../Model/ModelCollection";
 import {Controller} from "../Controller/Controller";
 import {ControllerCollection} from "../Controller/ControllerCollection";

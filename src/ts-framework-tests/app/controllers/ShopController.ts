@@ -1,5 +1,5 @@
 import {Controller, action} from "../../../ts-framework/Controller";
-import {JsonResult} from "../../../ts-framework/ActionResult";
+import {JsonResult} from "../../../ts-framework/View";
 
 export class ShopController extends Controller
 {
