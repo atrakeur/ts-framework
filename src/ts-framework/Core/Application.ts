@@ -1,8 +1,8 @@
-/// <reference path="../../typings/main.d.ts" />
+/// <reference path="../../../typings/main.d.ts" />
 
 import * as Express from "express";
 import {Configuration} from "./Configuration";
-import {Router} from "./Router";
+import {Router} from "../Router/Router";
 import {AutoLoader} from "./AutoLoader";
 
 /**
@@ -173,18 +173,5 @@ export class Application
         console.log(" GitHub:  %s                                  ", Application.getRepositoryAddress());
         console.log(" Version: %s                                            ", Application.getVersion());
         console.log("-----------------------------------------------------------------------------     ");
-    }
-}
-
-/**
- * Debug method, wrapper for console.log() only when the application is in 'development' mode
- * @param {any[]} args
- * @private
- */
-export function __DEBUG(...args: any[])
-{
-    if (Application.getEnvironment() === "development") {
-        args.unshift("[DEBUG]");
-        console.log.apply(null, args);
     }
 }
