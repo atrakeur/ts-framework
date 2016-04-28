@@ -23,8 +23,14 @@
   "scripts": {
     "prepublish": "npm prune",
     "start": "tsc -w",
+    
     "pretest": "tsc",
-    "test": "node src/ts-framework-build/ts-framework-tests/app.js"
+    "test": "node src/ts-framework-build/ts-framework-tests/app.js",
+    
+    "build": "tsc",
+    "preci": "node src/ts-framework-build/ts-framework-tests/app.js & echo $! > ci.pid & sleep 5",
+    "ci": "mocha src/ts-framework-build/ts-framework-tests/tests",
+    "postci": "kill -9 `cat ci.pid`"
   },
   "repository": {
     "type": "git",
@@ -49,6 +55,8 @@
     "waterline": "0.12.1"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
     "request": "~2.71.0",
     "should": "~8.3.0"
   },
