@@ -1,3 +1,7 @@
+import { Controller } from "./Controller";
+
 /**
- * Created by jhon on 27/04/16.
+ * Collection of controllers
+ * @format string -> controller
  */
+export type ControllerCollection = {[s: string]: Controller};

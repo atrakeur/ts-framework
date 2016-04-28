@@ -1,6 +1,8 @@
-import {ActionFilter, IActionFilter, IActionFilterContext} from "./ActionFilter";
-import {Request, Response} from "./Http";
-import {Error} from "./Exception";
+import {ActionFilter} from "./ActionFilter";
+import {IActionFilter} from "./IActionFilter";
+import {IActionFilterContext} from "./IActionFilterContext";
+import {Request} from "../Http/Request";
+import {Response} from "../Http/Response";
 
 /**
  * TS-Framework application
@@ -87,75 +89,4 @@ export class Controller
     {
         this.response = response;
     }
-}
-
-/**
- * TS-Framework application
- * DataModelController.ts - Register methods for communication with ORM
- * extends Controller
- */
-export class DataModelController extends Controller
-{
-    /**
-     * Create new Object
-     */
-    public create()
-    {
-        // ...
-    }
-
-    /**
-     * Update Object specified with ID
-     * @param {string} id
-     */
-    public update(id: string)
-    {
-        // ...
-    }
-    
-    /**
-     * Delete Object specified with ID
-     * @param {string} id
-    */
-    public delete(id: string)
-    {
-        // ...
-    }
-    
-    /**
-     * Find object by id
-     * @param {string} id
-     */
-    public find(id: string)
-    {
-        // ...
-    }
-}
-
-/**
- * Collection of controllers
- * @format string -> controller
- */
-export type ControllerCollection = {[s: string]: Controller};
-
-
-/**
- * Action decorator
- * @param parameters
- * @returns {TypedPropertyDescriptor<any>}
- * @decorator
- */
-export function action(parameters: Object = null)
-{
-    return function (target:Controller, propertyKey:string, descriptor:TypedPropertyDescriptor<any>) {
-        if (parameters) {
-            var aux = {};
-            if (target.decorate)
-                aux = target.decorate;
-            aux[propertyKey] = parameters;
-            target.decorate = aux;
-        }
-
-        return descriptor;
-    };
 }
