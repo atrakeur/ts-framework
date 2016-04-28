@@ -1,3 +1,6 @@
+import {ISingleResultCallback} from "../../Http/ISingleResultCallback";
+import {IDatabaseDriverUnique} from "./IDatabaseDriverUnique";
+
 /**
  * TS-Framework DatabaseDriverUnique
  * Contains method for oparation with WL Query
@@ -5,7 +8,7 @@
  */
 
 //needs to refactor class name !!!
-export class DatabaseDriverUnique<T> implements DatabaseDriverUnique<T> {
+export class DatabaseDriverUnique<T> implements IDatabaseDriverUnique<T> {
 
     /**
      * Register query method WHERE

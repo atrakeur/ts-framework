@@ -1,3 +1,5 @@
+import {IMultipleResultCallback} from "../../Http/IMultipleResultCallback";
+
 export interface IDatabaseDriverEnd<T> {
 
     /**

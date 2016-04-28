@@ -1,3 +1,6 @@
+import {IMultipleResultCallback} from "../../Http/IMultipleResultCallback";
+import {IDatabaseDriver} from "./IDatabaseDriver";
+
 /**
  * TS-Framework DatabaseDriver
  * Contains method for oparation with WL Query

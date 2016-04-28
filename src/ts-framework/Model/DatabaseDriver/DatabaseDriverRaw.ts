@@ -1,3 +1,6 @@
+import {ISingleResultCallback} from "../../Http/ISingleResultCallback";
+import {IDatabaseDriverRaw} from "./IDatabaseDriverRaw";
+
 /**
  * TS-Framework DatabaseDriverUnique
  * Contains method for oparation with WL Query
