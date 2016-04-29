@@ -1,9 +1,9 @@
 /// <reference path="../../../typings/main.d.ts" />
 
 import * as Express from "express";
+import {AutoLoader} from "./AutoLoader";
 import {Configuration} from "./Configuration";
 import {Router} from "../Router/Router";
-import {AutoLoader} from "./AutoLoader";
 
 /**
  * TS-Framework application

@@ -2,12 +2,12 @@
 import * as fs from "fs";
 import * as _ from "lodash";
 
+import {__DEBUG} from "./Debug";
 import {AutoLoaderException} from "./Exception";
-import {Model} from "../Model/Model";
-import {ModelCollection} from "../Model/ModelCollection";
 import {Controller} from "../Controller/Controller";
 import {ControllerCollection} from "../Controller/ControllerCollection";
-import {__DEBUG} from "./Debug";
+import {Model} from "../Model/Model";
+import {ModelCollection} from "../Model/ModelCollection";
 
 /**
  * AutoLoader class

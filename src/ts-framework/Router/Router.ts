@@ -2,11 +2,13 @@
 import * as Express from "express";
 
 import {__DEBUG} from "../Core/Debug";
+import {ControllerCollection} from "../Controller/ControllerCollection";
+import {IActionDecorator} from "../Controller/IActionDecorator";
+import {IActionResult} from "../View/IActionResult";
 import {Reflection} from "../Core/Reflection";
 import {Response} from "../Http/Response";
 import {Request} from "../Http/Request";
-import {ControllerCollection} from "../Controller/ControllerCollection";
-import {IActionResult} from "../View/IActionResult";
+import {RequestMethod} from "../Http/RequestMethod";
 import {Route} from "./Route";
 import {RouteCollection} from "./RouteCollection";
 
@@ -25,6 +27,7 @@ export class Router
     /**
      * Register routes by passing a collection of controllers to it
      * @param {ControllerCollection} controllers
+     * @param express
      * @returns {void}
      */
     public registerRoutes(controllers: ControllerCollection, express: Express.Application)
@@ -39,23 +42,20 @@ export class Router
                     if (action === "constructor") return;
                     if (action === "decorate") return;
 
-                    var decorate = {
-                        path: null,
-                        method: null
-                    };
+                    var decorate: IActionDecorator;
                     if (controllers[name].__proto__.decorate) {
                         if (controllers[name].__proto__.decorate[action])
                             decorate = controllers[name].__proto__.decorate[action];
                     }
 
-                    let path = (name   === "index") ? `/`       : `/${name}`;
+                    let path: string = (name === "index") ? `/` : `/${name}`;
                     if (decorate.path) {
                         path = decorate.path;
                     } else {
                         path = (action === "index") ? `${path}` : `${path}/${action}`;
                     }
 
-                    var method = (decorate.method) ? decorate.method : ['GET'];
+                    var method: Array<RequestMethod> = (decorate.method) ? decorate.method : ['GET'];
 
                     let route = new Route();
                     route.path = path;
