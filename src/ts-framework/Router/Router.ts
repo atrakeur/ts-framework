@@ -2,8 +2,8 @@
 import * as Express from "express";
 
 import {__DEBUG} from "../Core/Debug";
+import {Action} from "../Controller/Action";
 import {ControllerCollection} from "../Controller/ControllerCollection";
-import {IActionDecorator} from "../Controller/IActionDecorator";
 import {IActionResult} from "../View/IActionResult";
 import {Reflection} from "../Core/Reflection";
 import {Response} from "../Http/Response";
@@ -42,20 +42,20 @@ export class Router
                     if (action === "constructor") return;
                     if (action === "decorate") return;
 
-                    var decorate: IActionDecorator;
+                    var decorate = new Action();
                     if (controllers[name].__proto__.decorate) {
                         if (controllers[name].__proto__.decorate[action])
                             decorate = controllers[name].__proto__.decorate[action];
                     }
 
                     let path: string = (name === "index") ? `/` : `/${name}`;
-                    if (decorate.path) {
+                    if (decorate.hasOwnProperty('path')) {
                         path = decorate.path;
                     } else {
                         path = (action === "index") ? `${path}` : `${path}/${action}`;
                     }
 
-                    var method: Array<RequestMethod> = (decorate.method) ? decorate.method : ['GET'];
+                    var method: Array<RequestMethod> = (decorate.hasOwnProperty('method')) ? decorate.method : ['GET'];
 
                     let route = new Route();
                     route.path = path;
