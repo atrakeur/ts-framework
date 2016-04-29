@@ -19,7 +19,7 @@
     "app",
     "api"
   ],
-  "main": "./src/ts-framework-build/TS-Framework.d.ts",
+  "main": "./src/ts-framework-build/Core.ts",
   "scripts": {
     "prepublish": "npm prune",
     "start": "tsc -w",
