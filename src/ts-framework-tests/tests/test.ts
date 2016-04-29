@@ -3,9 +3,9 @@
 /**
  * Module dependencies.
  */
-import assert = require('assert');
-import chai = require('chai');
-import http = require('http');
+import * as assert from "assert";
+import * as chai from "chai";
+import * as http from "http";
 
 /**
  * Globals

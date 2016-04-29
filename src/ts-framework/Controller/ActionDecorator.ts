@@ -1,5 +1,4 @@
 import { Controller } from "./Controller";
-import { IActionDecorator } from "./IActionDecorator";
 
 /**
  * Action decorator
@@ -7,11 +6,11 @@ import { IActionDecorator } from "./IActionDecorator";
  * @returns {TypedPropertyDescriptor<any>}
  * @decorator
  */
-export function action(parameters: IActionDecorator = null)
+export function action(parameters = null)
 {
     return function (target:Controller, propertyKey:string, descriptor:TypedPropertyDescriptor<any>) {
         if (parameters) {
-            var aux: IActionDecorator;
+            var aux = {};
             if (target.decorate)
                 aux = target.decorate;
             aux[propertyKey] = parameters;

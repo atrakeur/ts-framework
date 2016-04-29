@@ -1,5 +1,4 @@
 import {ActionFilter} from "../View/ActionFilter";
-import {IActionDecorator} from "./IActionDecorator";
 import {IActionFilter} from "../View/IActionFilter";
 import {IActionFilterContext} from "../View/IActionFilterContext";
 import {Request} from "../Http/Request";
@@ -20,7 +19,7 @@ export class Controller
     /**
      * Parameters Decorator Action
      */
-    public decorate: IActionDecorator;
+    public decorate: Object;
 
     /**
      * The request made by the client
@@ -35,38 +34,38 @@ export class Controller
     protected response: Response;
 
 
-    /** 
+    /**
      * Array IActionFilter
      * @type IActionFilter[]
     */
     private filters: IActionFilter[];
-    
+
     /**
      * Register filter before action
      * @param {IActionFilterContext} actionFilter
      * @return IActionFilter
     */
-    public static registerFilterBefore(actionFilter: IActionFilterContext) : IActionFilter 
+    public static registerFilterBefore(actionFilter: IActionFilterContext) : IActionFilter
     {
         return new ActionFilter();
     }
-    
+
     /**
      * Register filter after action
      * @param {IActionFilterContext} actionFilter
      * @return IActionFilter
     */
-    public static registerFilterAfter(actionFilter: IActionFilterContext) : IActionFilter 
+    public static registerFilterAfter(actionFilter: IActionFilterContext) : IActionFilter
     {
         return new ActionFilter();
     }
-    
+
     /**
      * Register filter action
      * @param {IActionFilterContext} actionFilter
      * @return IActionFilter
     */
-    public static registerFilter(actionFilter: IActionFilterContext) : IActionFilter 
+    public static registerFilter(actionFilter: IActionFilterContext) : IActionFilter
     {
         return new ActionFilter();
     }
