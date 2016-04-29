@@ -1,6 +1,6 @@
+import {IActionResult} from "./IActionResult";
 import {Request} from "../Http/Request";
 import {Response} from "../Http/Response";
-import {IActionResult} from "./IActionResult";
 
 export interface IActionFilterContext
 {

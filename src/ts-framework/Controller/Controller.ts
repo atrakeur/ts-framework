@@ -1,4 +1,5 @@
 import {ActionFilter} from "../View/ActionFilter";
+import {IActionDecorator} from "./IActionDecorator";
 import {IActionFilter} from "../View/IActionFilter";
 import {IActionFilterContext} from "../View/IActionFilterContext";
 import {Request} from "../Http/Request";
@@ -19,7 +20,7 @@ export class Controller
     /**
      * Parameters Decorator Action
      */
-    public decorate: Object;
+    public decorate: IActionDecorator;
 
     /**
      * The request made by the client

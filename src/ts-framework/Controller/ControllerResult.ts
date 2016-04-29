@@ -1,9 +1,9 @@
-import { ViewResult } from "../View/ViewResult";
-import { RedirectResult } from "../View/RedirectResult";
 import { ContentResult } from "../View/ContentResult";
-import { JsonResult } from "../View/JsonResult";
-import { FileResult } from "../View/FileResult";
 import { DownloadResult} from "../View/DownloadResult";
+import { FileResult } from "../View/FileResult";
+import { JsonResult } from "../View/JsonResult";
+import { RedirectResult } from "../View/RedirectResult";
+import { ViewResult } from "../View/ViewResult";
 
 /**
  * TS-Framework ControllerResult
