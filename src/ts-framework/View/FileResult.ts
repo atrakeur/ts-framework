@@ -4,7 +4,7 @@ import {Response} from "../Http/Response";
 /**
  * TS-Framework FileResult
  * This class contains redirect result
- * Methods are calling from ControllerResult, when user want return content from controller
+ * Methods are calling from HttpController, when user want return content from controller
  */
 export class FileResult implements IActionResult
 {

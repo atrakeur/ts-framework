@@ -1,12 +1,10 @@
 import {ActionFilter} from "../View/ActionFilter";
 import {IActionFilter} from "../View/IActionFilter";
 import {IActionFilterContext} from "../View/IActionFilterContext";
-import {Request} from "../Http/Request";
-import {Response} from "../Http/Response";
 
 /**
  * TS-Framework application
- * Controller.ts - It can register filters and call Model db functions
+ * Defines a base controller: ie some code that is called to handle a given request
  */
 export class Controller
 {
@@ -22,26 +20,15 @@ export class Controller
     public decorate: Object;
 
     /**
-     * The request made by the client
-     * @type {Request}
-     */
-    protected request: Request;
-
-    /**
-     * Response sent by the controller action
-     * @type {Response}
-     */
-    protected response: Response;
-
-
-    /**
      * Array IActionFilter
+     * @deprecated
      * @type IActionFilter[]
     */
     private filters: IActionFilter[];
 
     /**
      * Register filter before action
+     * @deprecated
      * @param {IActionFilterContext} actionFilter
      * @return IActionFilter
     */
@@ -52,6 +39,7 @@ export class Controller
 
     /**
      * Register filter after action
+     * @deprecated
      * @param {IActionFilterContext} actionFilter
      * @return IActionFilter
     */
@@ -62,31 +50,12 @@ export class Controller
 
     /**
      * Register filter action
+     * @deprecated
      * @param {IActionFilterContext} actionFilter
      * @return IActionFilter
     */
     public static registerFilter(actionFilter: IActionFilterContext) : IActionFilter
     {
         return new ActionFilter();
-    }
-
-    /**
-     * Sets the request of the client requesting the resource
-     * @param {Request} request
-     * @private
-     */
-    public __setRequest(request: Request): void
-    {
-        this.request = request;
-    }
-
-    /**
-     * Sets the response the server will return to the client
-     * @param {Response} response
-     * @private
-     */
-    public __setResponse(response: Response): void
-    {
-        this.response = response;
     }
 }

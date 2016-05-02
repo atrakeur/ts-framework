@@ -11,6 +11,7 @@ import {Request} from "../Http/Request";
 import {RequestMethod} from "../Http/RequestMethod";
 import {Route} from "./Route";
 import {RouteCollection} from "./RouteCollection";
+import {HttpController} from "../Controller/HttpController";
 
 /**
  * Router script used to register and dispatch routes
@@ -96,27 +97,42 @@ export class Router
             // else
             // Get parameters
 
-            let request: Request = new Request(req);
-            let response: Response = new Response(res);
-            route.controller.__setRequest(request);
-            route.controller.__setResponse(response);
-
-            // Trigger the action
-            let result: IActionResult = route.controller[route.action](/* parameters */);
-
-            // IActionResult was returned
-            if (
-                result !== undefined &&
-                result.__proto__.hasOwnProperty("execute") &&
-                result.execute instanceof Function
-            ) {
-                result.execute(response);
-            } else {
-                res.end();
+            //Create a copy of the controller
+            //TODO move that to the autoloader
+            var controller = <HttpController>{};
+            for (var attribut in route.controller) {
+                //if (route.controller.hasOwnProperty(attribut)) {
+                    controller[attribut] = route.controller[attribut];
+                //}
             }
 
-            // Log request
-            __DEBUG(`[${req.ip}] (${req.statusCode || 200}) ${req.method} ${req.path}`);
+            //Set request and responce
+            let request: Request = new Request(req);
+            let response: Response = new Response(res);
+            controller.__setRequest(request);
+            controller.__setResponse(response);
+
+            //Prepare the callback to actually send the result
+            var send = (result: IActionResult) => {
+                // IActionResult was returned, end the request
+                if (
+                    result !== undefined &&
+                    result.__proto__.hasOwnProperty("execute") &&
+                    result.execute instanceof Function
+                ) {
+                    result.execute(response);
+                } else {
+                    res.end();
+                }
+
+                //Log it
+                __DEBUG(`[${req.ip}] (${req.statusCode || 200}) ${req.method} ${req.path}`);
+            };
+            controller.__setSend(send);
+
+            // Trigger the action
+            //TODO move that to the autoloader
+            controller[route.action]();
         }
     }
 }

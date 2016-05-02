@@ -1,7 +1,8 @@
 import {Controller, action} from "../../../ts-framework/Controller";
 import {Request, Response} from "../../../ts-framework/Http";
+import {HttpController} from "../../../ts-framework/Controller/HttpController";
 
-export class AuthController extends Controller
+export class AuthController extends HttpController
 {
     // GET: /auth
     @action({
@@ -9,7 +10,7 @@ export class AuthController extends Controller
         'method': ['GET']
     }) index()
     {
-        this.response.sendContent("Auth");
+        return this.content("Auth");
     }
 
     // POST: /auth/login
@@ -19,15 +20,15 @@ export class AuthController extends Controller
     }) login(username: string, password: string)
     {
         if (username === "foo" && password === "bar") {
-            this.response.redirect("/success");
+            this.redirect("/success");
         } else {
-            this.response.redirect("/error");
+            this.redirect("/error");
         }
     }
 
     // POST: /auth/logout
     @action() logout(token: string)
     {
-        this.response.sendContent("logout");
+        this.content("logout");
     }
 }
