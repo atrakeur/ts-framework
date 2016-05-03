@@ -1,13 +1,12 @@
-import {Controller, action} from "../../../ts-framework/Controller";
-import {Request, Response} from "../../../ts-framework/Http";
+import {Request, Response, HttpController, action} from "../../../ts-framework/Http";
 import {ContentResult} from "../../../ts-framework/View";
 
-export class IndexController extends Controller
+export class IndexController extends HttpController
 {
     // GET: /
     @action() index()
     {
-        return new ContentResult(`
+        return this.content(`
             <!DOCTYPE html>
             <html lang="en">
                 <head>
@@ -15,7 +14,7 @@ export class IndexController extends Controller
                     <meta http-equiv="X-UA-Compatible" content="IE=edge">
                     <meta name="viewport" content="width=device-width, initial-scale=1">
                     <title>TS-Framework</title>
-                    
+
                     <style type="text/css">
                         body {
                             font-family: 'Open Sans', sans-serif;
@@ -80,7 +79,7 @@ export class IndexController extends Controller
                             </p>
                         </section>
                     </header>
-            
+
                     <footer>
                         <p>Powered by <a href="https://github.com/tsframework">TS-Framework</a></p>
                     </footer>

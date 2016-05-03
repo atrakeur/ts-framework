@@ -1,19 +1,23 @@
 import {Controller, action} from "../../../ts-framework/Controller";
 import {JsonResult} from "../../../ts-framework/View";
+import {HttpController} from "../../../ts-framework/Controller/HttpController";
 
-export class ShopController extends Controller
+export class ShopController extends HttpController
 {
     // GET: /shop
     @action() index()
     {
-        this.response.sendContent("Hello");
+        this.content("Hello");
     }
 
     // GET: /shop/product/:id
-    @action() product(id: number)
+    @action({
+        'path': '/shop/product/:id',
+        'method': ['GET']
+    }) product()
     {
-        return new JsonResult({
-            "id": id || 0
+        this.json({
+            "id": this.request.params().id || 0
         });
     }
 }

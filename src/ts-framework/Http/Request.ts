@@ -9,4 +9,8 @@ import * as Express from "express";
 export class Request
 {
     public constructor(public express: Express.Request) {}
+
+    public params() {
+        return this.express.params
+    }
 }
