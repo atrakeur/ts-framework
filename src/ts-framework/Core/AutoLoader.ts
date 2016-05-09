@@ -114,7 +114,7 @@ export class AutoLoader
 
     public start() {
         this.serviceProviders.forEach(serviceProvider => {
-            serviceProvider.start(this.application);
+            serviceProvider.start(this.application, this.container);
         });
     }
 }

@@ -80,15 +80,13 @@ export class Application
         this.router = this.container.resolve("Router");
 
         // Define some default settings
+        //TODO move that to some json files
         this.config.set('env', Application.getEnvironment());
         this.config.set('port', Application.DEFAULT_PORT);
         this.config.set('static.path', 'public');
         this.config.set('view.path', 'app/views');
         this.config.set('view.engine', 'ejs');
         this.config.set('view.layout', false);
-
-        //Start each service. After this line the application is started and wait for requests
-        this.loader.start();
     }
 
     /**
@@ -123,48 +121,12 @@ export class Application
 
     /**
      * Registers all controllers and models accordingly, and starts the express server
-     * @param {number|null} port
      * @returns {void}
      */
-    public start(port: number = null): void
+    public start(): void
     {
-        // If no port was given, fetch from config or use the default port
-        if (port == null) {
-            port =  this.config.get("port") || Application.DEFAULT_PORT;
-        }
-
-        // Build all dependencies
-        //YODO trigger all service providers bind
-
-        //Prepare the server
-        this.initializeExpress();
-        this.registerRoutes();
-
-        // Make express listen
-        this.express.listen(port);
-
-        // Display a start message
-        console.log("");
-        console.log("Server listening on port: %d", port);
-    }
-
-    /**
-     * Register all routes in the router
-     * @returns {void}
-     */
-    private registerRoutes(): void
-    {
-        //TODO
-        //this.router.registerRoutes(this.loader.getControllers(), this.express);
-    }
-
-    /**
-     * Initialize the express application
-     * @returns {void}
-     */
-    private initializeExpress(): void
-    {
-        this.express = Express();
+        //Start each service. After this line the application is started and wait for requests
+        this.loader.start();
     }
 
     /**

@@ -1,13 +1,14 @@
 ///<reference path="../../../typings/main.d.ts" />
 
 import * as _ from "lodash";
+import {ConfigurationContract} from "./Contracts/ConfigurationContract";
 
 /**
  * Configuration container used to store data on runtime
  * @todo Throwing an exception when calling Configuration#get() if the key is not found would be smarter, as it's instantly clear a key doesn't exist
  * @todo Proposal to make Configuration#set() read-only, so it can't be overwritten once set
  */
-export class Configuration
+export class Configuration implements ConfigurationContract
 {
     /**
      * Container holding all configuration keys
