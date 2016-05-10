@@ -9,7 +9,7 @@ import {ConfigurationContract} from "../Core/Contracts/ConfigurationContract";
  */
 export class HttpServer {
 
-    private express: Express.Application;
+    public express: Express.Application;
 
     @Inject("Configuration")
     private config: ConfigurationContract;
@@ -26,6 +26,10 @@ export class HttpServer {
         // Display a start message
         console.log("");
         console.log("Server listening on port: %d", this.config.get("port"));
+    }
+
+    public getExpress(): Express.Application {
+        return this.express;
     }
 
 }

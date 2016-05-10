@@ -1,7 +1,7 @@
 import { IDatabaseDriver, IDatabaseDriverEnd, IDatabaseDriverUnique, IDatabaseDriverRaw } from "./DatabaseDriver";
 import { IModelValidation } from "./IModelValidation";
-import { INoResultCallback } from "../Http/INoResultCallback";
-import { ISingleResultCallback } from "../Http/ISingleResultCallback";
+import { INoResultCallback } from "./INoResultCallback";
+import { ISingleResultCallback } from "./ISingleResultCallback";
 
 
 export interface IModel {

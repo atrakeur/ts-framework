@@ -1,4 +1,4 @@
-import {ISingleResultCallback} from "../../Http/ISingleResultCallback";
+import {ISingleResultCallback} from "../ISingleResultCallback";
 import {IDatabaseDriverRaw} from "./IDatabaseDriverRaw";
 
 /**

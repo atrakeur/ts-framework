@@ -1,4 +1,4 @@
-import {IMultipleResultCallback} from "../../Http/IMultipleResultCallback";
+import {IMultipleResultCallback} from "../IMultipleResultCallback";
 import {IDatabaseDriver} from "./IDatabaseDriver";
 
 /**

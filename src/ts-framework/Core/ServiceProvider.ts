@@ -1,9 +1,9 @@
 import Container = Huject.Container;
 import {Application} from "./Application";
 import {Configuration} from "./Configuration";
-import {Router} from "../Router/Router";
 import {ServiceProviderContract } from "./Contracts/ServiceProviderContract";
 import FactoryMethod = Huject.FactoryMethod;
+import {Router} from "../Http/Router/Router";
 
 
 export abstract class ServiceProvider implements ServiceProviderContract {

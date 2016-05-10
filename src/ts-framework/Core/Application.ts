@@ -5,7 +5,6 @@ import * as Express from "express";
 import { Container } from 'huject'
 import { AutoLoader } from "./AutoLoader";
 import { Configuration } from "./Configuration";
-import { Router } from "../Router/Router";
 
 /**
  * TS-Framework application
@@ -19,12 +18,6 @@ export class Application
      * @type {number}
      */
     public static DEFAULT_PORT = 3000;
-
-    /**
-     * Router object
-     * @type {Router}
-     */
-    public router: Router;
 
     /**
      * AutoLoader object
@@ -77,7 +70,6 @@ export class Application
 
         //Load config and router from container
         this.config = this.container.resolve("Configuration");
-        this.router = this.container.resolve("Router");
 
         // Define some default settings
         //TODO move that to some json files
