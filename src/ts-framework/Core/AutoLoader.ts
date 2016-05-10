@@ -20,6 +20,12 @@ import {ServiceProvider} from "./ServiceProvider";
 export class AutoLoader
 {
 
+    private lookupPaths = [
+        __dirname+"/",                                  //running application path (usercode)
+        __dirname+"/../../ts-framework/",              //from source framework installation (git)
+        __dirname+"/../node_modules/ts-framework/lib"   //distribution framework installation (npm)
+    ];
+
     /**
      * Collection of all service providers
      * @type {{}}
@@ -53,35 +59,42 @@ export class AutoLoader
 
     /**
      * Try to load a file into the framework
-     * @param {string} file
      * @returns {void}
+     * @param filename
      */
-    private loadFile(file: string)
+    private loadFile(filename: string)
     {
-        if (fs.existsSync(file)) {
-            // Require the module
-            let module: Object = require(file);
+        var found = false;
+        this.lookupPaths.forEach((path: string) => {
+            let file = path + filename;
+            if (fs.existsSync(file)) {
+                // Require the module
+                let module: Object = require(file);
 
-            // Since there's a possibility the developer put more than one controller in the
-            // class (not advised), we'll be looping over the object to find possible candidates
-            for (let name in module)
-            {
-                if (module.hasOwnProperty(name))
+                // Since there's a possibility the developer put more than one controller in the
+                // class (not advised), we'll be looping over the object to find possible candidates
+                for (let name in module)
                 {
-                    //The object is a service provider
-                    if (module[name].prototype instanceof ServiceProvider) {
-                        __DEBUG(`Loaded service provider: ${name}`);
-                        //let base = _.kebabCase(name.replace("ServiceProvider", ""));
-                        this.serviceProviders.push(new module[name]());
-                        continue;
-                    }
+                    if (module.hasOwnProperty(name))
+                    {
+                        //The object is a service provider
+                        if (module[name].prototype instanceof ServiceProvider) {
+                            __DEBUG(`Loaded service provider: ${name}`);
+                            //let base = _.kebabCase(name.replace("ServiceProvider", ""));
+                            this.serviceProviders.push(new module[name]());
+                            found = true;
+                            continue;
+                        }
 
-                    // Something is terribly wrong
-                    __DEBUG(`WARNING: Exported object '${name}' in not a valid service provider`);
+                        // Something is terribly wrong
+                        __DEBUG(`WARNING: Exported object '${name}' in not a valid service provider`);
+                    }
                 }
             }
-        } else {
-            __DEBUG("WARNING: File "+file+" not found during startup");
+        });
+
+        if (!found) {
+            __DEBUG("WARNING: File "+filename+" not found during startup");
         }
     }
 
