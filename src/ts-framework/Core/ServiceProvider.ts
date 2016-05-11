@@ -1,9 +1,8 @@
-import Container = Huject.Container;
+import {ServiceProviderContract } from "./Contracts/ServiceProviderContract";
+import {Container, FactoryMethod} from "huject";
 import {Application} from "./Application";
 import {Configuration} from "./Configuration";
-import {ServiceProviderContract } from "./Contracts/ServiceProviderContract";
-import FactoryMethod = Huject.FactoryMethod;
-import {Router} from "../Http/Router/Router";
+import {AutoLoader} from "./AutoLoader";
 
 
 export abstract class ServiceProvider implements ServiceProviderContract {
@@ -22,24 +21,5 @@ export abstract class ServiceProvider implements ServiceProviderContract {
      * @param container
      */
     public abstract start(app: Application, container:Huject.Container);
-
-}
-
-/**
- * Defines the base service provider
- *
- * Basically register all TSFW related classes
- */
-export class TSFWServiceProvider extends ServiceProvider {
-
-    boot(container:Huject.Container) {
-        //Register default framework classes
-        container.register("Configuration", Configuration).as(FactoryMethod.SINGLETON);
-        container.register("Router", Router).as(FactoryMethod.SINGLETON);
-    }
-
-    start(app:Application, container:Huject.Container) {
-        //Start any component that have to be started
-    }
 
 }

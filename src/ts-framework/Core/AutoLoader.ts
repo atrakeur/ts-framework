@@ -2,6 +2,7 @@
 /// <reference path="../../../node_modules/huject/huject.d.ts" />
 
 import * as fs from "fs";
+import * as path from "path";
 import * as _ from "lodash";
 
 import {__DEBUG} from "./Debug";
@@ -21,9 +22,10 @@ export class AutoLoader
 {
 
     private lookupPaths = [
-        __dirname+"/",                                  //running application path (usercode)
-        __dirname+"/../../ts-framework/",              //from source framework installation (git)
-        __dirname+"/../node_modules/ts-framework/lib"   //distribution framework installation (npm)
+        path.normalize(__dirname+"/"),                                      //running application path (usercode)
+        path.normalize(__dirname+"/../../ts-framework/"),                   //from source framework installation (git)
+        path.normalize(__dirname+"/../../ts-framework-tests/"),              //from source framework installation test (git)
+        path.normalize(__dirname+"/../node_modules/ts-framework/lib")       //distribution framework installation (npm)
     ];
 
     /**
@@ -49,6 +51,13 @@ export class AutoLoader
     }
 
     /**
+     * @returns {string[]} the list of path to lookup when loading
+     */
+    public getLookupPath() {
+        return this.lookupPaths;
+    }
+
+    /**
      * Add and trigger a service provider
      * @param serviceProvider
      */
@@ -62,10 +71,10 @@ export class AutoLoader
      * @returns {void}
      * @param filename
      */
-    private loadFile(filename: string)
+    loadFile(filename: string)
     {
         var found = false;
-        this.lookupPaths.forEach((path: string) => {
+        var module = this.lookupPaths.forEach((path: string) => {
             let file = path + filename;
             if (fs.existsSync(file)) {
                 // Require the module
@@ -87,7 +96,7 @@ export class AutoLoader
                         }
 
                         // Something is terribly wrong
-                        __DEBUG(`WARNING: Exported object '${name}' in not a valid service provider`);
+                        return module;
                     }
                 }
             }
@@ -96,6 +105,8 @@ export class AutoLoader
         if (!found) {
             __DEBUG("WARNING: File "+filename+" not found during startup");
         }
+
+        return module;
     }
 
     /**
