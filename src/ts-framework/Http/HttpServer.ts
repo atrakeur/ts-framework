@@ -1,6 +1,7 @@
 import * as Express from "express";
 import { Inject } from "huject";
 import {ConfigurationContract} from "../Core/Contracts/ConfigurationContract";
+import {__DEBUG, __INFO} from "../Core/Debug";
 
 /**
  * Provides an http server to the application
@@ -24,8 +25,7 @@ export class HttpServer {
         this.express.listen(this.config.get("port"));
 
         // Display a start message
-        console.log("");
-        console.log("Server listening on port: %d", this.config.get("port"));
+        __INFO("Server listening on port: " + this.config.get("port"));
     }
 
     public getExpress(): Express.Application {

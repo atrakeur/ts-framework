@@ -5,6 +5,7 @@ import * as Express from "express";
 import { Container } from 'huject'
 import { AutoLoader } from "./AutoLoader";
 import { Configuration } from "./Configuration";
+import {__DEBUG, __INFO} from "./Debug";
 
 /**
  * TS-Framework application
@@ -119,6 +120,7 @@ export class Application
     {
         //Start each service. After this line the application is started and wait for requests
         this.loader.start();
+        __INFO("Application fully started");
     }
 
     /**

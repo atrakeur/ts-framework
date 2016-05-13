@@ -10,6 +10,7 @@ import {Response} from "../Response";
 import {IActionResult} from "../../View/IActionResult";
 
 import { Container, Inject } from 'huject'
+import {__INFO} from "../../Core/Debug";
 
 /**
  * Router script used to register and dispatch routes
@@ -63,6 +64,7 @@ export class Router
      */
     private dispatch(route: Route): Function
     {
+        var container = this.container;
         return function (req: Express.Request, res: Express.Response, next: Function)
         {
             res.header("X-Powered-By", "TS-Framework");
@@ -73,7 +75,7 @@ export class Router
             // Get parameters
 
             //Create a copy of the controller
-            var controller = this.container.resolve(route.getController());
+            var controller = container.resolve(route.getController());
 
             //Set request and responce
             let request: Request = new Request(req);

@@ -5,7 +5,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as _ from "lodash";
 
-import {__DEBUG} from "./Debug";
+import {__DEBUG, __INFO, __WARNING} from "./Debug";
 import {AutoLoaderException} from "./Exception";
 import {Container} from "huject";
 import {Application} from "./Application";
@@ -103,7 +103,7 @@ export class AutoLoader
         });
 
         if (!found) {
-            __DEBUG("WARNING: File "+filename+" not found during startup");
+            __WARNING("File "+filename+" not found during startup");
         }
 
         return module;

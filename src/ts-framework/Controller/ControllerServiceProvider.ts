@@ -4,7 +4,7 @@ import {ServiceProvider} from "../Core/ServiceProvider";
 import * as fs from "fs";
 import * as pathUtils from "path";
 import * as _ from "lodash";
-import {__DEBUG} from "../Core/Debug";
+import {__DEBUG, __INFO} from "../Core/Debug";
 import {AutoLoader} from "../Core/AutoLoader";
 import {Controller} from "./Controller";
 import Container = Huject.Container;
