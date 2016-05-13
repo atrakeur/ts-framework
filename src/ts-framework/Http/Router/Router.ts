@@ -46,7 +46,7 @@ export class Router
         this.attachRouteToServer(route);
 
         // Debug message
-        __DEBUG(`Registered route: ${path} (controller = ${name}, action = ${action}`);
+        __DEBUG(`Registered route: ${methods} ${path} to ${action}`);
     }
 
     private attachRouteToServer(route: Route): void

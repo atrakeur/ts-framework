@@ -8,6 +8,7 @@ import {__DEBUG} from "../Core/Debug";
 import {AutoLoader} from "../Core/AutoLoader";
 import {Controller} from "./Controller";
 import Container = Huject.Container;
+import {RouterContract} from "../Core/Contracts/RouterContract";
 
 /**
  * Service provider to bootstrap all controllers
@@ -62,6 +63,26 @@ export class ControllerServiceProvider extends ServiceProvider {
 
                     //Register to the IoC
                     container.register(name, module[name]);
+
+                    //Register annotated routes
+                    var router: RouterContract = container.resolve("Router");
+                    var controller = container.resolve(name);
+                    for (var route in controller.decorate.routes) {
+                        //Extract value from decorators or use defaults
+                        var controllerPath = (controller.decorate.path ? controller.decorate.path: name.replace("Controller", "").toLowerCase());
+                        var actionPath = (controller.decorate.routes[route].path ? controller.decorate.routes[route].path: route);
+                        var methods = (controller.decorate.routes[route].method ? controller.decorate.routes[route].method : ['GET']);
+
+                        //Transform indexes to nothing (well to act like an index..)
+                        controllerPath = controllerPath.replace("Index", "/").replace("index", "/");
+                        actionPath     = actionPath.replace("Index", "/").replace("index", "/");
+
+                        var fullPath = controllerPath + actionPath;
+                        fullPath = fullPath.replace("//", "/");  //Fixes multiples useless slashes
+
+                        //Register route from path using the ControllerClass@method syntax
+                        router.registerRoute(methods, fullPath, name+"@"+route);
+                    }
 
                     continue;
                 }

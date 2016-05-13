@@ -12,6 +12,7 @@ export class TSFWServiceProvider extends ServiceProvider {
 
     boot(container:Huject.Container) {
         //Register default framework classes
+        container.register("Container", container);
         container.register("AutoLoader", AutoLoader).as(FactoryMethod.SINGLETON);
         container.register("Configuration", Configuration).as(FactoryMethod.SINGLETON);
     }
