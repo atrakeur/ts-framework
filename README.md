@@ -15,40 +15,10 @@ $ typings install
 $ npm test // app test
 ```
 
-## Installation
-
-Install the latest stable release of TSFramework:
-
-```sh
-$ sudo npm install -g tsfw-cli
-```
-
-Note: Don’t use `sudo` if you’re using Windows.
-
-## Create a New TSFramework Project
-
-Create a new app:
-
-```sh
-$ tsfw new testProject
-```
-
-Run your app:
-
-```sh
-$ cd testProject
-$ tsfw start
-```
-
-And Voilà, your application has started. Visit [http://localhost:3000](http://localhost:3000) and you should see the default homepage.
-
-## Documentation
-
-<a href="http://tsframework.github.io/documentation" target="_blank">TSFramework</a>
-
 ## Team
 * [Jhon Mike](https://github.com/jhonmike)
 * [Luke Paris](https://github.com/Paradoxis)
+* [Valentin Letourneur](https://github.com/atrakeur)
 * [Petr Tomášek](https://github.com/petrck)
 
 ## License
