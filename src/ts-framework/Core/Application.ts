@@ -1,9 +1,11 @@
 /// <reference path="../../../typings/main.d.ts" />
+/// <reference path="../../../node_modules/huject/huject.d.ts" />
 
 import * as Express from "express";
-import {AutoLoader} from "./AutoLoader";
-import {Configuration} from "./Configuration";
-import {Router} from "../Router/Router";
+import { Container } from 'huject'
+import { AutoLoader } from "./AutoLoader";
+import { Configuration } from "./Configuration";
+import {__DEBUG, __INFO} from "./Debug";
 
 /**
  * TS-Framework application
@@ -17,12 +19,6 @@ export class Application
      * @type {number}
      */
     public static DEFAULT_PORT = 3000;
-
-    /**
-     * Router object
-     * @type {Router}
-     */
-    public router: Router;
 
     /**
      * AutoLoader object
@@ -42,22 +38,42 @@ export class Application
      */
     private express: Express.Application;
 
+    /**
+     * Injection of dependencies container
+     * @type {Huject.Container}
+     */
+    private container = new Container();
+
 
     /**
      * Application constructor
      * Developer must define the default root directory of the application
      * @param {string} rootDirectory
+     * @param {string[]} serviceProviders
      */
-    public constructor(private rootDirectory: string)
+    public constructor(private rootDirectory: string, private serviceProviders: string[])
     {
         // Print a pretty header
         this.printHeader();
 
         // Initialize router and configuration manager
-        this.config = new Configuration();
-        this.router = new Router();
+        this.container = new Container();
 
-        // Define default settings
+        //Bind all service providers to the autoloader
+        this.loader = new AutoLoader(this, this.container);
+        serviceProviders.forEach(serviceProvider => {
+            this.loader.addServiceProvider(serviceProvider);
+        });
+
+        //Boot each services. They are registered to the container after this line
+        this.loader.load();
+        this.loader.boot();
+
+        //Load config and router from container
+        this.config = this.container.resolve("Configuration");
+
+        // Define some default settings
+        //TODO move that to some json files
         this.config.set('env', Application.getEnvironment());
         this.config.set('port', Application.DEFAULT_PORT);
         this.config.set('static.path', 'public');
@@ -98,63 +114,13 @@ export class Application
 
     /**
      * Registers all controllers and models accordingly, and starts the express server
-     * @param {number|null} port
      * @returns {void}
      */
-    public start(port: number = null): void
+    public start(): void
     {
-        // If no port was given, fetch from config or use the default port
-        if (port == null) {
-            port =  this.config.get("port") || Application.DEFAULT_PORT;
-        }
-
-        // Build all dependencies
-        this.initializeExpress();
-        this.loadAutoLoader();
-        this.registerRoutes();
-
-        // Make express listen
-        this.express.listen(port);
-
-        // Display a start message
-        console.log("");
-        console.log("Server listening on port: %d", port);
-    }
-
-    /**
-     * Loads all dependencies from the models and controllers directories
-     * @returns {void}
-     */
-    private loadAutoLoader(): void
-    {
-        // Check if an auto-loader is defined
-        // If not, it will try to add models and controllers from the default routes
-        if (this.loader == null) {
-            this.loader = new AutoLoader();
-            this.loader.addDirectory(`${this.rootDirectory}/app/models/`);
-            this.loader.addDirectory(`${this.rootDirectory}/app/controllers/`);
-        }
-
-        // AutoLoad all models and controllers
-        this.loader.load();
-    }
-
-    /**
-     * Register all routes in the router
-     * @returns {void}
-     */
-    private registerRoutes(): void
-    {
-        this.router.registerRoutes( this.loader.getControllers(), this.express );
-    }
-
-    /**
-     * Initialize the express application
-     * @returns {void}
-     */
-    private initializeExpress(): void
-    {
-        this.express = Express();
+        //Start each service. After this line the application is started and wait for requests
+        this.loader.start();
+        __INFO("Application fully started");
     }
 
     /**

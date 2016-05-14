@@ -1,55 +1,119 @@
 /// <reference path="../../../typings/main.d.ts" />
+/// <reference path="../../../node_modules/huject/huject.d.ts" />
+
 import * as fs from "fs";
+import * as path from "path";
 import * as _ from "lodash";
 
-import {__DEBUG} from "./Debug";
+import {__DEBUG, __INFO, __WARNING} from "./Debug";
 import {AutoLoaderException} from "./Exception";
-import {Controller} from "../Controller/Controller";
-import {ControllerCollection} from "../Controller/ControllerCollection";
-import {Model} from "../Model/Model";
-import {ModelCollection} from "../Model/ModelCollection";
+import {Container} from "huject";
+import {Application} from "./Application";
+import {ServiceProvider} from "./ServiceProvider";
 
 /**
  * AutoLoader class
- * Responsible for require'ing all models and controllers
+ * This class handle all the autoloading of the application
+ *
+ * Basicaly it execute each ServiceProvider boot and start methods.
+ * Each of them is then responsible to register every service to the application and container
  */
 export class AutoLoader
 {
-    /**
-     * Collection of all models
-     * Format: name => model object
-     * @type {Object}
-     */
-    private models: ModelCollection = {};
+
+    private lookupPaths = [
+        path.normalize(__dirname+"/"),                                      //running application path (usercode)
+        path.normalize(__dirname+"/../../ts-framework/"),                   //from source framework installation (git)
+        path.normalize(__dirname+"/../../ts-framework-tests/"),              //from source framework installation test (git)
+        path.normalize(__dirname+"/../node_modules/ts-framework/lib")       //distribution framework installation (npm)
+    ];
 
     /**
-     * Collection of all controllers
-     * Format: name => controller object
-     * @type {Object}
+     * Collection of all service providers
+     * @type {{}}
      */
-    private controllers: ControllerCollection = {};
-
+    private serviceProviders = [];
 
     /**
-     * Directory include paths
-     * @see AutoLoader#addDirectory()
-     * @type {string[]}
+     * Collection of all service providers
+     * @type {{}}
      */
-    private directories: string[] = [];
+    private serviceProvidersFiles = [];
 
     /**
-     * Add a directory to the list of auto-loaders
-     * Checks if the path exists before registering it in the directory index
-     * @param {string} directory
-     * @returns {void}
+     * Create a new Autoloader that will load instances to the given container
+     * @param application
+     * @param container the dependency injection container to fill
      */
-    public addDirectory(directory: string): void
+    public constructor(private application: Application, private container: Container)
     {
-        if (fs.existsSync(directory)) {
-            this.directories.push(directory);
-        } else {
-            throw new AutoLoaderException(`Directory '${directory}' does not exist!`);
+        //empty
+    }
+
+    /**
+     * @returns {string[]} the list of path to lookup when loading
+     */
+    public getLookupPath() {
+        return this.lookupPaths;
+    }
+
+    /**
+     * Add and trigger a service provider
+     * @param serviceProvider
+     */
+    public addServiceProvider(serviceProvider: string): void
+    {
+        this.serviceProvidersFiles.push(serviceProvider);
+    }
+
+    /**
+     * Try to load a file into the framework
+     * @returns {void}
+     * @param filename
+     */
+    loadFile(filename: string)
+    {
+        var found = false;
+        var module = this.lookupPaths.forEach((path: string) => {
+            let file = path + filename;
+            if (fs.existsSync(file)) {
+                // Require the module
+                let module: Object = require(file);
+
+                // Since there's a possibility the developer put more than one controller in the
+                // class (not advised), we'll be looping over the object to find possible candidates
+                for (let name in module)
+                {
+                    if (module.hasOwnProperty(name))
+                    {
+                        //The object is a service provider
+                        if (module[name].prototype instanceof ServiceProvider) {
+                            __DEBUG(`Loaded service provider: ${name}`);
+                            //let base = _.kebabCase(name.replace("ServiceProvider", ""));
+                            this.serviceProviders.push(new module[name]());
+                            found = true;
+                            continue;
+                        }
+
+                        // Something is terribly wrong
+                        return module;
+                    }
+                }
+            }
+        });
+
+        if (!found) {
+            __WARNING("File "+filename+" not found during startup");
         }
+
+        return module;
+    }
+
+    /**
+     * @returns {Array} of all service providers registered
+     */
+    public getServiceProviders() {
+        return this.serviceProviders;
     }
 
     /**
@@ -58,83 +122,23 @@ export class AutoLoader
      */
     public load(): void
     {
-        // Loop over all the directories
-        this.directories.forEach(directory => {
-
-            // Load all files from the directory and loop over them
-            fs.readdirSync(directory).forEach(file => {
-
-                // Skip source mappings or definition files
-                if (_.endsWith(file, ".d.ts") || _.endsWith(file, ".js.map")) {
-                    return;
-                }
-
-                // Check if file file is a controller
-                if (_.endsWith(file, "Controller.js") || _.endsWith(file, "Model.js")) {
-                    this.loadAbstract(directory, file);
-                    return;
-                }
-
-                // File doesn't seem to match any of the signatures, lets warn the user
-                console.warn(`File '${file}' in '${directory}' doesn't match controller or model name signature!`);
-            });
+        this.serviceProvidersFiles.forEach(serviceProvider => {
+            this.loadFile(serviceProvider);
         });
     }
 
     /**
-     * Require a file, and load the controllers/models in it into their designated directories
-     * @param {string} directory
-     * @param {string} file
-     * @returns {void}
+     * Boot all services providers
      */
-    private loadAbstract(directory: string, file: string)
-    {
-        // Require the module
-        let module: Object = require(directory + file);
-
-        // Since there's a possibility the developer put more than one controller in the
-        // class (not advised), we'll be looping over the object to find possible candidates
-        for (let name in module)
-        {
-            if (module.hasOwnProperty(name))
-            {
-                // The object in the module is a controller
-                if (module[name].prototype instanceof Controller) {
-                    __DEBUG(`Loaded controller: ${file}`);
-                    let base = _.kebabCase(name.replace("Controller", ""));
-                    this.controllers[base] = new module[name]();
-                    continue;
-                }
-
-                // The object in the module is a model
-                if (module[name].prototype instanceof Model) {
-                    __DEBUG(`Loaded model: ${file}`);
-                    let base = _.kebabCase(name.replace("Model", ""));
-                    this.models[base] = new module[name]();
-                    continue;
-                }
-
-                // Something is terribly wrong
-                __DEBUG(`Exported object '${name}' in '${file}' is neither a model nor a controller`);
-            }
-        }
+    public boot() {
+        this.serviceProviders.forEach(serviceProvider => {
+            serviceProvider.boot(this.container);
+        });
     }
 
-    /**
-     * Returns the collection of controllers that were found by AutoLoader#load()
-     * @returns {ControllerCollection}
-     */
-    public getControllers(): ControllerCollection
-    {
-        return this.controllers;
-    }
-
-    /**
-     * Returns the collection of models that were found by AutoLoader#load()
-     * @returns {ModelCollection}
-     */
-    public getModels(): ModelCollection
-    {
-        return this.models;
+    public start() {
+        this.serviceProviders.forEach(serviceProvider => {
+            serviceProvider.start(this.application, this.container);
+        });
     }
 }
