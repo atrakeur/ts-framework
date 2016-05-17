@@ -98,15 +98,16 @@ export class Application
      */
     private printHeader(): void
     {
-        console.log("-----------------------------------------------------------------------------     ");
-        console.log("   ___________       ______                                             __        ");
-        console.log("  /_  __/ ___/      / ____/________ _____ ___  ___ _      ______  _____/ /__      ");
-        console.log("   / /  \\__ \\______/ /_  / ___/ __ `/ __ `__ \\/ _ \\ | /| / / __ \\/ ___/ //_/ ");
-        console.log("  / /  ___/ /_____/ __/ / /  / /_/ / / / / / /  __/ |/ |/ / /_/ / /  / ,<         ");
-        console.log(" /_/  /____/     /_/   /_/   \\__,_/_/ /_/ /_/\\___/|__/|__/\\____/_/  /_/|_|     ");
-        console.log("                                                                                  ");
-        console.log(" GitHub:  %s                                  ", Application.getRepositoryAddress());
-        console.log(" Version: %s                                            ", Application.getVersion());
-        console.log("-----------------------------------------------------------------------------     ");
+        console.log("-----------------------------------------------------------------------------         ");
+        console.log("   ___________       ______                                             __            ");
+        console.log("  /_  __/ ___/      / ____/________ _____ ___  ___ _      ______  _____/ /__          ");
+        console.log("   / /  \\__ \\______/ /_  / ___/ __ `/ __ `__ \\/ _ \\ | /| / / __ \\/ ___/ //_/     ");
+        console.log("  / /  ___/ /_____/ __/ / /  / /_/ / / / / / /  __/ |/ |/ / /_/ / /  / ,<             ");
+        console.log(" /_/  /____/     /_/   /_/   \\__,_/_/ /_/ /_/\\___/|__/|__/\\____/_/  /_/|_|         ");
+        console.log("                                                                                      ");
+        console.log(" GitHub:  %s                                      ", Application.getRepositoryAddress());
+        console.log(" Version: %s                                                ", Application.getVersion());
+        console.log(" Config:  %s                                            ", Application.getEnvironment());
+        console.log("-----------------------------------------------------------------------------         ");
     }
 }

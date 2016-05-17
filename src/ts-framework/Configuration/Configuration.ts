@@ -10,8 +10,6 @@ import {Application} from "../Core/Application";
 
 /**
  * Configuration container used to store data on runtime
- * @todo Throwing an exception when calling Configuration#get() if the key is not found would be smarter, as it's instantly clear a key doesn't exist
- * @todo Proposal to make Configuration#set() read-only, so it can't be overwritten once set
  */
 export class Configuration implements ConfigurationContract
 {
@@ -23,29 +21,25 @@ export class Configuration implements ConfigurationContract
 
     load() {
         //Force env
-        this.nconf.overrides({"env": Application.getEnvironment()});
+        this.fixes("env", Application.getEnvironment());
 
         var instance = this.nconf;
         this.autoloader.getLookupPath().forEach(function(path) {
             if(fs.existsSync(path + 'config.json')) {
                 instance.file(path + 'config.json');
-                __INFO("Loading default config config.json");
             }
         });
 
         var env = this.get("env");
-        __INFO("Set application env to "+env);
 
         if (env) {
             this.autoloader.getLookupPath().forEach(function(path) {
                 if (fs.existsSync(path + 'config."+env+".json')) {
                     instance.file(path + 'config.json');
-                    __INFO("Loading " + env + " env config config." + env + ".json");
                 }
             });
         }
 
-        __INFO("Loading args config");
         this.nconf.argv();
     }
 
@@ -62,7 +56,6 @@ export class Configuration implements ConfigurationContract
 
     /**
      * Set a key in the configuration
-     * @todo Why are we splitting the key exactly, can't we just store it as is? ~@Paradoxis
      * @param {string} key
      * @param {*} value
      * @returns {void}
@@ -70,5 +63,16 @@ export class Configuration implements ConfigurationContract
     set(key: string, value: any)
     {
         this.nconf.set(key, value);
+    }
+
+    /**
+     * Fixes a key to a given value
+     * All next calls to set this key will be forgotten
+     * @param key
+     * @param value
+     */
+    fixes(key: string, value: any)
+    {
+        this.nconf.overrides({key: value});
     }
 }
