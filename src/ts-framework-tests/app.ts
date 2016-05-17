@@ -2,6 +2,7 @@ import {Application} from "../ts-framework/Core";
 
 let services = [
     "Core/TSFWServiceProvider.js",
+    "Configuration/ConfigurationServiceProvider.js",
     "Http/HttpServiceProvider.js",
     "Controller/ControllerServiceProvider.js"
 ];

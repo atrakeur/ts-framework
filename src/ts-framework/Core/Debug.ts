@@ -28,6 +28,7 @@ export function __ERROR(...args: any[])
 }
 
 export function __PRINT(severity: string, ...args: any[]) {
+
     if (Application.getEnvironment() === "development") {
         args.unshift("["+severity+"]");
         console.log.apply(null, args);

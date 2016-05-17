@@ -1,10 +1,8 @@
 /// <reference path="../../../typings/main.d.ts" />
 /// <reference path="../../../node_modules/huject/huject.d.ts" />
 
-import * as Express from "express";
 import { Container } from 'huject'
 import { AutoLoader } from "./AutoLoader";
-import { Configuration } from "./Configuration";
 import {__DEBUG, __INFO} from "./Debug";
 
 /**
@@ -14,29 +12,12 @@ import {__DEBUG, __INFO} from "./Debug";
  */
 export class Application
 {
-    /**
-     * Default port used by the application in development mode
-     * @type {number}
-     */
-    public static DEFAULT_PORT = 3000;
 
     /**
      * AutoLoader object
      * @type {AutoLoader}
      */
     private loader: AutoLoader;
-
-    /**
-     * Configuration object
-     * @type {Configuration}
-     */
-    private config: Configuration;
-
-    /**
-     * Express server we're creating a wrapper for
-     * @type {Express.Application}
-     */
-    private express: Express.Application;
 
     /**
      * Injection of dependencies container
@@ -68,18 +49,6 @@ export class Application
         //Boot each services. They are registered to the container after this line
         this.loader.load();
         this.loader.boot();
-
-        //Load config and router from container
-        this.config = this.container.resolve("Configuration");
-
-        // Define some default settings
-        //TODO move that to some json files
-        this.config.set('env', Application.getEnvironment());
-        this.config.set('port', Application.DEFAULT_PORT);
-        this.config.set('static.path', 'public');
-        this.config.set('view.path', 'app/views');
-        this.config.set('view.engine', 'ejs');
-        this.config.set('view.layout', false);
     }
 
     /**
@@ -88,7 +57,7 @@ export class Application
      */
     public static getEnvironment()
     {
-        return ((process.env.NODE_ENV == null) ? 'development' : process.env.NODE_ENV);
+        return ((process.env.NODE_ENV == null) ? 'dev' : process.env.NODE_ENV);
     }
 
     /**
