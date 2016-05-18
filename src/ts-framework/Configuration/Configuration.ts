@@ -19,7 +19,9 @@ export class Configuration implements ConfigurationContract
 
     load() {
         //Force env
+        this.nconf.use('memory');
         this.fixes("env", Application.getEnvironment());
+        this.set("port", 3000);
 
         var instance = this.nconf;
         this.autoloader.getLookupPath().forEach(function(path) {
