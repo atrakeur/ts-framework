@@ -1,5 +1,4 @@
 import { Controller } from "./Controller";
-import {__DEBUG} from "../Core/Debug";
 
 /**
  * Annotate a controller with some properties

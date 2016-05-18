@@ -1,10 +1,11 @@
 import * as _ from "lodash";
 import * as fs from "fs";
-import {__INFO} from "../Core/Debug";
-import {ConfigurationContract} from "../Core/Contracts/ConfigurationContract";
+
 import {Inject} from "huject";
-import {AutoLoader} from "../Core/AutoLoader";
-import {Application} from "../Core/Application";
+import {ConfigurationContract} from "../Core/Contracts/ConfigurationContract";
+import {ApplicationContract} from "../Core/Contracts/ApplicationContract";
+import {DebugContract} from "../Core/Contracts/DebugContract";
+import {AutoLoaderContract} from "../Core/Contracts/AutoLoaderContract";
 
 /**
  * Configuration container used to store data on runtime
@@ -15,12 +16,16 @@ export class Configuration implements ConfigurationContract
     private nconf = require('nconf');
 
     @Inject("AutoLoader")
-    private autoloader: AutoLoader;
+    private autoloader: AutoLoaderContract;
+
+    @Inject("Application")
+    private application: ApplicationContract;
 
     load() {
-        //Force env
+        //Force env & version
         this.nconf.use('memory');
-        this.fixes("env", Application.getEnvironment());
+        this.set("env", this.application.getEnvironment());
+        this.set("tsfw-version", this.application.getVersion());
         this.set("port", 3000);
 
         var instance = this.nconf;
@@ -63,16 +68,5 @@ export class Configuration implements ConfigurationContract
     set(key: string, value: any)
     {
         this.nconf.set(key, value);
-    }
-
-    /**
-     * Fixes a key to a given value
-     * All next calls to set this key will be forgotten
-     * @param key
-     * @param value
-     */
-    fixes(key: string, value: any)
-    {
-        this.nconf.overrides({key: value});
     }
 }

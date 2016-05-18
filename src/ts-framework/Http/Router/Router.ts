@@ -1,6 +1,5 @@
 import * as Express from "express";
 
-import {__DEBUG} from "../../Core/Debug";
 import {HttpServer} from "../HttpServer";
 import {RouteCollection} from "./RouteCollection";
 import {Route} from "./Route";
@@ -9,13 +8,15 @@ import {Response} from "../Response";
 import {IActionResult} from "../../View/IActionResult";
 
 import { Container, Inject } from 'huject'
-import {__INFO} from "../../Core/Debug";
+import { ConfigurationContract } from "../../Core/Contracts/ConfigurationContract";
+import {RouterContract} from "../../Core/Contracts/RouterContract";
+import {DebugContract} from "../../Core/Contracts/DebugContract";
 
 /**
  * Router script used to register and dispatch routes
  * Routes must be able to use /path/:id syntax
  */
-export class Router
+export class Router implements RouterContract
 {
     @Inject("HttpServer")
     private httpServer: HttpServer;
@@ -23,19 +24,74 @@ export class Router
     @Inject("Container")
     private container: Container;
 
+    @Inject("Configuration")
+    private configuration: ConfigurationContract;
+
+    @Inject("Debug")
+    private debug: DebugContract;
+
     /**
      * All registered routes
      * @type {Array}
      */
-    public routes: RouteCollection = {};
+    private routes: RouteCollection = {};
 
     /**
-     * Register a route
+     * Create a get route
+     * @param path
+     * @param action
+     */
+    public get(path: string, action: string) {
+        return this.route(['GET'], path, action);
+    }
+
+    /**
+     * Create a post route
+     * @param path
+     * @param action
+     * @returns {undefined}
+     */
+    public post(path: string, action: string) {
+        return this.route(['POST'], path, action);
+    }
+
+    /**
+     * Create a put route
+     * @param path
+     * @param action
+     * @returns {undefined}
+     */
+    public put(path: string, action: string) {
+        return this.route(['PUT'], path, action);
+    }
+
+    /**
+     * Create a delete route
+     * @param path
+     * @param action
+     * @returns {undefined}
+     */
+    public delete(path: string, action: string) {
+        return this.route(['DELETE'], path, action);
+    }
+
+    /**
+     * Create a patch route
+     * @param path
+     * @param action
+     * @returns {undefined}
+     */
+    public patch(path: string, action: string) {
+        return this.route(['PATCH'], path, action);
+    }
+
+    /**
+     * Register a generic route
      * @param methods
      * @param path
      * @param action
      */
-    public registerRoute(methods: string[], path:string, action: string) {
+    public route(methods: string[], path:string, action: string) {
         let route = new Route();
         route.methods = methods;
         route.path = path;
@@ -46,9 +102,13 @@ export class Router
         this.attachRouteToServer(route);
 
         // Debug message
-        __DEBUG(`Registered route: ${methods} ${path} to ${action}`);
+        this.debug.__DEBUG(`Registered route: ${methods} ${path} to ${action}`);
     }
 
+    /**
+     * Attach route to express server
+     * @param route
+     */
     private attachRouteToServer(route: Route): void
     {
         route.methods.forEach(method => {
@@ -63,10 +123,20 @@ export class Router
      */
     private dispatch(route: Route): Function
     {
-        var container = this.container;
+        let container = this.container;
+        let configuration = this.configuration;
+        let debug = this.debug;
+
         return function (req: Express.Request, res: Express.Response, next: Function)
         {
-            res.header("X-Powered-By", "TS-Framework");
+            //Display framework version in debug mode
+            if (configuration.get("debug")) {
+                var tsfwVersion = configuration.get("tsfw-version");
+                res.header("X-Powered-By", "TS-Framework "+tsfwVersion);
+            } else {
+                res.header("X-Powered-By", "TS-Framework");
+            }
+
 
             // Request parameters don't match target?
             // Dispatch 404
@@ -96,7 +166,7 @@ export class Router
                 }
 
                 //Log it
-                __DEBUG(`[${req.ip}] (${req.statusCode || 200}) ${req.method} ${req.path}`);
+                debug.__DEBUG(`[${req.ip}] (${req.statusCode || 200}) ${req.method} ${req.path}`);
             };
             controller.__setSend(send);
 

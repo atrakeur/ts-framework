@@ -5,11 +5,11 @@ import * as fs from "fs";
 import * as path from "path";
 import * as _ from "lodash";
 
-import {__DEBUG, __INFO, __WARNING} from "./Debug";
 import {AutoLoaderException} from "./Exception";
 import {Container} from "huject";
 import {Application} from "./Application";
 import {ServiceProvider} from "./ServiceProvider";
+import {AutoLoaderContract} from "./Contracts/AutoLoaderContract";
 
 /**
  * AutoLoader class
@@ -18,7 +18,7 @@ import {ServiceProvider} from "./ServiceProvider";
  * Basicaly it execute each ServiceProvider boot and start methods.
  * Each of them is then responsible to register every service to the application and container
  */
-export class AutoLoader
+export class AutoLoader implements AutoLoaderContract
 {
 
     private lookupPaths = [
@@ -74,6 +74,7 @@ export class AutoLoader
     loadFile(filename: string)
     {
         var found = false;
+
         var module = this.lookupPaths.forEach((path: string) => {
             let file = path + filename;
             if (fs.existsSync(file)) {
@@ -88,7 +89,6 @@ export class AutoLoader
                     {
                         //The object is a service provider
                         if (module[name].prototype instanceof ServiceProvider) {
-                            __DEBUG(`Loaded service provider: ${name}`);
                             //let base = _.kebabCase(name.replace("ServiceProvider", ""));
                             this.serviceProviders.push(new module[name]());
                             found = true;
@@ -103,7 +103,7 @@ export class AutoLoader
         });
 
         if (!found) {
-            __WARNING("File "+filename+" not found during startup");
+            throw new AutoLoaderException("Service Provider "+filename+" not found during startup");
         }
 
         return module;

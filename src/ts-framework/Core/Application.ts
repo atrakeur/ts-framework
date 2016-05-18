@@ -3,14 +3,14 @@
 
 import { Container } from 'huject'
 import { AutoLoader } from "./AutoLoader";
-import {__DEBUG, __INFO} from "./Debug";
+import {ApplicationContract} from "./Contracts/ApplicationContract";
 
 /**
  * TS-Framework application
  * This class is a wrapper around the default express server
  * It will load controllers, models and routes automatically
  */
-export class Application
+export class Application implements ApplicationContract
 {
 
     /**
@@ -37,11 +37,13 @@ export class Application
         // Print a pretty header
         this.printHeader();
 
-        // Initialize router and configuration manager
+        // Initialize IoC container
         this.container = new Container();
+        this.container.register("Application", this);
 
         //Bind all service providers to the autoloader
         this.loader = new AutoLoader(this, this.container);
+        this.container.register("AutoLoader", this.loader);
         serviceProviders.forEach(serviceProvider => {
             this.loader.addServiceProvider(serviceProvider);
         });
@@ -55,7 +57,7 @@ export class Application
      * Checks wether the project should run as development mode or production mode
      * @returns {string}
      */
-    public static getEnvironment()
+    public getEnvironment()
     {
         return ((process.env.NODE_ENV == null) ? 'dev' : process.env.NODE_ENV);
     }
@@ -64,7 +66,7 @@ export class Application
      * Get the version specified in package.json
      * @returns {string|number}
      */
-    private static getVersion()
+    public getVersion()
     {
         return require('root-require')('package.json').version
     }
@@ -89,7 +91,6 @@ export class Application
     {
         //Start each service. After this line the application is started and wait for requests
         this.loader.start();
-        __INFO("Application fully started");
     }
 
     /**
@@ -106,8 +107,8 @@ export class Application
         console.log(" /_/  /____/     /_/   /_/   \\__,_/_/ /_/ /_/\\___/|__/|__/\\____/_/  /_/|_|         ");
         console.log("                                                                                      ");
         console.log(" GitHub:  %s                                      ", Application.getRepositoryAddress());
-        console.log(" Version: %s                                                ", Application.getVersion());
-        console.log(" Config:  %s                                            ", Application.getEnvironment());
+        console.log(" Version: %s                                                       ", this.getVersion());
+        console.log(" Config:  %s                                                   ", this.getEnvironment());
         console.log("-----------------------------------------------------------------------------         ");
     }
 }
