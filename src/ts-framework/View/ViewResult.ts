@@ -2,9 +2,7 @@ import {IActionResult} from "./IActionResult";
 import {Response} from "../Http/Response";
 
 /**
- * TS-Framework ViewResult
- * This class contains redirect result
- * Methods are calling from HttpController, when user want return content from controller
+ * Respond to a request with a view
  */
 export class ViewResult implements IActionResult
 {
@@ -21,6 +19,8 @@ export class ViewResult implements IActionResult
      */
     execute(response: Response)
     {
+        //TODO defer with the use of https://github.com/tj/consolidate.js
+        //TODO this is to avoid getting too tied with express
         response.sendView(this.template, this.options);
     }
 }

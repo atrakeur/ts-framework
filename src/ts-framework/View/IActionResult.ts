@@ -1,6 +1,8 @@
 import {Response} from "../Http/Response";
 
-/** IActionResult interface for a response */
+/**
+ * Defines a result from an action (IE a controller)
+ */
 export interface IActionResult
 {
     /**

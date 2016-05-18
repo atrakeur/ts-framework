@@ -64,11 +64,20 @@ export class Application implements ApplicationContract
 
     /**
      * Get the version specified in package.json
-     * @returns {string|number}
+     * @returns {string}
      */
     public getVersion()
     {
         return require('root-require')('package.json').version
+    }
+
+    /**
+     * Get the root directory of the application
+     * @returns {string}
+     */
+    public getRootDirectory()
+    {
+        return this.rootDirectory;
     }
 
     /**
