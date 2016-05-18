@@ -1,6 +1,8 @@
+import {Inject} from 'huject';
 import {IActionResult} from "./IActionResult";
 import {Response} from "../Http/Response";
 import * as path from 'path';
+import {ApplicationContract} from "../Core/Contracts/ApplicationContract";
 
 /**
  * TS-Framework FileResult
@@ -8,6 +10,9 @@ import * as path from 'path';
  */
 export class FileResult implements IActionResult
 {
+    @Inject("Application")
+    private application: ApplicationContract;
+
     /**
      * Constructor for FileResult
      * @param {string} path
@@ -21,8 +26,6 @@ export class FileResult implements IActionResult
      */
     execute(response: Response): void
     {
-        //TODO check that filename uses a pretty syntax relative to app root
-        let file = path.basename(this.path);
-        response.sendFile(file);
+        response.sendFile(this.application.getResourcesDirectory() + '/' + this.path);
     }
 }

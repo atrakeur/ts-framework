@@ -5,5 +5,6 @@ export interface ApplicationContract {
 
     getEnvironment();
     getVersion();
-
+    getRootDirectory();
+    getResourcesDirectory();
 }

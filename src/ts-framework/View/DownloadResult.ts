@@ -1,6 +1,8 @@
 import {IActionResult} from "./IActionResult";
 import {Response} from "../Http/Response";
 import * as path from 'path';
+import {Inject} from 'huject';
+import {ApplicationContract} from "../Core/Contracts/ApplicationContract";
 
 /**
  * TS-Framework DownloadResult
@@ -8,6 +10,10 @@ import * as path from 'path';
  */
 export class DownloadResult implements IActionResult
 {
+
+    @Inject("Application")
+    private application: ApplicationContract;
+
     /**
      * Constructor for DownloadResult
      * @param {string} path
@@ -21,8 +27,9 @@ export class DownloadResult implements IActionResult
      */
     execute(response: Response)
     {
-        //TODO check that filename uses a pretty syntax relative to app root
-        let file = path.basename(this.path);
-        response.sendDownload(file, this.filename);
+        if (this.filename == null) {
+            this.filename = path.basename(this.path);
+        }
+        response.sendDownload(this.application.getResourcesDirectory() + '/' + this.path, this.filename);
     }
 }

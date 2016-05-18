@@ -39,6 +39,7 @@ export class Application implements ApplicationContract
 
         // Initialize IoC container
         this.container = new Container();
+        this.container.setAllowUnregisteredResolving(true);
         this.container.register("Application", this);
 
         //Bind all service providers to the autoloader
@@ -78,6 +79,14 @@ export class Application implements ApplicationContract
     public getRootDirectory()
     {
         return this.rootDirectory;
+    }
+
+    /**
+     * Get the application resources directory
+     * @returns {string}
+     */
+    public getResourcesDirectory() {
+        return this.getRootDirectory() + '/resources';
     }
 
     /**
