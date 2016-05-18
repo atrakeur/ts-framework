@@ -15,6 +15,7 @@
         "typings",
         "typings/main",
         "typings/main.d.ts",
+        "typings/index.d.ts",
         "typings/browser",
         "typings/browser.d.ts"
     ]

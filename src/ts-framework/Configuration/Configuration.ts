@@ -1,5 +1,3 @@
-///<reference path="../../../typings/main.d.ts" />
-
 import * as _ from "lodash";
 import * as fs from "fs";
 import {__INFO} from "../Core/Debug";
