@@ -11,4 +11,9 @@ export interface RouterContract {
     patch(path: string, action: string);
     route(methods: string[], path:string, action: string);
 
+    /**
+     * Print routes to a string
+     */
+    printRoutes(): string;
+
 }

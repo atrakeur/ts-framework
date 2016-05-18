@@ -100,9 +100,6 @@ export class Router implements RouterContract
         this.routes[path] = route;
 
         this.attachRouteToServer(route);
-
-        // Debug message
-        this.debug.__DEBUG(`Registered route: ${methods} ${path} to ${action}`);
     }
 
     /**
@@ -173,5 +170,22 @@ export class Router implements RouterContract
             // Trigger the action
             controller[route.getMethod()]();
         }
+    }
+
+    public printRoutes(): string {
+        var table = require("cli-table");
+        var headers = ['Methods', 'Path', 'Action'];
+
+        var instance = new table({head: headers});
+
+        for(var routeName in this.routes) {
+            var route = [];
+            route.push(this.routes[routeName].methods);
+            route.push(this.routes[routeName].path);
+            route.push(this.routes[routeName].action);
+            instance.push(route);
+        }
+
+        return instance.toString();
     }
 }
