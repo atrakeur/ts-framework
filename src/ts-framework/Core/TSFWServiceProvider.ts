@@ -1,7 +1,8 @@
+import {FactoryMethod} from 'huject';
 import {ServiceProvider} from "./ServiceProvider";
 import {AutoLoader} from "./AutoLoader";
-import FactoryMethod = Huject.FactoryMethod;
 import {Application} from "./Application";
+import {Debug} from "./Debug";
 /**
  * Defines the base service provider
  *
@@ -12,7 +13,7 @@ export class TSFWServiceProvider extends ServiceProvider {
     boot(container:Huject.Container) {
         //Register default framework classes
         container.register("Container", container);
-        container.register("AutoLoader", AutoLoader).as(FactoryMethod.SINGLETON);
+        container.register("Debug", Debug);
     }
 
     start(app:Application, container:Huject.Container) {

@@ -1,12 +1,11 @@
-///<reference path="../../../typings/main.d.ts" />
-
 import * as _ from "lodash";
 import * as fs from "fs";
-import {__INFO} from "../Core/Debug";
-import {ConfigurationContract} from "../Core/Contracts/ConfigurationContract";
+
 import {Inject} from "huject";
-import {AutoLoader} from "../Core/AutoLoader";
-import {Application} from "../Core/Application";
+import {ConfigurationContract} from "../Core/Contracts/ConfigurationContract";
+import {ApplicationContract} from "../Core/Contracts/ApplicationContract";
+import {DebugContract} from "../Core/Contracts/DebugContract";
+import {AutoLoaderContract} from "../Core/Contracts/AutoLoaderContract";
 
 /**
  * Configuration container used to store data on runtime
@@ -17,11 +16,15 @@ export class Configuration implements ConfigurationContract
     private nconf = require('nconf');
 
     @Inject("AutoLoader")
-    private autoloader: AutoLoader;
+    private autoloader: AutoLoaderContract;
+
+    @Inject("Application")
+    private application: ApplicationContract;
 
     load() {
-        //Force env
-        this.fixes("env", Application.getEnvironment());
+        //Force env & version
+        this.fixes("env", this.application.getEnvironment());
+        this.fixes("ts-version", this.application.getVersion());
 
         var instance = this.nconf;
         this.autoloader.getLookupPath().forEach(function(path) {

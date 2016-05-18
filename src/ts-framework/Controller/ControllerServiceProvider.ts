@@ -4,7 +4,6 @@ import {ServiceProvider} from "../Core/ServiceProvider";
 import * as fs from "fs";
 import * as pathUtils from "path";
 import * as _ from "lodash";
-import {__DEBUG, __INFO} from "../Core/Debug";
 import {AutoLoader} from "../Core/AutoLoader";
 import {Controller} from "./Controller";
 import Container = Huject.Container;
@@ -51,6 +50,7 @@ export class ControllerServiceProvider extends ServiceProvider {
     private loadController(filename: string, container: Container) {
         // Load file, execute all annotations
         let module: Object = require(filename);
+        let debug = container.resolve("Debug");
 
         //loop over the object to find possible candidates
         for (let name in module)
@@ -59,7 +59,7 @@ export class ControllerServiceProvider extends ServiceProvider {
             {
                 //The object is a service provider
                 if (module[name].prototype instanceof Controller) {
-                    __DEBUG(`Loaded controller: ${name}`);
+                    debug.__DEBUG(`Loaded controller: ${name}`);
 
                     //Register to the IoC
                     container.register(name, module[name]);
@@ -81,7 +81,7 @@ export class ControllerServiceProvider extends ServiceProvider {
                         fullPath = fullPath.replace("//", "/");  //Fixes multiples useless slashes
 
                         //Register route from path using the ControllerClass@method syntax
-                        router.registerRoute(methods, fullPath, name+"@"+route);
+                        router.route(methods, fullPath, name+"@"+route);
                     }
 
                     continue;

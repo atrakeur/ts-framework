@@ -9,9 +9,9 @@ import {Response} from "../Response";
 import {IActionResult} from "../../View/IActionResult";
 
 import { Container, Inject } from 'huject'
-import {__DEBUG, __INFO} from "../../Core/Debug";
 import { ConfigurationContract } from "../../Core/Contracts/ConfigurationContract";
 import {RouterContract} from "../../Core/Contracts/RouterContract";
+import {DebugContract} from "../../Core/Contracts/DebugContract";
 
 /**
  * Router script used to register and dispatch routes
@@ -27,6 +27,9 @@ export class Router implements RouterContract
 
     @Inject("Configuration")
     private configuration: ConfigurationContract;
+
+    @Inject("Debug")
+    private debug: DebugContract;
 
     /**
      * All registered routes
@@ -100,7 +103,7 @@ export class Router implements RouterContract
         this.attachRouteToServer(route);
 
         // Debug message
-        __DEBUG(`Registered route: ${methods} ${path} to ${action}`);
+        this.debug.__DEBUG(`Registered route: ${methods} ${path} to ${action}`);
     }
 
     /**
@@ -122,9 +125,18 @@ export class Router implements RouterContract
     private dispatch(route: Route): Function
     {
         var container = this.container;
+        var configuration = this.configuration;
+
         return function (req: Express.Request, res: Express.Response, next: Function)
         {
-            res.header("X-Powered-By", "TS-Framework");
+            //Display framework version in debug mode
+            if (configuration.get("debug")) {
+                var version = configuration.get("version");
+                res.header("X-Powered-By", "TS-Framework "+version);
+            } else {
+                res.header("X-Powered-By", "TS-Framework");
+            }
+
 
             // Request parameters don't match target?
             // Dispatch 404
@@ -154,7 +166,7 @@ export class Router implements RouterContract
                 }
 
                 //Log it
-                __DEBUG(`[${req.ip}] (${req.statusCode || 200}) ${req.method} ${req.path}`);
+                this.debug.__DEBUG(`[${req.ip}] (${req.statusCode || 200}) ${req.method} ${req.path}`);
             };
             controller.__setSend(send);
 
