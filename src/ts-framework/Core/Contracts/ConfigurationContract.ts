@@ -15,12 +15,4 @@ export interface ConfigurationContract {
      * @param value
      */
     set(key: string, value: any);
-
-    /**
-     * Fixes a key to a given value
-     * All next calls to set this key will be ignored
-     * @param key
-     * @param value
-     */
-    fixes(key: string, value: any);
 }

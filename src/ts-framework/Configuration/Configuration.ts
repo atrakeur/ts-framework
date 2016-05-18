@@ -23,8 +23,9 @@ export class Configuration implements ConfigurationContract
 
     load() {
         //Force env & version
-        this.fixes("env", this.application.getEnvironment());
-        this.fixes("ts-version", this.application.getVersion());
+        this.nconf.use('memory');
+        this.set("env", this.application.getEnvironment());
+        this.set("tsfw-version", this.application.getVersion());
 
         var instance = this.nconf;
         this.autoloader.getLookupPath().forEach(function(path) {
@@ -66,16 +67,5 @@ export class Configuration implements ConfigurationContract
     set(key: string, value: any)
     {
         this.nconf.set(key, value);
-    }
-
-    /**
-     * Fixes a key to a given value
-     * All next calls to set this key will be forgotten
-     * @param key
-     * @param value
-     */
-    fixes(key: string, value: any)
-    {
-        this.nconf.overrides({key: value});
     }
 }

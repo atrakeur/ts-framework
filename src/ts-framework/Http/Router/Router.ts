@@ -124,15 +124,16 @@ export class Router implements RouterContract
      */
     private dispatch(route: Route): Function
     {
-        var container = this.container;
-        var configuration = this.configuration;
+        let container = this.container;
+        let configuration = this.configuration;
+        let debug = this.debug;
 
         return function (req: Express.Request, res: Express.Response, next: Function)
         {
             //Display framework version in debug mode
             if (configuration.get("debug")) {
-                var version = configuration.get("version");
-                res.header("X-Powered-By", "TS-Framework "+version);
+                var tsfwVersion = configuration.get("tsfw-version");
+                res.header("X-Powered-By", "TS-Framework "+tsfwVersion);
             } else {
                 res.header("X-Powered-By", "TS-Framework");
             }
@@ -166,7 +167,7 @@ export class Router implements RouterContract
                 }
 
                 //Log it
-                this.debug.__DEBUG(`[${req.ip}] (${req.statusCode || 200}) ${req.method} ${req.path}`);
+                debug.__DEBUG(`[${req.ip}] (${req.statusCode || 200}) ${req.method} ${req.path}`);
             };
             controller.__setSend(send);
 
