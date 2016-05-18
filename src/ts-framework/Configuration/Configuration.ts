@@ -26,6 +26,7 @@ export class Configuration implements ConfigurationContract
         this.nconf.use('memory');
         this.set("env", this.application.getEnvironment());
         this.set("tsfw-version", this.application.getVersion());
+        this.set("port", 3000);
 
         var instance = this.nconf;
         this.autoloader.getLookupPath().forEach(function(path) {

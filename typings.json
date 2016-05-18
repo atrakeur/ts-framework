@@ -4,7 +4,7 @@
   "dependencies": {
     "chai": "registry:npm/chai#3.5.0+20160415060238"
   },
-  "ambientDependencies": {
+  "globalDependencies": {
     "express": "registry:dt/express#4.0.0+20160317120654",
     "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160322035842",
     "lodash": "registry:dt/lodash#3.10.0+20160330154726",

@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/main.d.ts" />
+
 /// <reference path="../../../node_modules/huject/huject.d.ts" />
 
 import * as fs from "fs";
