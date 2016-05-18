@@ -4,6 +4,11 @@
  */
 export interface RouterContract {
 
-    registerRoute(method: string, path:string, controller: string);
+    get(path: string, action: string);
+    post(path: string, action: string);
+    put(path: string, action: string);
+    delete(path: string, action: string);
+    patch(path: string, action: string);
+    route(methods: string[], path:string, action: string);
 
 }
