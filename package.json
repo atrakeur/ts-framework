@@ -27,8 +27,8 @@
     "test": "node src/ts-framework-build/ts-framework-tests/app.js",
     "build": "tsc",
     "preci": "cd src/ts-framework-tests && node ../ts-framework-build/ts-framework-tests/app.js & echo $! > ci.pid & sleep 5",
-    "ci": "cd src/ts-framework-tests; mocha ../ts-framework-build/ts-framework-tests/tests",
-    "postci": "cd src/ts-framework-tests; kill -9 `cat ci.pid`"
+    "ci": "cd src/ts-framework-tests && mocha ../ts-framework-build/ts-framework-tests/tests",
+    "postci": "pkill -9 node"
   },
   "repository": {
     "type": "git",
