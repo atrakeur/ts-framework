@@ -1,7 +1,6 @@
 import {ServiceProviderContract } from "./Contracts/ServiceProviderContract";
 import {Container, FactoryMethod} from "huject";
 import {Application} from "./Application";
-import {Configuration} from "./Configuration";
 import {AutoLoader} from "./AutoLoader";
 
 

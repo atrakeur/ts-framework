@@ -1,6 +1,8 @@
 import {Application} from "../Application";
+
 /**
- * Defines the contract interface for the configuration manager
+ * Defines the contract interface for the service providers
+ * A service provider mission is to register component to the IoC, then start each components
  */
 export interface ServiceProviderContract {
     /**
