@@ -59,8 +59,6 @@ export class ControllerServiceProvider extends ServiceProvider {
             {
                 //The object is a service provider
                 if (module[name].prototype instanceof Controller) {
-                    debug.__DEBUG(`Loaded controller: ${name}`);
-
                     //Register to the IoC
                     container.register(name, module[name]);
 

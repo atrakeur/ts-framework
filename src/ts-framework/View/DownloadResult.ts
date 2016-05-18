@@ -1,13 +1,19 @@
 import {IActionResult} from "./IActionResult";
 import {Response} from "../Http/Response";
+import * as path from 'path';
+import {Inject} from 'huject';
+import {ApplicationContract} from "../Core/Contracts/ApplicationContract";
 
 /**
  * TS-Framework DownloadResult
- * This class contains redirect result
- * Methods are calling from HttpController, when user want return content from controller
+ * Respond to a request with a download
  */
 export class DownloadResult implements IActionResult
 {
+
+    @Inject("Application")
+    private application: ApplicationContract;
+
     /**
      * Constructor for DownloadResult
      * @param {string} path
@@ -21,7 +27,9 @@ export class DownloadResult implements IActionResult
      */
     execute(response: Response)
     {
-        let file = ""; //path.join(app.root, this.path); // @todo Now we need to get root dir from the application
-        response.sendDownload(file, this.filename);
+        if (this.filename == null) {
+            this.filename = path.basename(this.path);
+        }
+        response.sendDownload(this.application.getResourcesDirectory() + '/' + this.path, this.filename);
     }
 }

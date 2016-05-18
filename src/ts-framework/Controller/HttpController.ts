@@ -1,3 +1,4 @@
+import {Inject, ContainerFactoryInterface} from 'huject';
 import { ContentResult } from "../View/ContentResult";
 import { DownloadResult} from "../View/DownloadResult";
 import { FileResult } from "../View/FileResult";
@@ -7,6 +8,7 @@ import { ViewResult } from "../View/ViewResult";
 import { Controller } from "./Controller";
 import {Request} from "../Http/Request";
 import {Response} from "../Http/Response";
+import Container = Huject.Container;
 
 /**
  * TS-Framework HttpController
@@ -14,6 +16,10 @@ import {Response} from "../Http/Response";
  */
 export class HttpController extends Controller
 {
+
+    @Inject
+    public objectFactory: ContainerFactoryInterface;
+
     /**
      * The request made by the client
      * @type {Request}
@@ -65,7 +71,7 @@ export class HttpController extends Controller
      * @param {number} status
     */
     protected redirect(url: string, status: number = 302) {
-        this.send(new RedirectResult(url, status));
+        this.send(this.objectFactory.make(RedirectResult, [url, status]));
     }
 
     /**
@@ -74,7 +80,7 @@ export class HttpController extends Controller
      * @param {string?} contentType
     */
     protected content(text: string, contentType?: string) {
-        this.send(new ContentResult(text, contentType));
+        this.send(this.objectFactory.make(ContentResult, [text, contentType]));
     }
 
     /**
@@ -82,7 +88,7 @@ export class HttpController extends Controller
      * @param {} data
     */
     protected json(data: {}) {
-        this.send(new JsonResult(data));
+        this.send(this.objectFactory.make(JsonResult, [data]));
     }
     
     /**
@@ -90,7 +96,7 @@ export class HttpController extends Controller
      * @param {string} path     
     */
     protected file(path: string) {
-        this.send(new FileResult(path));
+        this.send(this.objectFactory.make(FileResult, [path]));
     }
     
     /**
@@ -99,7 +105,7 @@ export class HttpController extends Controller
      * @param {string?} filename
     */
     protected download(path: string, filename?: string) {
-        this.send(new DownloadResult(path, filename));
+        this.send(this.objectFactory.make(DownloadResult, [path, filename]));
     }
 
     /**
@@ -108,7 +114,7 @@ export class HttpController extends Controller
      * @param {?} options
     */
     protected view(template: string, options?: {}) {
-        var result = new ViewResult(template);
+        var result = this.objectFactory.make(ViewResult, [template]);
         if (options) result.options = options;
         this.send(result);
     }

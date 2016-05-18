@@ -1,13 +1,18 @@
+import {Inject} from 'huject';
 import {IActionResult} from "./IActionResult";
 import {Response} from "../Http/Response";
+import * as path from 'path';
+import {ApplicationContract} from "../Core/Contracts/ApplicationContract";
 
 /**
  * TS-Framework FileResult
- * This class contains redirect result
- * Methods are calling from HttpController, when user want return content from controller
+ * Respond to a request with a file
  */
 export class FileResult implements IActionResult
 {
+    @Inject("Application")
+    private application: ApplicationContract;
+
     /**
      * Constructor for FileResult
      * @param {string} path
@@ -21,7 +26,6 @@ export class FileResult implements IActionResult
      */
     execute(response: Response): void
     {
-        let file = ""; //path.join(app.root, this.path); // @todo Now we need to get root dir from the application
-        response.sendFile(file);
+        response.sendFile(this.application.getResourcesDirectory() + '/' + this.path);
     }
 }

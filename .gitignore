@@ -6,6 +6,7 @@ build*
 .build*
 typings*
 !typings.json
+ci.pid
 
 *.pid
 *.iml

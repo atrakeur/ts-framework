@@ -2,9 +2,7 @@ import {IActionResult} from "./IActionResult";
 import {Response} from "../Http/Response";
 
 /**
- * TS-Framework ActionResult
- * This class contains redirect result
- * Methods are calling from HttpController, when user want return content from controller
+ * Respond to a request with a redirect
  */
 export class RedirectResult implements IActionResult
 {

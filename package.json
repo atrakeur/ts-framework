@@ -26,9 +26,9 @@
     "pretest": "tsc",
     "test": "node src/ts-framework-build/ts-framework-tests/app.js",
     "build": "tsc",
-    "preci": "node src/ts-framework-build/ts-framework-tests/app.js & echo $! > ci.pid & sleep 5",
-    "ci": "mocha src/ts-framework-build/ts-framework-tests/tests",
-    "postci": "kill -9 `cat ci.pid`"
+    "preci": "cd src/ts-framework-tests && node ../ts-framework-build/ts-framework-tests/app.js & echo $! > ci.pid & sleep 5",
+    "ci": "cd src/ts-framework-tests && mocha ../ts-framework-build/ts-framework-tests/tests",
+    "postci": "pkill -9 node"
   },
   "repository": {
     "type": "git",
@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "body-parser": "~1.15.0",
+    "cli-table": "^0.3.1",
     "commander": "~2.9.0",
     "compression": "~1.6.1",
     "depd": "~1.1.0",
