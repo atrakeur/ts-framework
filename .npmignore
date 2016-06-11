@@ -1,7 +1,7 @@
 node_modules*
-src/ts-framework
-src/ts-framework-tests
-src/ts-framework-build/ts-framework-test
+src
+test
+build-test
 .travis.yml
 *.iml
 *.log

@@ -7,16 +7,10 @@
         "removeComments": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "outDir": "src/ts-framework-build/"
+        "rootDir": ".",
+        "outDir": "../build-test"
     },
     "exclude": [
-        "src/ts-framework-build",
-        "node_modules",
-        "typings",
-        "typings/main",
-        "typings/main.d.ts",
-        "typings/index.d.ts",
-        "typings/browser",
-        "typings/browser.d.ts"
+
     ]
 }

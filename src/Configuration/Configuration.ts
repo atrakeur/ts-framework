@@ -4,7 +4,6 @@ import * as fs from "fs";
 import {Inject} from "huject";
 import {ConfigurationContract} from "../Core/Contracts/ConfigurationContract";
 import {ApplicationContract} from "../Core/Contracts/ApplicationContract";
-import {DebugContract} from "../Core/Contracts/DebugContract";
 import {AutoLoaderContract} from "../Core/Contracts/AutoLoaderContract";
 
 /**
@@ -21,9 +20,12 @@ export class Configuration implements ConfigurationContract
     @Inject("Application")
     private application: ApplicationContract;
 
+    constructor() {
+        this.nconf.use('memory');
+    }
+
     load() {
         //Force env & version
-        this.nconf.use('memory');
         this.set("env", this.application.getEnvironment());
         this.set("tsfw-version", this.application.getVersion());
         this.set("port", 3000);

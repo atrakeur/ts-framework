@@ -1,5 +1,5 @@
 
-/// <reference path="../../../node_modules/huject/huject.d.ts" />
+/// <reference path="../../node_modules/huject/huject.d.ts" />
 
 import * as fs from "fs";
 import * as path from "path";
@@ -23,9 +23,6 @@ export class AutoLoader implements AutoLoaderContract
 
     private lookupPaths = [
         path.normalize(__dirname+"/"),                                      //running application path (usercode)
-        path.normalize(__dirname+"/../../ts-framework/"),                   //from source framework installation (git)
-        path.normalize(__dirname+"/../../ts-framework-tests/"),              //from source framework installation test (git)
-        path.normalize(__dirname+"/../node_modules/ts-framework/lib")       //distribution framework installation (npm)
     ];
 
     /**

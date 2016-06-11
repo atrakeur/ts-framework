@@ -1,9 +1,10 @@
 {
-  "name": "ts-framework",
-  "version": "0.3.0",
+  "name": "tsframework-full",
+  "version": "0.0.1",
   "description": "TSFramework",
-  "author": "Jhon Mike <developer@jhonmike.com.br>",
+  "author": "Atrakeur <atrakeur@gmail.com>",
   "contributors": [
+    "Jhon Mike <developer@jhonmike.com.br>",
     "Luke Paris <luke@paradoxis.nl>",
     "Petr Tomášek"
   ],
@@ -19,16 +20,11 @@
     "app",
     "api"
   ],
-  "main": "./src/ts-framework-build/Core.ts",
   "scripts": {
-    "prepublish": "npm prune",
-    "start": "tsc -w",
-    "pretest": "tsc",
-    "test": "node src/ts-framework-build/ts-framework-tests/app.js",
-    "build": "tsc",
-    "preci": "cd src/ts-framework-tests && node ../ts-framework-build/ts-framework-tests/app.js & echo $! > ci.pid & sleep 5",
-    "ci": "cd src/ts-framework-tests && mocha ../ts-framework-build/ts-framework-tests/tests",
-    "postci": "pkill -9 node"
+    "build": "tsc -p src",
+
+    "pretest": "tsc -p src && tsc -p test",
+    "test": "mocha build-test --recursive"
   },
   "repository": {
     "type": "git",
@@ -52,8 +48,7 @@
     "method-override": "~2.3.5",
     "morgan": "~1.7.0",
     "nconf": "^0.8.4",
-    "root-require": "^0.3.1",
-    "waterline": "0.12.1"
+    "root-require": "^0.3.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",

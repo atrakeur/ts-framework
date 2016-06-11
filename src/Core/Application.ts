@@ -1,5 +1,5 @@
-/// <reference path="../../../typings/index.d.ts" />
-/// <reference path="../../../node_modules/huject/huject.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
+/// <reference path="../../node_modules/huject/huject.d.ts" />
 
 import { Container } from 'huject'
 import { AutoLoader } from "./AutoLoader";
