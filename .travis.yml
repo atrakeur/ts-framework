@@ -14,7 +14,7 @@ before_install:
     - typings install
     
 before_script:
-    - npm run-script build
+    - npm run build
     
 script:
-    - npm run-script ci
+    - npm run test
