@@ -1,5 +1,3 @@
-import {Application} from "../Application";
-
 /**
  * Defines the contract interface for the service providers
  * A service provider mission is to register component to the IoC, then start each components
@@ -19,6 +17,6 @@ export interface ServiceProviderContract {
      * We can use external dependencies because we are sure they are all registered to the container
      * @param app
      */
-    start(app:Application, container:Huject.Container);
+    start(container:Huject.Container);
 }
 

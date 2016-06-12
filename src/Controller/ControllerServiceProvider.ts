@@ -7,7 +7,7 @@ import * as _ from "lodash";
 import {AutoLoader} from "../Core/AutoLoader";
 import {Controller} from "./Controller";
 import Container = Huject.Container;
-import {RouterContract} from "../Core/Contracts/RouterContract";
+import {RouterContract} from "../Contracts/RouterContract";
 
 /**
  * Service provider to bootstrap all controllers

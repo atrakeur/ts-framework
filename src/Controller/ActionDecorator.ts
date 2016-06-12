@@ -1,6 +1,6 @@
 import Inject = Huject.Inject;
 import { Controller } from "./Controller";
-import {RouterContract} from "../Core/Contracts/RouterContract";
+import {RouterContract} from "../Contracts/RouterContract";
 
 /**
  * Annotate controller actions with some properties

@@ -8,9 +8,9 @@ import {Response} from "../Response";
 import {IActionResult} from "../../View/IActionResult";
 
 import { Container, Inject } from 'huject'
-import { ConfigurationContract } from "../../Core/Contracts/ConfigurationContract";
-import {RouterContract} from "../../Core/Contracts/RouterContract";
-import {DebugContract} from "../../Core/Contracts/DebugContract";
+import { ConfigurationContract } from "../../Contracts/ConfigurationContract";
+import {RouterContract} from "../../Contracts/RouterContract";
+import {DebugContract} from "../../Contracts/DebugContract";
 
 /**
  * Router script used to register and dispatch routes

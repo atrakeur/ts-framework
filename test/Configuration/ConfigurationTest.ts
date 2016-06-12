@@ -1,7 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-/// <reference path="../references.ts" />
-
-import * as assert from "assert";
 import * as chai from "chai";
 import {Configuration} from "../../build/Configuration/Configuration";
 var expect = chai.expect;

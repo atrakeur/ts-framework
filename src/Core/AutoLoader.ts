@@ -1,15 +1,10 @@
-
-/// <reference path="../../node_modules/huject/huject.d.ts" />
-
 import * as fs from "fs";
 import * as path from "path";
 import * as _ from "lodash";
 
-import {AutoLoaderException} from "./Exception";
-import {Container} from "huject";
-import {Application} from "./Application";
-import {ServiceProvider} from "./ServiceProvider";
-import {AutoLoaderContract} from "./Contracts/AutoLoaderContract";
+import { AutoLoaderContract } from "../Contracts/Index";
+import { Application, AutoLoaderException, ServiceProvider } from "./Index";
+import { Container } from "huject";
 
 /**
  * AutoLoader class

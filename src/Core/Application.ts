@@ -3,7 +3,7 @@
 
 import { Container } from 'huject'
 import { AutoLoader } from "./AutoLoader";
-import {ApplicationContract} from "./Contracts/ApplicationContract";
+import {ApplicationContract} from "../Contracts/ApplicationContract";
 
 /**
  * TS-Framework application

@@ -18,7 +18,7 @@ export class HttpServiceProvider extends ServiceProvider {
         container.register("Router", Router).as(FactoryMethod.SINGLETON);
     }
 
-    start(app:Application, container:Huject.Container) {
+    start(container:Huject.Container) {
         var httpServer: HttpServer = container.resolve("HttpServer");
         httpServer.start();
     }

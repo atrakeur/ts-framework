@@ -16,7 +16,7 @@ export class TSFWServiceProvider extends ServiceProvider {
         container.register("Debug", Debug);
     }
 
-    start(app:Application, container:Huject.Container) {
+    start(container:Huject.Container) {
         //Start any component that have to be started
     }
 

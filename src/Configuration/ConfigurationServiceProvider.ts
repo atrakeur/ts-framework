@@ -12,7 +12,7 @@ export class ConfigurationServiceProvider extends ServiceProvider {
         container.register("Configuration", Configuration).as(FactoryMethod.SINGLETON);
     }
 
-    start(app:Application, container:Huject.Container) {
+    start(container:Huject.Container) {
         //Start any component that have to be started
         var configuration: Configuration = container.resolve("Configuration");
         configuration.load();

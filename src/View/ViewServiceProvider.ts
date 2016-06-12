@@ -1,7 +1,7 @@
 import {FactoryMethod} from 'huject';
 import {ServiceProvider} from "../Core/ServiceProvider";
 import {Application} from "../Core/Application";
-import {ApplicationContract} from "../Core/Contracts/ApplicationContract";
+import {ApplicationContract} from "../Contracts/ApplicationContract";
 import {HttpServer} from "../Http/HttpServer";
 
 /**

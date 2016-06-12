@@ -1,6 +1,6 @@
 import {Inject} from 'huject';
-import {ApplicationContract} from "./Contracts/ApplicationContract";
-import {DebugContract} from "./Contracts/DebugContract";
+import {ApplicationContract} from "../Contracts/ApplicationContract";
+import {DebugContract} from "../Contracts/DebugContract";
 
 export class Debug implements DebugContract{
 

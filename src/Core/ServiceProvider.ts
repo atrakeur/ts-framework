@@ -1,4 +1,4 @@
-import {ServiceProviderContract } from "./Contracts/ServiceProviderContract";
+import {ServiceProviderContract } from "../Contracts/ServiceProviderContract";
 import {Container, FactoryMethod} from "huject";
 import {Application} from "./Application";
 import {AutoLoader} from "./AutoLoader";
@@ -19,6 +19,6 @@ export abstract class ServiceProvider implements ServiceProviderContract {
      * @param app
      * @param container
      */
-    public abstract start(app: Application, container:Huject.Container);
+    public abstract start(container:Huject.Container);
 
 }

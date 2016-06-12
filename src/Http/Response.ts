@@ -1,5 +1,4 @@
 import * as Express from "express";
-import { ICookieOption } from "../Core/Cookie";
 
 /**
  * TS-Framework Response
@@ -53,31 +52,6 @@ export class Response
     public getHeader(field: string): string
     {
         return this.rawResponse.get(field);
-    }
-
-    /**
-     * Set Cookie
-     * @param {string} name
-     * @param {string} value
-     * @param {ICookieOption?} options
-     * @return {Response}
-     */
-    public setCookie(name: string, value: string, options?: ICookieOption): Response
-    {
-        this.rawResponse.cookie(name, value, options);
-        return this;
-    }
-
-    /**
-     * Remove cookie
-     * @param {string} name
-     * @param {string} path
-     * @return {Response}
-     */
-    public removeCookie(name: string, path: string = '/'): Response
-    {
-        this.rawResponse.clearCookie(name, { path: path });
-        return this;
     }
 
     /**

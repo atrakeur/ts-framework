@@ -2,7 +2,7 @@ import {IActionResult} from "./IActionResult";
 import {Response} from "../Http/Response";
 import * as path from 'path';
 import {Inject} from 'huject';
-import {ApplicationContract} from "../Core/Contracts/ApplicationContract";
+import {ApplicationContract} from "../Contracts/ApplicationContract";
 
 /**
  * TS-Framework DownloadResult

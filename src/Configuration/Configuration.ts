@@ -2,9 +2,9 @@ import * as _ from "lodash";
 import * as fs from "fs";
 
 import {Inject} from "huject";
-import {ConfigurationContract} from "../Core/Contracts/ConfigurationContract";
-import {ApplicationContract} from "../Core/Contracts/ApplicationContract";
-import {AutoLoaderContract} from "../Core/Contracts/AutoLoaderContract";
+import {ConfigurationContract} from "../Contracts/ConfigurationContract";
+import {ApplicationContract} from "../Contracts/ApplicationContract";
+import {AutoLoaderContract} from "../Contracts/AutoLoaderContract";
 
 /**
  * Configuration container used to store data on runtime

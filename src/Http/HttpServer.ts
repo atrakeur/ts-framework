@@ -1,7 +1,7 @@
 import * as Express from "express";
 import { Inject } from "huject";
-import {ConfigurationContract} from "../Core/Contracts/ConfigurationContract";
-import {DebugContract} from "../Core/Contracts/DebugContract";
+import {ConfigurationContract} from "../Contracts/ConfigurationContract";
+import {DebugContract} from "../Contracts/DebugContract";
 
 /**
  * Provides an http server to the application
