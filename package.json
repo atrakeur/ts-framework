@@ -22,9 +22,10 @@
   ],
   "scripts": {
     "build": "tsc -p src",
-
     "pretest": "tsc -p src && tsc -p test",
-    "test": "mocha build-test --recursive"
+    "test": "mocha build-test --recursive",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- build-test --recursive",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -52,7 +53,11 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "coveralls": "^2.11.9",
+    "intern": "^3.2.3",
+    "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
+    "remap-istanbul": "^0.6.4",
     "request": "~2.71.0",
     "should": "~8.3.0"
   },
