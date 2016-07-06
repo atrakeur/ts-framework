@@ -18,13 +18,13 @@ import {RouterContract} from "../Contracts/RouterContract";
  */
 export class ControllerServiceProvider extends ServiceProvider {
 
-    private controllersPaths = "/app/controllers/";
+    private controllersPaths = "controllers/";
 
     boot(container:Huject.Container) {
         //Nothing to do before the framework is booted
     }
 
-    start(app:Application, container:Huject.Container) {
+    start(container:Huject.Container) {
         //Lookup controllers and load them
         var autoloader: AutoLoader = container.resolve("AutoLoader");
         var lookupPaths = autoloader.getLookupPath();

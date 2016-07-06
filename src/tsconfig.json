@@ -14,9 +14,6 @@
 
     ],
     "files": [
-        "Index.ts",
-        "Configuration/Index.ts",
-        "Configuration/Configuration.ts",
-        "Configuration/ConfigurationServiceProvider.ts"
+        "Index.ts"
     ]
 }

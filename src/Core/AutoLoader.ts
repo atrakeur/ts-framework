@@ -17,7 +17,9 @@ export class AutoLoader implements AutoLoaderContract
 {
 
     private lookupPaths = [
-        path.normalize(__dirname+"/"),                                      //running application path (usercode)
+        path.normalize(process.cwd()+"/app/"),   //application user path
+        path.normalize(process.cwd()+"/build/"), //builded application user path
+        path.normalize(__dirname+"/../"),        //framework path
     ];
 
     /**
@@ -95,7 +97,7 @@ export class AutoLoader implements AutoLoaderContract
         });
 
         if (!found) {
-            throw new AutoLoaderException("Service Provider "+filename+" not found during startup");
+            throw new Error("Service Provider "+filename+" not found during startup");
         }
 
         return module;
@@ -130,7 +132,7 @@ export class AutoLoader implements AutoLoaderContract
 
     public start() {
         this.serviceProviders.forEach(serviceProvider => {
-            serviceProvider.start(this.application, this.container);
+            serviceProvider.start(this.container);
         });
     }
 }

@@ -12,7 +12,7 @@ export class ViewServiceProvider extends ServiceProvider {
     boot(container:Huject.Container) {
     }
 
-    start(app:Application, container:Huject.Container) {
+    start(container:Huject.Container) {
         //Start any component that have to be started
         var application: ApplicationContract = container.resolve("Application");
         var httpServer: HttpServer = container.resolve("HttpServer");
