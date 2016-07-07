@@ -23,6 +23,8 @@ export class HttpServer {
     }
 
     public start() {
+        this.config.get("port")
+        
         // Make express listen
         this.express.listen(this.config.get("port"));
 

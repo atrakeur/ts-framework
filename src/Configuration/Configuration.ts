@@ -1,5 +1,6 @@
 import * as _ from "lodash";
 import * as fs from "fs";
+import * as path from "path";
 
 import {Inject} from "huject";
 import {ConfigurationContract} from "../Contracts/ConfigurationContract";
@@ -22,32 +23,30 @@ export class Configuration implements ConfigurationContract
 
     constructor() {
         this.nconf.use('memory');
+        this.nconf.argv();
     }
 
     load() {
         //Force env & version
-        this.set("env", this.application.getEnvironment());
         this.set("tsfw-version", this.application.getVersion());
-        this.set("port", 3000);
 
         var instance = this.nconf;
-        this.autoloader.getLookupPath().forEach(function(path) {
-            if(fs.existsSync(path + 'config.json')) {
-                instance.file(path + 'config.json');
-            }
-        });
-
-        var env = this.get("env");
-
-        if (env) {
-            this.autoloader.getLookupPath().forEach(function(path) {
-                if (fs.existsSync(path + 'config."+env+".json')) {
-                    instance.file(path + 'config.json');
-                }
-            });
+        if(fs.existsSync(process.cwd() + '/config.json')) {
+            instance.file(process.cwd() + '/config.json');
         }
 
-        this.nconf.argv();
+        var env = this.get("env");
+        if (env) {
+            if (fs.existsSync(process.cwd() + '/config.'+env+'.json')) {
+                instance.file(process.cwd() + '/config.json');
+            }
+        } else {
+            this.set("env", "production");
+        }
+
+        if (this.get("port") == null) {
+            this.set("port", 3000);
+        }
     }
 
 
