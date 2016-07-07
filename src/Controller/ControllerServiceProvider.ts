@@ -1,13 +1,9 @@
-import {Application} from "../Core/Application";
 import {ServiceProvider} from "../Core/ServiceProvider";
 
-import * as fs from "fs";
-import * as pathUtils from "path";
-import * as _ from "lodash";
 import {AutoLoader} from "../Core/AutoLoader";
-import {Controller} from "./Controller";
-import Container = Huject.Container;
+import {Container, Inject} from "huject";
 import {RouterContract} from "../Contracts/RouterContract";
+import {LoaderContract} from "../Contracts/LoaderContract";
 
 /**
  * Service provider to bootstrap all controllers
@@ -22,71 +18,47 @@ export class ControllerServiceProvider extends ServiceProvider {
 
     boot(container:Huject.Container) {
         //Nothing to do before the framework is booted
+        var autoloader: AutoLoader = container.resolve("AutoLoader");
+        autoloader.registerLoader(container.resolve(ControllerLoader));
     }
 
     start(container:Huject.Container) {
         //Lookup controllers and load them
         var autoloader: AutoLoader = container.resolve("AutoLoader");
-        var lookupPaths = autoloader.getLookupPath();
-
-        //Parse all default lookup path with the Controllers suffix
-        lookupPaths.forEach((path: string) => {
-            let fullpath = path + this.controllersPaths;
-
-            if (fs.existsSync(fullpath)) {
-                var filenames:string[] = fs.readdirSync(fullpath);
-
-                //Try to load all files in paths
-                filenames.forEach((filename) => {
-                    //Enforce convention to terminate files with Controller.js
-                    if (_.endsWith(filename, "Controller.js")) {
-                        this.loadController(fullpath + filename, container);
-                    }
-                });
-            }
-        });
+        autoloader.loadDirectory(this.controllersPaths);
     }
 
-    private loadController(filename: string, container: Container) {
-        // Load file, execute all annotations
-        let module: Object = require(filename);
-        let debug = container.resolve("Debug");
+}
 
-        //loop over the object to find possible candidates
-        for (let name in module)
-        {
-            if (module.hasOwnProperty(name))
-            {
-                //The object is a service provider
-                if (module[name].prototype instanceof Controller) {
-                    //Register to the IoC
-                    container.register(name, module[name]);
+export class ControllerLoader implements LoaderContract {
 
-                    //Register annotated routes
-                    var router: RouterContract = container.resolve("Router");
-                    var controller = container.resolve(name);
-                    for (var route in controller.decorate.routes) {
-                        //Extract value from decorators or use defaults
-                        var controllerPath = (controller.decorate.path ? controller.decorate.path: name.replace("Controller", "").toLowerCase());
-                        var actionPath = (controller.decorate.routes[route].path ? controller.decorate.routes[route].path: route);
-                        var methods = (controller.decorate.routes[route].method ? controller.decorate.routes[route].method : ['GET']);
+    @Inject("Container")
+    private container : Container;
 
-                        //Transform indexes to nothing (well to act like an index..)
-                        controllerPath = controllerPath.replace("Index", "/").replace("index", "/");
-                        actionPath     = actionPath.replace("Index", "/").replace("index", "/");
+    loadModule(name:string, module:any):void {
+        //The object is a service provider
+        if (module.prototype.decorate.controller) {
+            //Register to the IoC
+            this.container.register(name, module);
 
-                        var fullPath = controllerPath + actionPath;
-                        fullPath = fullPath.replace("//", "/");  //Fixes multiples useless slashes
+            //Register annotated routes
+            var router: RouterContract = this.container.resolve("Router");
+            var controller = this.container.resolve(name);
+            for (var route in controller.decorate.routes) {
+                //Extract value from decorators or use defaults
+                var controllerPath = (controller.decorate.path ? controller.decorate.path: name.replace("Controller", "").toLowerCase());
+                var actionPath = (controller.decorate.routes[route].path ? controller.decorate.routes[route].path: route);
+                var methods = (controller.decorate.routes[route].method ? controller.decorate.routes[route].method : ['GET']);
 
-                        //Register route from path using the ControllerClass@method syntax
-                        router.route(methods, fullPath, name+"@"+route);
-                    }
+                //Transform indexes to nothing (well to act like an index..)
+                controllerPath = controllerPath.replace("Index", "/").replace("index", "/");
+                actionPath     = actionPath.replace("Index", "/").replace("index", "/");
 
-                    continue;
-                }
+                var fullPath = controllerPath + actionPath;
+                fullPath = fullPath.replace("//", "/");  //Fixes multiples useless slashes
 
-                // Something is terribly wrong
-                return module;
+                //Register route from path using the ControllerClass@method syntax
+                router.route(methods, fullPath, name+"@"+route);
             }
         }
     }

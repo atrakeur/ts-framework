@@ -17,6 +17,8 @@ export function controller(parameters = null)
             constructor.prototype.decorate = {}
         }
 
+        constructor.prototype.decorate.controller = true;
+
         //Merge all parametters into the decorator
         if (parameters) {
             for (var name in parameters) {
