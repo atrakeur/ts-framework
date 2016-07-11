@@ -23,8 +23,8 @@ export class HttpServer {
     }
 
     public start() {
-        this.config.get("port")
-        
+        this.express.use(Express.static(process.cwd() + "/public/"));
+
         // Make express listen
         this.express.listen(this.config.get("port"));
 
