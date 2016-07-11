@@ -10,11 +10,16 @@ branches:
         - development
 
 before_install:
-    - npm install -g typescript typings
+    - npm install -g typescript typings mocha istanbul
     - typings install
     
 before_script:
-    - npm run-script build
+    - npm run build
     
 script:
-    - npm run-script ci
+    - npm run test
+
+after_success:
+    - npm run coverage
+    - npm run report-coverage
+

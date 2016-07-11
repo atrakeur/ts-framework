@@ -1,9 +1,12 @@
 {
-  "name": "ts-framework",
-  "version": "0.3.0",
+  "name": "tsframework-full",
+  "version": "0.0.1",
   "description": "TSFramework",
-  "author": "Jhon Mike <developer@jhonmike.com.br>",
+  "author": "Atrakeur <atrakeur@gmail.com>",
+  "main": "build/Index.js",
+  "typings": "build/Index.d.ts",
   "contributors": [
+    "Jhon Mike <developer@jhonmike.com.br>",
     "Luke Paris <luke@paradoxis.nl>",
     "Petr Tomášek"
   ],
@@ -19,16 +22,12 @@
     "app",
     "api"
   ],
-  "main": "./src/ts-framework-build/Core.ts",
   "scripts": {
-    "prepublish": "npm prune",
-    "start": "tsc -w",
-    "pretest": "tsc",
-    "test": "node src/ts-framework-build/ts-framework-tests/app.js",
-    "build": "tsc",
-    "preci": "cd src/ts-framework-tests && node ../ts-framework-build/ts-framework-tests/app.js & echo $! > ci.pid & sleep 5",
-    "ci": "cd src/ts-framework-tests && mocha ../ts-framework-build/ts-framework-tests/tests",
-    "postci": "pkill -9 node"
+    "build": "tsc -p src",
+    "pretest": "tsc -p src && tsc -p test",
+    "test": "mocha build-test --recursive",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- build-test --recursive",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -38,9 +37,9 @@
     "url": "https://github.com/tsframework/ts-framework/issues"
   },
   "dependencies": {
+    "typescript": "1.8.10",
     "body-parser": "~1.15.0",
     "cli-table": "^0.3.1",
-    "commander": "~2.9.0",
     "compression": "~1.6.1",
     "depd": "~1.1.0",
     "ejs": "~2.4.1",
@@ -49,14 +48,13 @@
     "get-parameter-names": "^0.3.0",
     "huject": "^1.3.4",
     "lodash": "~4.10.0",
-    "method-override": "~2.3.5",
-    "morgan": "~1.7.0",
-    "nconf": "^0.8.4",
-    "root-require": "^0.3.1",
-    "waterline": "0.12.1"
+    "nconf": "^0.8.4"
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "coveralls": "^2.11.9",
+    "intern": "^3.2.3",
+    "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
     "request": "~2.71.0",
     "should": "~8.3.0"
