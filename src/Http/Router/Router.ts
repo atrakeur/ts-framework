@@ -11,6 +11,7 @@ import { Container, Inject } from 'huject'
 import { ConfigurationContract } from "../../Contracts/ConfigurationContract";
 import {RouterContract} from "../../Contracts/RouterContract";
 import {DebugContract} from "../../Contracts/DebugContract";
+import {RouteBuilder} from "./RouteBuilder";
 
 /**
  * Router script used to register and dispatch routes
@@ -34,14 +35,14 @@ export class Router implements RouterContract
      * All registered routes
      * @type {Array}
      */
-    private routes: RouteCollection = {};
+    private routes: RouteCollection = [];
 
     /**
      * Create a get route
      * @param path
      * @param action
      */
-    public get(path: string, action: string) {
+    public get(path: string, action: string): RouteBuilder {
         return this.route(['GET'], path, action);
     }
 
@@ -92,14 +93,14 @@ export class Router implements RouterContract
      * @param action
      */
     public route(methods: string[], path:string, action: string) {
-        let route = new Route();
-        route.methods = methods;
-        route.path = path;
-        route.action = action;
+        var routeBuilder:RouteBuilder = new RouteBuilder(path, methods);
+        
+        routeBuilder.toAction(action);
+        
+        this.routes.push(routeBuilder.getRoute());
+        this.attachRouteToServer(routeBuilder.getRoute());
 
-        this.routes[path] = route;
-
-        this.attachRouteToServer(route);
+        return routeBuilder;
     }
 
     /**
@@ -141,7 +142,7 @@ export class Router implements RouterContract
             // Get parameters
 
             //Create a copy of the controller
-            var controller = container.resolve(route.getController());
+            var controller = container.resolve(route.controller);
 
             //Set request and responce
             let request: Request = new Request(req);
@@ -168,7 +169,7 @@ export class Router implements RouterContract
             controller.__setSend(send);
 
             // Trigger the action
-            controller[route.getMethod()]();
+            controller[route.method]();
         }
     }
 
@@ -182,7 +183,7 @@ export class Router implements RouterContract
             var route = [];
             route.push(this.routes[routeName].methods);
             route.push(this.routes[routeName].path);
-            route.push(this.routes[routeName].action);
+            route.push(this.routes[routeName].controller+"@"+this.routes[routeName].method);
             instance.push(route);
         }
 
