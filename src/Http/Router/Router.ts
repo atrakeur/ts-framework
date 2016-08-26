@@ -142,7 +142,7 @@ export class Router implements RouterContract
             // Get parameters
 
             //Create a copy of the controller
-            var controller = container.resolve(route.controller);
+            var controller = container.resolve(route.controller.controller);
 
             //Set request and responce
             let request: Request = new Request(req);
@@ -169,21 +169,30 @@ export class Router implements RouterContract
             controller.__setSend(send);
 
             // Trigger the action
-            controller[route.method]();
+            controller[route.controller.method]();
         }
     }
 
     public printRoutes(): string {
         var table = require("cli-table");
-        var headers = ['Methods', 'Path', 'Action'];
+        var headers = ['Methods', 'Path', 'Action', 'Before', 'After'];
 
         var instance = new table({head: headers});
 
         for(var routeName in this.routes) {
             var route = [];
+            
             route.push(this.routes[routeName].methods);
             route.push(this.routes[routeName].path);
-            route.push(this.routes[routeName].controller+"@"+this.routes[routeName].method);
+            route.push(this.routes[routeName].controller.toString());
+
+            route.push(this.routes[routeName].before.map(function(elem){
+                return elem.toString();
+            }).join(","));
+            route.push(this.routes[routeName].after.map(function(elem){
+                return elem.toString();
+            }).join(","));
+
             instance.push(route);
         }
 

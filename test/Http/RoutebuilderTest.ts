@@ -19,7 +19,7 @@ describe('Http RouteBuilder component:', () => {
         var routeBuilder = new RouteBuilder("/lala", ["GET"]);
         var route = routeBuilder.getRoute();
         //When
-        routeBuilder.toController("test");
+        routeBuilder.toAction("test1@test1");
         //Then
         expect(routeBuilder.getRoute()).to.be.equals(route);
         done();
@@ -30,9 +30,9 @@ describe('Http RouteBuilder component:', () => {
         var routeBuilder = new RouteBuilder("/lala", ["GET"]);
         var route = routeBuilder.getRoute();
         //When
-        routeBuilder.toController("test");
+        routeBuilder.toAction("test0@test1");
         //Then
-        expect(routeBuilder.getRoute().controller).to.be.equals("test");
+        expect(routeBuilder.getRoute().controller.controller).to.be.equals("test0");
         done();
     });
 });

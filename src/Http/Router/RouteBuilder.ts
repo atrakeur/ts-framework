@@ -1,4 +1,4 @@
-import {Route} from "./Route";
+import {Route, RouteEndpoint} from "./Route";
 export class RouteBuilder {
 
     private route: Route;
@@ -7,74 +7,34 @@ export class RouteBuilder {
         this.route = new Route();
         this.route.methods = methods;
         this.route.path = path;
-    }
-
-    public toController(controller: string): RouteBuilder {
-        this.route.controller = controller;
-        return this;
-    }
-
-    public toMethod(method: string): RouteBuilder {
-        this.route.method = method;
-        return this;
+        this.route.before = [];
+        this.route.after = [];
     }
 
     public toAction(controller:string): RouteBuilder {
-        var components = controller.split('@');
-        if (components.length != 2) {
-            throw new Error("Route must follow the form Controller@Method");
+        this.route.controller = RouteEndpoint.fromString(controller);
+        return this;
+    }
+
+    public before(middleware: string): RouteBuilder {
+        var endpoint = RouteEndpoint.fromStringWithDefaultMethod(middleware, "before");
+        this.route.before.push(endpoint);
+        return this;
+    }
+
+    public after(middleware: string): RouteBuilder {
+        var endpoint = RouteEndpoint.fromStringWithDefaultMethod(middleware, "after");
+        this.route.after.push(endpoint);
+        return this;
+    }
+
+    public middleware(middleware: string) {
+        var components = middleware.split('@');
+        if (components.length == 2) {
+            throw new Error("You can't specify a method when declaring both before and after middleware");
         }
 
-        return this.toController(components[0]).toMethod(components[1]);
-    }
-
-    public before(middleware: string[]): RouteBuilder {
-        middleware.forEach((value, index, array) => {
-            var components = value.split('@');
-            if (components.length == 2) {
-                var object = components[0];
-                var method = components[1];
-            } else {
-                var object = value;
-                var method = "before";
-            }
-
-            var middlewareData = [];
-            middlewareData.push(object);
-            middlewareData.push(method);
-            this.route.before.push(middlewareData)
-        });
-        return this;
-    }
-
-    public after(middleware: string[]): RouteBuilder {
-        middleware.forEach((value, index, array) => {
-            var components = value.split('@');
-            if (components.length == 2) {
-                var object = components[0];
-                var method = components[1];
-            } else {
-                var object = value;
-                var method = "after";
-            }
-
-            var middlewareData = [];
-            middlewareData.push(object);
-            middlewareData.push(method);
-            this.route.after.push(middlewareData)
-        });
-        return this;
-    }
-
-    public middleware(middleware: string[]) {
-        middleware.forEach((value, index, array) => {
-            var components = value.split('@');
-            if (components.length == 2) {
-                throw new Error("");
-            }
-
-            this.before([value]).after([value]);
-        });
+        this.before(middleware).after(middleware);
         return this;
     }
 
