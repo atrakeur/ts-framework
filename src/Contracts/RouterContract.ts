@@ -4,12 +4,12 @@
  */
 export interface RouterContract {
 
-    get(path: string, action: string);
-    post(path: string, action: string);
-    put(path: string, action: string);
-    delete(path: string, action: string);
-    patch(path: string, action: string);
-    route(methods: string[], path:string, action: string);
+    get(path: string, controller: any, action: string);
+    post(path: string,  controller: any, action: string);
+    put(path: string, controller: any, action: string);
+    delete(path: string, controller: any, action: string);
+    patch(path: string, controller: any, action: string);
+    route(methods: string[], path:string, controller: any, action: string);
 
     /**
      * Print routes to a string

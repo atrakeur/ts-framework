@@ -19,20 +19,32 @@ describe('Http RouteBuilder component:', () => {
         var routeBuilder = new RouteBuilder("/lala", ["GET"]);
         var route = routeBuilder.getRoute();
         //When
-        routeBuilder.toAction("test1@test1");
+        routeBuilder.toAction("test1");
         //Then
         expect(routeBuilder.getRoute()).to.be.equals(route);
         done();
     });
 
-    it('should assign controller correctly', function (done) {
+    it('should assign controller instance correctly', function (done) {
         //Given
         var routeBuilder = new RouteBuilder("/lala", ["GET"]);
-        var route = routeBuilder.getRoute();
+        var controller = () => {
+
+        };
         //When
-        routeBuilder.toAction("test0@test1");
+        routeBuilder.toController(controller);
         //Then
-        expect(routeBuilder.getRoute().controller.controller).to.be.equals("test0");
+        expect(routeBuilder.getRoute().controller.controller).to.be.equals(controller);
+        done();
+    });
+
+    it('should assign controller method correctly', function (done) {
+        //Given
+        var routeBuilder = new RouteBuilder("/lala", ["GET"]);
+        //When
+        routeBuilder.toAction("test1");
+        //Then
+        expect(routeBuilder.getRoute().controller.method).to.be.equals("test1");
         done();
     });
 });

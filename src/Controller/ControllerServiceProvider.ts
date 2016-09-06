@@ -58,7 +58,7 @@ export class ControllerLoader implements LoaderContract {
                 fullPath = fullPath.replace("//", "/");  //Fixes multiples useless slashes
 
                 //Register route from path using the ControllerClass@method syntax
-                router.route(methods, fullPath, name+"@"+route);
+                router.route(methods, fullPath, controller, route);
             }
         }
     }
