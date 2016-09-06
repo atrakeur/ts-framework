@@ -1,4 +1,5 @@
 import {Route, RouteEndpoint} from "./Route";
+
 export class RouteBuilder {
 
     private route: Route;
@@ -7,34 +8,22 @@ export class RouteBuilder {
         this.route = new Route();
         this.route.methods = methods;
         this.route.path = path;
-        this.route.before = [];
-        this.route.after = [];
+        this.route.controller = new RouteEndpoint();
+        this.route.middlewares = [];
     }
 
-    public toAction(controller:string): RouteBuilder {
-        this.route.controller = RouteEndpoint.fromString(controller);
+    public toController(controller: any): RouteBuilder {
+        this.route.controller.controller = controller;
         return this;
     }
 
-    public before(middleware: string): RouteBuilder {
-        var endpoint = RouteEndpoint.fromStringWithDefaultMethod(middleware, "before");
-        this.route.before.push(endpoint);
+    public toAction(action: any): RouteBuilder {
+        this.route.controller.method = action;
         return this;
     }
 
-    public after(middleware: string): RouteBuilder {
-        var endpoint = RouteEndpoint.fromStringWithDefaultMethod(middleware, "after");
-        this.route.after.push(endpoint);
-        return this;
-    }
-
-    public middleware(middleware: string) {
-        var components = middleware.split('@');
-        if (components.length == 2) {
-            throw new Error("You can't specify a method when declaring both before and after middleware");
-        }
-
-        this.before(middleware).after(middleware);
+    public middleware(middleware: any) {
+        this.route.middlewares.push(middleware);
         return this;
     }
 

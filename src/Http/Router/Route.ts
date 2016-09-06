@@ -1,6 +1,3 @@
-
-import {Exception} from "../../Core/Exception/Exception";
-
 /**
  * Route class
  * Defines a single route in the application
@@ -12,15 +9,14 @@ export class Route
     public path: string;
 
     //Middlewares
-    public before: RouteEndpoint[];
-    public after: RouteEndpoint[];
+    public middlewares: any[];
     
     //To parameters
     public controller: RouteEndpoint;
 }
 
 export class RouteEndpoint {
-    public controller: string;
+    public controller: any;
     public method: string;
 
     public static fromString(endpoint) {
@@ -51,6 +47,12 @@ export class RouteEndpoint {
     }
 
     public toString() {
-        return this.controller + '@' + this.method;
+        if (this.controller instanceof Function) {
+            return this.controller.name + '@' + this.method;
+        } else if(this.controller instanceof Object) {
+            return this.controller.constructor.name + '@' + this.method;
+        } else {
+            return this.controller + '@' + this.method;
+        }
     }
 }

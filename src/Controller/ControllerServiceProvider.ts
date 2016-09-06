@@ -37,7 +37,7 @@ export class ControllerLoader implements LoaderContract {
 
     loadModule(name:string, module:any):void {
         //The object is a service provider
-        if (module.prototype.decorate.controller) {
+        if (module.prototype.decorate && module.prototype.decorate.controller) {
             //Register to the IoC
             this.container.register(name, module);
 
@@ -58,7 +58,7 @@ export class ControllerLoader implements LoaderContract {
                 fullPath = fullPath.replace("//", "/");  //Fixes multiples useless slashes
 
                 //Register route from path using the ControllerClass@method syntax
-                router.route(methods, fullPath, name+"@"+route);
+                router.route(methods, fullPath, controller, route);
             }
         }
     }
