@@ -1,5 +1,5 @@
 import * as chai from "chai";
-import {RouteBuilder} from "../../build/Http/Index";
+import {RouteBuilder} from "../../build/Router/Index";
 var expect = chai.expect;
 
 describe('Http RouteBuilder component:', () => {

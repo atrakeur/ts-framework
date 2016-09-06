@@ -2,7 +2,6 @@ import {ServiceProvider} from "../Core/ServiceProvider";
 import {HttpServer} from "./HttpServer";
 import {Application} from "../Core/Application";
 import FactoryMethod = Huject.FactoryMethod;
-import {Router} from "./Router/Router";
 
 /**
  * Bootstrap the http stack
@@ -15,7 +14,6 @@ export class HttpServiceProvider extends ServiceProvider {
 
     boot(container:Huject.Container) {
         container.register("HttpServer", HttpServer).as(FactoryMethod.SINGLETON);
-        container.register("Router", Router).as(FactoryMethod.SINGLETON);
     }
 
     start(container:Huject.Container) {

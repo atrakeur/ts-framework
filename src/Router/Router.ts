@@ -1,16 +1,12 @@
 import * as Express from "express";
 
-import {HttpServer} from "../HttpServer";
+import {HttpServer, Request, Response} from "../Http/Index";
+import {IActionResult} from "../View/Index";
 import {RouteCollection} from "./RouteCollection";
 import {Route} from "./Route";
-import {Request} from "../Request";
-import {Response} from "../Response";
-import {IActionResult} from "../../View/IActionResult";
 
 import { Container, Inject } from 'huject'
-import { ConfigurationContract } from "../../Contracts/ConfigurationContract";
-import {RouterContract} from "../../Contracts/RouterContract";
-import {DebugContract} from "../../Contracts/DebugContract";
+import { ConfigurationContract, RouterContract, DebugContract } from "../Contracts/Index";
 import {RouteBuilder} from "./RouteBuilder";
 
 /**
