@@ -24,36 +24,20 @@ export class HttpController extends Controller
      * The request made by the client
      * @type {Request}
      */
+    @Inject("Request")
     protected request: Request;
 
     /**
      * Response sent by the controller action
      * @type {Response}
      */
+    @Inject("Response")
     protected response: Response;
 
     /**
      * Method to trigger the actual responce sending
      */
     protected send: (IActionResult) => void;
-
-    /**
-     * Sets the request of the client requesting the resource
-     * @param {Request} request
-     */
-    public __setRequest(request: Request): void
-    {
-        this.request = request;
-    }
-
-    /**
-     * Sets the response the server will return to the client
-     * @param {Response} response
-     */
-    public __setResponse(response: Response): void
-    {
-        this.response = response;
-    }
 
     /**
      * Set the sending method to call

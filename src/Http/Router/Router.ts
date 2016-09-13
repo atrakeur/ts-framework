@@ -147,6 +147,10 @@ export class Router implements RouterContract
 
             let request: Request = new Request(req);
             let response: Response = new Response(res);
+
+            //Create controller instance
+            container.register("Request", request);
+            container.register("Response", response);
             let controller = container.resolve(route.controller.controller);
 
             //Prepare the callback to go back in the stack and actually send the result
@@ -174,14 +178,15 @@ export class Router implements RouterContract
             var next = () => {
                 if (stack.length == route.middlewares.length) {
                     //Set request and responce
-                    controller.__setRequest(request);
-                    controller.__setResponse(response);
                     controller.__setSend(send);
 
                     // Trigger the action
                     controller[route.controller.method]();
                 } else {
+                    container.register("Request", request);
+                    container.register("Response", response);
                     var middleware = container.resolve(route.middlewares[stack.length]);
+
                     stack.push(middleware);
                     if (middleware.__proto__.hasOwnProperty("before") && middleware.before instanceof Function) {
                         middleware.before(request, response, next, send);
