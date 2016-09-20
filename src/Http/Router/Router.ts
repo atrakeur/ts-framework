@@ -11,6 +11,7 @@ import { Container, Inject } from 'huject'
 import { ConfigurationContract } from "../../Contracts/ConfigurationContract";
 import {RouterContract} from "../../Contracts/RouterContract";
 import {DebugContract} from "../../Contracts/DebugContract";
+import {RouteBuilder} from "./RouteBuilder";
 
 /**
  * Router script used to register and dispatch routes
@@ -34,72 +35,79 @@ export class Router implements RouterContract
      * All registered routes
      * @type {Array}
      */
-    private routes: RouteCollection = {};
+    private routes: RouteCollection = [];
 
     /**
      * Create a get route
      * @param path
+     * @param controller
      * @param action
      */
-    public get(path: string, action: string) {
-        return this.route(['GET'], path, action);
+    public get(path: string, controller: any, action: string): RouteBuilder {
+        return this.route(['GET'], path, controller, action);
     }
 
     /**
      * Create a post route
      * @param path
+     * @param controller
      * @param action
      * @returns {undefined}
      */
-    public post(path: string, action: string) {
-        return this.route(['POST'], path, action);
+    public post(path: string, controller: any, action: string) {
+        return this.route(['POST'], path, controller, action);
     }
 
     /**
      * Create a put route
      * @param path
+     * @param controller
      * @param action
      * @returns {undefined}
      */
-    public put(path: string, action: string) {
-        return this.route(['PUT'], path, action);
+    public put(path: string, controller: any, action: string) {
+        return this.route(['PUT'], path, controller, action);
     }
 
     /**
      * Create a delete route
      * @param path
+     * @param controller
      * @param action
      * @returns {undefined}
      */
-    public delete(path: string, action: string) {
-        return this.route(['DELETE'], path, action);
+    public delete(path: string, controller: any, action: string) {
+        return this.route(['DELETE'], path, controller, action);
     }
 
     /**
      * Create a patch route
      * @param path
+     * @param controller
      * @param action
      * @returns {undefined}
      */
-    public patch(path: string, action: string) {
-        return this.route(['PATCH'], path, action);
+    public patch(path: string, controller: any, action: string) {
+        return this.route(['PATCH'], path, controller, action);
     }
 
     /**
      * Register a generic route
      * @param methods
      * @param path
+     * @param controller
      * @param action
      */
-    public route(methods: string[], path:string, action: string) {
-        let route = new Route();
-        route.methods = methods;
-        route.path = path;
-        route.action = action;
+    public route(methods: string[], path:string, controller: any, action: string) {
+        var routeBuilder:RouteBuilder = new RouteBuilder(path, methods);
 
-        this.routes[path] = route;
+        routeBuilder.toController(controller);
+        routeBuilder.toAction(action);
+        
+        this.routes.push(routeBuilder.getRoute());
+        this.attachRouteToServer(routeBuilder.getRoute());
 
-        this.attachRouteToServer(route);
+        return routeBuilder;
     }
 
     /**
@@ -124,7 +132,7 @@ export class Router implements RouterContract
         let configuration = this.configuration;
         let debug = this.debug;
 
-        return function (req: Express.Request, res: Express.Response, next: Function)
+        return function (req: Express.Request, res: Express.Response)
         {
             //Display framework version in debug mode
             if (configuration.get("debug")) {
@@ -134,55 +142,74 @@ export class Router implements RouterContract
                 res.header("X-Powered-By", "TS-Framework");
             }
 
+            //Middleware stack
+            var stack: any[] = [];
 
-            // Request parameters don't match target?
-            // Dispatch 404
-            // else
-            // Get parameters
-
-            //Create a copy of the controller
-            var controller = container.resolve(route.getController());
-
-            //Set request and responce
             let request: Request = new Request(req);
             let response: Response = new Response(res);
-            controller.__setRequest(request);
-            controller.__setResponse(response);
+            let controller = container.resolve(route.controller.controller);
 
-            //Prepare the callback to actually send the result
+            //Prepare the callback to go back in the stack and actually send the result
             var send = (result: IActionResult) => {
-                // IActionResult was returned, end the request
-                if (
-                    result !== undefined &&
-                    result.__proto__.hasOwnProperty("execute") &&
-                    result.execute instanceof Function
-                ) {
+                //Execute the result returned by controller/last middleware
+                if (result !== undefined && result.__proto__.hasOwnProperty("execute") && result.execute instanceof Function) {
                     result.execute(response);
-                } else {
-                    res.end();
                 }
+                
+                if (stack.length == 0) {
+                    //No more middlewares, Send to browser
+                    res.end();
 
-                //Log it
-                debug.__DEBUG(`[${req.ip}] (${req.statusCode || 200}) ${req.method} ${req.path}`);
+                    debug.__DEBUG(`[${req.ip}] (${req.statusCode || 200}) ${req.method} ${req.path}`);
+                } else {
+                    //execute more Middlewares
+                    var middleware = stack.pop();
+                    if (middleware.__proto__.hasOwnProperty("after") && middleware.after instanceof Function) {
+                        middleware.after(request, response, send);
+                    }
+                }
             };
-            controller.__setSend(send);
 
-            // Trigger the action
-            controller[route.getMethod()]();
+            //Prepare the callback to go up in the stack
+            var next = () => {
+                if (stack.length == route.middlewares.length) {
+                    //Set request and responce
+                    controller.__setRequest(request);
+                    controller.__setResponse(response);
+                    controller.__setSend(send);
+
+                    // Trigger the action
+                    controller[route.controller.method]();
+                } else {
+                    var middleware = container.resolve(route.middlewares[stack.length]);
+                    stack.push(middleware);
+                    if (middleware.__proto__.hasOwnProperty("before") && middleware.before instanceof Function) {
+                        middleware.before(request, response, next, send);
+                    }
+                }
+            };
+
+            next();
         }
     }
 
     public printRoutes(): string {
         var table = require("cli-table");
-        var headers = ['Methods', 'Path', 'Action'];
+        var headers = ['Methods', 'Path', 'Action', 'Middleware'];
 
         var instance = new table({head: headers});
 
         for(var routeName in this.routes) {
             var route = [];
+            
             route.push(this.routes[routeName].methods);
             route.push(this.routes[routeName].path);
-            route.push(this.routes[routeName].action);
+            route.push(this.routes[routeName].controller.toString());
+
+            route.push(this.routes[routeName].middlewares.map(function(elem){
+                return elem.name;
+            }).join(","));
+
             instance.push(route);
         }
 
