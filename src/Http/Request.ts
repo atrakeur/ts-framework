@@ -6,17 +6,36 @@ import * as Express from "express";
  */
 export class Request
 {
-    public constructor(public express: Express.Request) {}
+
+    private getArray = {};
+    private postArray = {};
+
+    public get(name: string) {
+        if (name == undefined) {
+            return this.getArray;
+        }
+
+        return this.getArray[name];
+    }
 
     public post(name: string) {
         if (name == undefined) {
-            return this.express.body;
+            return this.postArray;
         }
 
-        return this.express.body[name];
+        return this.postArray[name];
     }
 
-    public params() {
-        return this.express.params
+    public setFromExpress(express: Express.Request) {
+        this.getArray = express.params;
+        this.postArray = express.body;
+    }
+
+    public setPost(data: any) {
+        this.postArray = data;
+    }
+
+    public setGet(data: any) {
+        this.getArray = data;
     }
 }

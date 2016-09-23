@@ -145,7 +145,8 @@ export class Router implements RouterContract
             //Middleware stack
             var stack: any[] = [];
 
-            let request: Request = new Request(req);
+            let request: Request = new Request();
+            request.setFromExpress(req);
             let response: Response = new Response(res);
 
             //Create controller instance
