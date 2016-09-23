@@ -10,7 +10,7 @@ export class Request
     private getArray = {};
     private postArray = {};
 
-    public get(name: string) {
+    public get(name: string = undefined) {
         if (name == undefined) {
             return this.getArray;
         }
@@ -18,7 +18,7 @@ export class Request
         return this.getArray[name];
     }
 
-    public post(name: string) {
+    public post(name: string = undefined) {
         if (name == undefined) {
             return this.postArray;
         }
