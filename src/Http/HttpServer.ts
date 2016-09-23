@@ -1,4 +1,5 @@
 import * as Express from "express";
+import * as BodyParser from "body-parser";
 import { Inject } from "huject";
 import {ConfigurationContract} from "../Contracts/ConfigurationContract";
 import {DebugContract} from "../Contracts/DebugContract";
@@ -24,6 +25,8 @@ export class HttpServer {
 
     public start() {
         this.express.use(Express.static(process.cwd() + "/public/"));
+        this.express.use(BodyParser.json());
+        this.express.use(BodyParser.urlencoded({extended: true}));
 
         // Make express listen
         this.express.listen(this.config.get("port"));

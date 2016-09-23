@@ -47,4 +47,15 @@ describe('Http RouteBuilder component:', () => {
         expect(routeBuilder.getRoute().controller.method).to.be.equals("test1");
         done();
     });
+
+    it('should assign controller middleware correctly', function (done) {
+        //Given
+        var routeBuilder = new RouteBuilder("/lala", ["GET"]);
+        var dummyMiddleware = {};
+        //When
+        routeBuilder.middleware(dummyMiddleware);
+        //Then
+        expect(routeBuilder.getRoute().middlewares).to.be.deep.equal([dummyMiddleware]);
+        done();
+    });
 });

@@ -10,3 +10,6 @@ export {Route} from "./Router/Route";
 export {RouteCollection} from "./Router/RouteCollection";
 export {Router} from "./Router/Router";
 export {RouteBuilder} from "./Router/RouteBuilder";
+
+
+export {TimeoutRequests} from "./Middlewares/TimeoutRequests";
