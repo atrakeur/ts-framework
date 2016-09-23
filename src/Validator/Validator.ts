@@ -89,8 +89,6 @@ export class Validator {
                 //TODO addError
                 //TODO return false
             }
-
-            console.log(result);
         }
 
         return false;
