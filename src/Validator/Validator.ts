@@ -157,7 +157,7 @@ export class Validator {
      * @returns {boolean}
      */
     private isAccepted(field: string, value: string, params: string[]) {
-        return value === "true" || value === "1" || value === "yes";
+        return value == "true" || value == "1" || value == "yes";
     }
 
     /**

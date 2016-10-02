@@ -4,15 +4,15 @@
   "dependencies": {
     "body-parser": "registry:npm/body-parser#1.15.2+20160815132839",
     "chai": "registry:npm/chai#3.5.0+20160415060238",
+    "express": "registry:npm/express#4.14.0+20160925001530",
     "validator": "registry:npm/validator#5.7.0+20160912014851"
   },
   "globalDependencies": {
-    "express": "registry:dt/express#4.0.0+20160317120654",
     "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160322035842",
     "lodash": "registry:dt/lodash#3.10.0+20160330154726",
     "mime": "registry:dt/mime#0.0.0+20160316155526",
     "mocha": "registry:dt/mocha#2.2.5+20160317120654",
-    "node": "registry:dt/node#4.0.0+20160412142033",
+    "node": "registry:dt/node#6.0.0+20160928143418",
     "serve-static": "registry:dt/serve-static#1.7.1+20160104095738"
   }
 }

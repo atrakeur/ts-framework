@@ -71,8 +71,8 @@ export class HttpController extends Controller
      * Send json content     
      * @param {} data
     */
-    protected json(data: {}) {
-        this.send(this.objectFactory.make(JsonResult, [data]));
+    protected json(data: {}, status: number = 200) {
+        this.send(this.objectFactory.make(JsonResult, [data, status]));
     }
     
     /**
