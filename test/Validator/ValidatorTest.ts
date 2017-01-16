@@ -1,5 +1,6 @@
 import * as chai from "chai";
 import {Validator} from "../../build/Validator/Index";
+import {Lang} from "../../build/Lang/Index";
 import {Request} from "../../build/Http/Index";
 var expect = chai.expect;
 
@@ -20,6 +21,7 @@ describe('validator tests:', () => {
         var request = new Request();
         var validator = new Validator();
         validator.setRequest(request);
+        validator.setLang(new Lang());
         validator.rules({
             "dummyParam": "required"
         });
@@ -73,6 +75,7 @@ describe('validator tests:', () => {
             "dummyParam": "dummyValue"
         });
         var validator = new Validator();
+        validator.setLang(new Lang());
         validator.setRequest(request);
         validator.rules({
             "dummyParam": "in:some,dummy,value"

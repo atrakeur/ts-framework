@@ -39,6 +39,9 @@ export class Lang {
     public get(ident: string) {
         var parts = ident.split(".");
         var root = this.langData[this.defaultLang];
+        if (root == null) {
+            return ident;
+        }
         for (var index in parts) {
             if (parts[index] in root) {
                 root = root[parts[index]];
