@@ -2,7 +2,7 @@
   "name": "ts-framework",
   "version": false,
   "dependencies": {
-    "body-parser": "registry:npm/body-parser#1.15.2+20160815132839",
+    "body-parser": "registry:npm/body-parser#1.15.2+20161116154925",
     "chai": "registry:npm/chai#3.5.0+20160415060238",
     "validator": "registry:npm/validator#5.7.0+20160912014851"
   },
