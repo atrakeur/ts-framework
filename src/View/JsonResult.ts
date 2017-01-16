@@ -10,7 +10,7 @@ export class JsonResult implements IActionResult
      * Constructor for JsonResult
      * @param {any} data
      */
-    constructor(public data: any) {}
+    constructor(public data: any, public status: number) {}
 
     /**
      * Execute the response
@@ -19,6 +19,7 @@ export class JsonResult implements IActionResult
      */
     execute(response: Response): void
     {
+        response.setStatus(this.status);
         response.sendJson(this.data);
     }
 }

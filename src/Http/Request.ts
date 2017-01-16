@@ -28,7 +28,7 @@ export class Request
 
     public setFromExpress(express: Express.Request) {
         this.getArray = express.params;
-        this.postArray = express.body;
+        this.postArray = (<any>express).body;
     }
 
     public setPost(data: any) {

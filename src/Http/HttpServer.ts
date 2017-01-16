@@ -1,4 +1,5 @@
 import * as Express from "express";
+import * as Http from "http";
 import * as BodyParser from "body-parser";
 import { Inject } from "huject";
 import {ConfigurationContract} from "../Contracts/ConfigurationContract";
@@ -11,7 +12,8 @@ import {DebugContract} from "../Contracts/DebugContract";
  */
 export class HttpServer {
 
-    public express: Express.Application;
+    public server: Http.Server;
+    public express: any;
 
     @Inject("Configuration")
     private config: ConfigurationContract;
@@ -21,6 +23,7 @@ export class HttpServer {
 
     public constructor() {
         this.express = Express();
+        this.server = Http.createServer(this.express);
     }
 
     public start() {
@@ -29,7 +32,7 @@ export class HttpServer {
         this.express.use(BodyParser.urlencoded({extended: true}));
 
         // Make express listen
-        this.express.listen(this.config.get("port"));
+        this.server.listen(this.config.get("port"));
 
         // Display a start message
         this.debug.__INFO("Server listening on port: " + this.config.get("port"));
@@ -37,6 +40,10 @@ export class HttpServer {
 
     public getExpress(): Express.Application {
         return this.express;
+    }
+
+    public getServer(): Http.Server {
+        return this.server;
     }
 
 }

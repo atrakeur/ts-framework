@@ -1,5 +1,7 @@
 import {Request} from "../Http/Request";
 import { Inject } from "huject";
+import {Lang} from "../Lang/Lang";
+import * as _ from "lodash";
 var validator = require("validator");
 
 export class Validator {
@@ -7,8 +9,11 @@ export class Validator {
     @Inject("Request")
     private request: Request;
 
+    @Inject("Lang")
+    private lang: Lang;
+
     private rulesArray: any = {};
-    private errorsArray: string[] = [];
+    private errorsArray = {};
 
     private customValidators = {};
 
@@ -17,15 +22,13 @@ export class Validator {
     }
 
     public validates(): boolean {
-        var passed = true;
-
         for(var field in this.rulesArray) {
             if (this.rulesArray.hasOwnProperty(field)) {
-                passed = passed && this.validatesField(field, this.rulesArray[field]);
+                this.validatesField(field, this.rulesArray[field]);
             }
         }
 
-        return passed;
+        return this.passed();
     }
 
     public errors() {
@@ -33,7 +36,7 @@ export class Validator {
     }
 
     public passed() {
-        return this.errorsArray.length == 0;
+        return _.isEmpty(this.errorsArray);
     }
 
     public setRequest(request: Request) {
@@ -42,6 +45,14 @@ export class Validator {
 
     public getRequest() {
         return this.request;
+    }
+
+    public setLang(lang: Lang) {
+        this.lang = lang;
+    }
+
+    public getLang() {
+        return this.lang;
     }
 
     public registerCustomValidator(ruleName: string, ruleFunction: (field: string, value: string, params: string[]) => boolean) {
@@ -58,7 +69,7 @@ export class Validator {
             //Split the rule ruleName:params
             var ruleComponents = rules[ruleIndex].split(":");
             if (ruleComponents.length != 1 && ruleComponents.length != 2) {
-                console.log("Rule format unknown");
+                throw new Error("Rule format unknown");
             }
 
             //Split the params params1,params2
@@ -78,20 +89,18 @@ export class Validator {
             } else if (fullRuleName in this.customValidators) {
                 result = this.customValidators[fullRuleName](field, value, ruleParams);
             } else {
-                //TODO add error validation rule not found
-                return false;
+                throw new Error("Invalid rule "+fullRuleName);
             }
 
-            if (result) {
-                return true;
-            } else {
-                //TODO get error message
-                //TODO addError
-                //TODO return false
+            if (!result) {
+                var errorMessage = this.lang.get("validator.rules."+ruleName);
+                errorMessage = errorMessage.replace(":attribute", this.lang.get("validator.attribute."+field));
+                console.log(errorMessage);
+                this.addError(field, errorMessage);
             }
         }
 
-        return false;
+        return this.passed();
     }
 
     private addError(field: string, message: string) {
@@ -138,6 +147,17 @@ export class Validator {
     private isConfirmed(field: string, value: string, params: string[]) {
         var value_confirmation = this.request.post(field+"_conf");
         return value == value_confirmation;
+    }
+
+    /**
+     * Handle a field that must be accepted
+     * @param field
+     * @param value
+     * @param params
+     * @returns {boolean}
+     */
+    private isAccepted(field: string, value: string, params: string[]) {
+        return value == "true" || value == "1" || value == "yes";
     }
 
     /**
