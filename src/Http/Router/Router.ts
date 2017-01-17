@@ -163,7 +163,9 @@ export class Router implements RouterContract
                 
                 if (stack.length == 0) {
                     //No more middlewares, Send to browser
-                    res.end();
+		    if (res.headersSent) {
+                    	res.end();
+		    }
 
                     debug.__DEBUG(`[${req.ip}] (${req.statusCode || 200}) ${req.method} ${req.path}`);
                 } else {
